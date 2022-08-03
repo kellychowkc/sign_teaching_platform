@@ -28,5 +28,8 @@
 ├── migrations
 ├── seeds
 ├── sql
+├── .gitignore
+├── env
+├── env.example
 └── server.ts
 ```
