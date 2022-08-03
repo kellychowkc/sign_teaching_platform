@@ -77,7 +77,8 @@
 - [ ] source tf_python/bin/activate
 - [ ] pip install --upgrade pip
 
-## Config of prettier
+## Config
+### Prettier
 - [ ] create a file of <.prettierrc>
 ```
 {
@@ -99,3 +100,6 @@
 }
 
 ```
+
+### ts
+- [ ] create a file of <tsconfig.json>
