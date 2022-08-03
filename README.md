@@ -76,3 +76,26 @@
 - [ ] python -m venv tf_python
 - [ ] source tf_python/bin/activate
 - [ ] pip install --upgrade pip
+
+## Config of prettier
+- [ ] create a file of <.prettierrc>
+```
+{
+    "trailingComma": "es5",
+    "tabWidth": 4,
+    "semi": false,
+    "singleQuote": true,
+    "overrides": [
+        {
+            "files": ["*.ts", "*.js"],
+            "options": {
+                "semi": true,
+                "tabWidth": 2,
+                "singleQuote": false,
+                "printWidth": 100
+            }
+        }
+    ]
+}
+
+```
