@@ -4,12 +4,12 @@
 ```
 ├── private
 │   ├── assets
-│   ├── styling
+│   ├── css
 │   ├── js
 │   └── html
 ├── public
 │   ├── assets
-│   ├── styling
+│   ├── css
 │   ├── js
 │   └── html
 ├── middleware
