@@ -33,3 +33,6 @@
 ├── env.example
 └── server.ts
 ```
+
+## workflow
+- [ ] npm init
