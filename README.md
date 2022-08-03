@@ -35,7 +35,6 @@
 ```
 
 ## Workflow
-```
 - [ ] npm init
 - [ ] npm install  ts-node typescript @types/node
 - [ ] npm install express @types/express
@@ -59,22 +58,17 @@
 - [ ] yarn add knex  pg @types/pg
 - [ ] yarn add --dev playwright 
 - [ ] yarn add redis @types/redis
-```
 
 ## Tensorflow Installation
-```
 - [ ] Mac with Intel Chip: pip install --upgrade tensorflow
 - [ ] Mac with M1 chip: pip install --upgrade tensorflow
-```
 
 ## Save the installed version
-```
 - [ ] Mac with Intel: tensorflow==2.9.1
 - [ ] Mac with M1: 
       tensorflow-macos==2.9.0
       tensorflow-metal==0.5.0
       protobuf==3.9.2
-```
 
 ## Setup an environment using venv
 - [ ] mkdir cats-and-dogs
