@@ -4,12 +4,12 @@
 ```
 ├── private
 │   ├── assets
-│   ├── styling
+│   ├── css
 │   ├── js
 │   └── html
 ├── public
 │   ├── assets
-│   ├── styling
+│   ├── css
 │   ├── js
 │   └── html
 ├── middleware
@@ -28,5 +28,8 @@
 ├── migrations
 ├── seeds
 ├── sql
+├── .gitignore
+├── env
+├── env.example
 └── server.ts
 ```
