@@ -1,6 +1,6 @@
 # c21-tw-bad-group4
 
-## set up environment
+## Set up environment
 ```
 ├── private
 │   ├── assets
@@ -34,7 +34,7 @@
 └── server.ts
 ```
 
-## workflow
+## Workflow
 ```
 - [ ] npm init
 - [ ] npm install  ts-node typescript @types/node
@@ -76,3 +76,9 @@
       protobuf==3.9.2
 ```
 
+## Setup an environment using venv
+- [ ] mkdir cats-and-dogs
+- [ ] cd cats-and-dogs
+- [ ] python -m venv tf_python
+- [ ] source tf_python/bin/activate
+- [ ] pip install --upgrade pip
