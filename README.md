@@ -1,6 +1,6 @@
 # c21-tw-bad-group4
 
-## set up environment
+## Set up environment
 ```
 ├── private
 │   ├── assets
@@ -34,8 +34,7 @@
 └── server.ts
 ```
 
-## workflow
-```
+## Workflow
 - [ ] npm init
 - [ ] npm install  ts-node typescript @types/node
 - [ ] npm install express @types/express
@@ -59,20 +58,78 @@
 - [ ] yarn add knex  pg @types/pg
 - [ ] yarn add --dev playwright 
 - [ ] yarn add redis @types/redis
-```
 
 ## Tensorflow Installation
-```
 - [ ] Mac with Intel Chip: pip install --upgrade tensorflow
 - [ ] Mac with M1 chip: pip install --upgrade tensorflow
-```
 
 ## Save the installed version
-```
 - [ ] Mac with Intel: tensorflow==2.9.1
 - [ ] Mac with M1: 
       tensorflow-macos==2.9.0
       tensorflow-metal==0.5.0
       protobuf==3.9.2
+
+## Setup an environment using venv
+- [ ] mkdir cats-and-dogs
+- [ ] cd cats-and-dogs
+- [ ] python -m venv tf_python
+- [ ] source tf_python/bin/activate
+- [ ] pip install --upgrade pip
+
+## Config
+### Prettier
+- [ ] create a file of <.prettierrc>
+```
+{
+    "trailingComma": "es5",
+    "tabWidth": 4,
+    "semi": false,
+    "singleQuote": true,
+    "overrides": [
+        {
+            "files": ["*.ts", "*.js"],
+            "options": {
+                "semi": true,
+                "tabWidth": 2,
+                "singleQuote": false,
+                "printWidth": 100
+            }
+        }
+    ]
+}
+
 ```
 
+### ts
+- [ ] create a file of <tsconfig.json>
+```
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "target": "es5",
+        "lib": ["es6", "dom"],
+        "sourceMap": true,
+        "allowJs": true,
+        "jsx": "react",
+        "esModuleInterop": true,
+        "moduleResolution": "node",
+        "noImplicitReturns": true,
+        "noImplicitThis": true,
+        "noImplicitAny": true,
+        "strictNullChecks": true,
+        "suppressImplicitAnyIndexErrors": true,
+        "noUnusedLocals": true
+    },
+    "exclude": ["node_modules", "build", "scripts", "index.js"]
+}
+```
+
+### .gitignore
+```
+node_modules
+.DS_Store
+.env
+package-lock.json
+
+```
