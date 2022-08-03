@@ -13,7 +13,7 @@
 │   ├── js
 │   └── html
 ├── middleware
-│   └── isLoggedinGuard.ts
+│   └── isLoggedInGuard.ts
 ├── controller
 │   ├── userController.ts
 │   └── testing
