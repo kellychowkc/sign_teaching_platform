@@ -1,6 +1,7 @@
 # c21-tw-bad-group4
 
 ## set up environment
+```
 ├── private
 │   ├── assets
 │   ├── styling
@@ -28,3 +29,4 @@
 ├── seeds
 ├── sql
 └── server.ts
+```
