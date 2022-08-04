@@ -1,5 +1,5 @@
 import { Knex } from "knex";
-import { User } from "../models/models";
+import { User } from "../utility/models";
 
 export class UserService {
   constructor(private knex: Knex) {}
