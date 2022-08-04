@@ -134,3 +134,9 @@ node_modules
 package-lock.json
 
 ```
+
+### git push to other branches
+```
+ git checkout -b develop
+ git push -u origin develop
+```
