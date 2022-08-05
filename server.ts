@@ -1,6 +1,6 @@
 import express from "express";
 import path from "path";
-import http from "http";
+// import http from "http";
 import expressSession from "express-session";
 import Knex from "knex";
 
@@ -20,7 +20,7 @@ app.use(
   })
 );
 
-export const server = new http.Server(app);
+// export const server = new http.Server(app);
 
 // logger set up
 const logFormat = winston.format.printf(function(info){
@@ -44,18 +44,18 @@ import knexConfigs from "./knexfile";
 const configMode = process.env.NODE_ENV || "development";
 const knexConfig = knexConfigs[configMode];
 const knex = Knex(knexConfig);
-console.log(knex);
+// console.log(knex);
 
-import { logInRoutes } from "./routers/logInRoutes";
-import { signUpRoutes } from "./routers/signUpRoutes";
 import { UserService } from "./service/userService";
 import { UserController } from "./controller/userController";
-import { logOutRoutes } from "./routers/logOutRoutes";
 
 //server & controller set up
 const userService = new UserService(knex);
 export const userController = new UserController(userService);
 
+import { logInRoutes } from "./routers/logInRoutes";
+import { signUpRoutes } from "./routers/signUpRoutes";
+import { logOutRoutes } from "./routers/logOutRoutes";
 //route handling
 app.use("/signUp",signUpRoutes)
 app.use("/logIn",logInRoutes)
@@ -71,6 +71,6 @@ app.use((req, res) => {
 });
 
 const PORT = 8080;
-server.listen(PORT, () => {
+app.listen(PORT, () => {
   console.log(`listening at http://localhost:${PORT}`);
 });

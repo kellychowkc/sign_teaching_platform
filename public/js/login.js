@@ -1,16 +1,15 @@
-
 import Swal from 'sweetalert2';
 
 document.querySelector("#login").addEventListener("submit", async (event) => {
     event.preventDefault();
     const form = event.target;
     const formData = {};
-    formData['username'] = form.loginUsername.value;
-    formData['password'] = form.loginPassword.value;
-    const resp = await fetch('/logIn', {
+    formData["username"] = form.loginUsername.value;
+    formData["password"] = form.loginPassword.value;
+    const resp = await fetch("/logIn", {
         method: "POST",
         headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
         },
         body: JSON.stringify(formData),
     });
@@ -18,7 +17,7 @@ document.querySelector("#login").addEventListener("submit", async (event) => {
 
     if (result.success === true) {
         Swal.fire({
-            icon: 'success',
+            icon: "success",
             title: result.message,
             showConfirmButton: false,
             timer: 1500
@@ -26,7 +25,7 @@ document.querySelector("#login").addEventListener("submit", async (event) => {
         window.location.href = `/user.html`;
     } else {
         Swal.fire({
-            icon: 'error',
+            icon: "error",
             text: result.message
         });
         window.location.reload();
