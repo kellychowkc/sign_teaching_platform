@@ -17,11 +17,11 @@
 ├── controller
 │   ├── userController.ts
 │   └── testing
-│       └── userController.test
+│       └── userController.test.ts
 ├── service
 │   ├── userService.ts
 │   └── testing
-│       └── userService.test
+│       └── userService.test.ts
 ├── routers
 │   ├── signUp.ts
 │   └── logIn.ts

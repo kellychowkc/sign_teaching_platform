@@ -8,25 +8,31 @@ export class UserController {
   constructor(private userService: UserService) {}
 
   logIn = async (req: Request, res: Response) => {
-    const { username, password } = req.body;
-    if (!username || !password) {
-      res.status(400).json({ success: false, message: "invalid username/password" });
-      return;
-    }
 
-    const foundUserInfo = await this.userService.login(username);
-     if (!foundUserInfo) {
-      res.status(401).json({ success: false, message: "no such user or wrong password" });
-      return;
-    }
-    const match = await checkPassword(password, foundUserInfo["password"])
-    if(match){
-      if(req.session){
-        req.session["user"] = { id: foundUserInfo["id"], username: foundUserInfo["username"], identity: foundUserInfo["identity"]};
-        res.status(200).json({ message: "success" });
-      };
-    }else{
-      res.status(401).json({ message: "no such user or wrong password" });
+    try{
+      const { username, password } = req.body;
+      if (!username || !password) {
+        res.status(400).json({ success: false, message: "invalid username/password" });
+        return;
+      }
+  
+      const foundUserInfo = await this.userService.logIn(username);
+       if (!foundUserInfo) {
+        res.status(401).json({ success: false, message: "no such user or wrong password" });
+        return;
+      }
+      const match = await checkPassword(password, foundUserInfo["password"])
+      if(match){
+        if(req.session){
+          req.session["user"] = { id: foundUserInfo["id"], username: foundUserInfo["username"], identity: foundUserInfo["identity"]};
+          res.status(200).json({ message: "success" });
+        };
+      }else{
+        res.status(401).json({ message: "no such user or wrong password" });
+      }
+    }catch(err){
+      logger.error(err.toString());
+      res.status(500).json({ success: false, message: "internal server error" });
     }
 
   };
