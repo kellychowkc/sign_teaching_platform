@@ -1,8 +1,8 @@
 window.onload = () => {
   document.querySelector("#header").innerHTML = `
-  <nav class="navbar navbar-expand-lg navbar-light bg-light py-3 fixed-top">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light py-3">
   <div class="container">
-      <img src="../assets/手語學堂logo.png" alt="logo">
+      <a href="../index.html"><img src="../assets/手語學堂logo.png" alt="logo"></a>
 
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav">
