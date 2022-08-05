@@ -137,6 +137,8 @@ package-lock.json
 
 ### git push to other branches
 ```
- git checkout -b develop
- git push -u origin develop
+git fetch
+git switch [branch]
+git checkout [branch]
+
 ```
