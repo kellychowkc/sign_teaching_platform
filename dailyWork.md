@@ -9,23 +9,28 @@
 2. logIn
 - [x] feature
 - [x] route handling
-- [ ] frontEnd
 3. signUp
 - [x] feature
 - [x] route handling
-- [ ] frontEnd
 4. logOut
 - [x] feature
 - [x] route handling
-- [ ] frontEnd
 5. isLoggedInAPI
 - [x] student
 - [x] teacher
 - [x] admin
 5. hashed
 6. testing
-7. html & css
-8. git pull & push
+7. html & css 
+- [ ] logIn
+- [ ] SignUp
+- [ ] landing Page
+8. js
+- [ ] logIn
+- [ ] SignUp
+- [ ] landing Page
+9. logger
+10. git pull & push
 
 ## changes
 1. Routers' name
@@ -34,5 +39,6 @@
 2. Controllers' feature name
 - login -> logIn
 3. comment userService's getAllUsers()
+4. logger replace console.error
 
 

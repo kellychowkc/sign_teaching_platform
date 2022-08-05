@@ -2,6 +2,7 @@ import type { UserService } from "../service/userService";
 import type { Request, Response } from "express";
 import { checkPassword } from "../utility/hash";
 import { User } from "../utility/models";
+import {logger} from "../server";
 
 export class UserController {
   constructor(private userService: UserService) {}
@@ -35,7 +36,8 @@ export class UserController {
         res.status(201).json({ success: false, message: "internal server error" });
       }
     }catch(err){
-      console.error(err.message);
+      logger.error(err.toString());
+      // console.error(err.message);
       res.status(500).json({ success: false, message: "internal server error" });
     }
   }
@@ -45,7 +47,8 @@ export class UserController {
       delete req.session["user"];
       res.status(200).json({message: "success"})
     }catch(err){
-      console.error(err.message)
+      logger.error(err.toString());
+      // console.error(err.message)
       res.status(500).json({ success: false, message: "internal server error" });
     }
     
@@ -63,7 +66,8 @@ export class UserController {
       res.status(200).json({ message: "success", user: userInfo });
 
     } catch (err) {
-      console.error(err.message);
+      logger.error(err.toString());
+      // console.error(err.message);
       res.status(500).json({ success: false, message: "internal server error" });
     }
   };
@@ -75,7 +79,8 @@ export class UserController {
       const allUsers = await this.userService.getAllUsers(admin);
       res.status(200).json({ message: "success", user: allUsers });
     }catch(err){
-      console.error(err.message);
+      logger.error(err.toString());
+      // console.error(err.message);
       res.status(500).json({ success: false, message: "internal server error" });
     }
 

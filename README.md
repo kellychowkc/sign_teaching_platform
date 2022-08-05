@@ -55,7 +55,7 @@
 - [ ] yarn add --dev jest
 - [ ] yarn add --dev typescript ts-jest @types/jest @types/node ts-node ts-node-dev
 - [ ] yarn ts-jest config:init
-- [ ] yarn add knex  pg @types/pg
+- [ ] yarn add knex pg @types/pg
 - [ ] yarn knex init -x ts
 - [ ] yarn add --dev playwright 
 - [ ] yarn add redis @types/redis

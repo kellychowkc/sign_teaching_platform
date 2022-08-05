@@ -4,6 +4,8 @@ import http from "http";
 import expressSession from "express-session";
 import Knex from "knex";
 
+import winston from "winston";
+
 
 
 const app = express();
@@ -20,8 +22,25 @@ app.use(
 
 export const server = new http.Server(app);
 
+// logger set up
+const logFormat = winston.format.printf(function(info){
+  let date = new Date().toISOString();
+  return `${date}[${info.level}]: ${info.message}\n`;
+});
+export const logger = winston.createLogger({
+  level: "info",
+  format:winston.format.combine(
+    winston.format.colorize(),
+    logFormat
+  ),
+  transports:[
+    new winston.transports.Console()
+  ]
+})
+
 //knex set up
-const knexConfigs = require("./knexfile");
+// const knexConfigs = require("./knexfile");
+import knexConfigs from "./knexfile";
 const configMode = process.env.NODE_ENV || "development";
 const knexConfig = knexConfigs[configMode];
 const knex = Knex(knexConfig);
