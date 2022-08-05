@@ -11,6 +11,8 @@ export async function up(knex: Knex): Promise<void> {
             table.string("password").notNullable();
             table.string("first_name").notNullable();
             table.string("last_name").notNullable();
+            table.string("email").notNullable();
+            table.integer("phone_num").notNullable();
             table.string("identity").notNullable();
             table.timestamps(true, true);
         });
@@ -27,9 +29,9 @@ export async function up(knex: Knex): Promise<void> {
         })
     };
 
-    const hasTableTimetable = await knex.schema.hasTable("timetable");
-    if (!hasTableTimetable) {
-        await knex.schema.createTable("timetable", (table) => {
+    const hasTableTimeTable = await knex.schema.hasTable("time_table");
+    if (!hasTableTimeTable) {
+        await knex.schema.createTable("time_table", (table) => {
             table.increments();
             table.string("weekday").notNullable();
             table.time("booking_time").notNullable();
@@ -42,8 +44,8 @@ export async function up(knex: Knex): Promise<void> {
             table.increments();
             table.integer("teacher_id").unsigned;
             table.foreign("teacher_id").references("teachers.id");
-            table.integer("timetable_id").unsigned;
-            table.foreign("timetable_id").references("timetable.id");
+            table.integer("time_table_id").unsigned;
+            table.foreign("time_table_id").references("time_table.id");
         })
     };
 
@@ -130,7 +132,7 @@ export async function down(knex: Knex): Promise<void> {
     await knex.schema.dropTableIfExists("packages_prices");
     await knex.schema.dropTableIfExists("packages");
     await knex.schema.dropTableIfExists("can_booking_table");
-    await knex.schema.dropTableIfExists("timetable");
+    await knex.schema.dropTableIfExists("time_table");
     await knex.schema.dropTableIfExists("teachers");
     await knex.schema.dropTableIfExists("users");
 }

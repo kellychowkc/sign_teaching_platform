@@ -20,7 +20,7 @@ CREATE TABLE teachers (
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
-CREATE TABLE timetable (
+CREATE TABLE time_table (
     id SERIAL PRIMARY KEY,
     weekday TEXT NOT NULL,
     booking_time TIME NOT NULL
@@ -29,9 +29,9 @@ CREATE TABLE timetable (
 CREATE TABLE can_booking_table (
     id SERIAL PRIMARY KEY,
     teacher_id INTEGER,
-    timetable_id INTEGER,
+    time_table_id INTEGER,
     FOREIGN KEY (teacher_id) REFERENCES teachers(id),
-    FOREIGN KEY (timetable_id) REFERENCES timetable(id)
+    FOREIGN KEY (time_table_id) REFERENCES time_table(id)
 );
 
 CREATE TABLE packages (
