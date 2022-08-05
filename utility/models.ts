@@ -7,3 +7,9 @@ export interface User {
   email?: string;
   phoneNum?: number;
 }
+
+export interface SessionUser{
+  id: number;
+  username: string;
+  identity: string;
+}
