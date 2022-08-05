@@ -5,7 +5,7 @@ window.onload = () => {
 };
 
 function signUpForm() {
-  const signUp = document.querySelector("#signup");
+  const signUp = document.querySelector("#signUp");
   if (!signUp) {
     return;
   }

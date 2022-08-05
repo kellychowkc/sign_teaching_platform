@@ -3,6 +3,13 @@ window.onload = () => {
   <nav class="navbar navbar-expand-lg navbar-light bg-light py-3">
   <div class="container">
       <a href="../index.html"><img src="../assets/手語學堂logo.png" alt="logo" id="logo" width="100" height="90"></a>
+    
+                          
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+      data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+      aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+       </button>
 
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav">

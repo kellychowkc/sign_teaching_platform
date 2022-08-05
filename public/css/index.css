@@ -1,3 +1,37 @@
+.intro-container {
+    margin: 3rem;
+}
 
+.col-sm-6 {
+    padding: 1.5rem;
+}
 
+#indexPagePic {
+    padding-left: 4rem;
+    height: 90%;
+    width: 90%;
+    box-sizing: border-box;
+}
 
+#intro-box {
+    padding: 4rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Noto Serif TC', serif;
+    line-height: 200%;
+    letter-spacing: 0.1rem;
+}
+
+@media only screen and (max-width: 900px) {
+    .col-sm-6 {
+        margin: 1rem;
+        padding: 0;
+    }
+    #indexPagePic {
+        padding: 0;
+    }
+    #intro-box {
+        padding: 0;
+    }
+}
