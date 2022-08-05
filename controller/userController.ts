@@ -1,8 +1,8 @@
-import type { UserService } from "../service/userService";
+import { UserService } from "../service/userService";
 import type { Request, Response } from "express";
-import { checkPassword } from "../utility/hash";
-import { User } from "../utility/models";
+// import { checkPassword } from "../utility/hash";
 import {logger} from "../server";
+import {checkPassword} from "../utility/hash";
 
 export class UserController {
   constructor(private userService: UserService) {}
@@ -14,30 +14,33 @@ export class UserController {
       return;
     }
 
-    const foundUser: User[] = await this.userService.login(req.body);
-
-    if (foundUser.length === 0) {
+    const foundUserInfo = await this.userService.login(username);
+     if (!foundUserInfo) {
       res.status(401).json({ success: false, message: "no such user or wrong password" });
       return;
     }
-
-    if (await checkPassword(password, foundUser.password)) {
-      req.session["user"] = { id: foundUser.id, username, identity};
-      res.status(200).json({ message: "success" });
-    } else {
+    const match = await checkPassword(password, foundUserInfo["password"])
+    if(match){
+      if(req.session){
+        req.session["user"] = { id: foundUserInfo["id"], username: foundUserInfo["username"], identity: foundUserInfo["identity"]};
+        res.status(200).json({ message: "success" });
+      };
+    }else{
       res.status(401).json({ message: "no such user or wrong password" });
     }
+
   };
 
   create = async (req:Request, res: Response) => {
     try{
       const newUser = await this.userService.create(req.body);
       if(newUser){
-        res.status(201).json({ success: false, message: "internal server error" });
+        res.status(201).json({ success: true, message: "Created user" });
+      }else{
+        res.status(405).json({ success: false, message: "Method not allowed: user/email/phoneNumber already exists" });
       }
     }catch(err){
       logger.error(err.toString());
-      // console.error(err.message);
       res.status(500).json({ success: false, message: "internal server error" });
     }
   }
@@ -48,7 +51,6 @@ export class UserController {
       res.status(200).json({message: "success"})
     }catch(err){
       logger.error(err.toString());
-      // console.error(err.message)
       res.status(500).json({ success: false, message: "internal server error" });
     }
     
@@ -58,21 +60,16 @@ export class UserController {
     try {
       const user = req.session["user"];
 
-      // is this matching to userService's getAllUsers()?
-      // const { id, ...others } = user;
-
-      // try matching...
       const userInfo = await this.userService.getUserInfo(user);
       res.status(200).json({ message: "success", user: userInfo });
 
     } catch (err) {
       logger.error(err.toString());
-      // console.error(err.message);
       res.status(500).json({ success: false, message: "internal server error" });
     }
   };
 
-  // maybe used in admin page's system control?
+  // used in admin page's system control
   getAllUsers = async (req: Request, res: Response) => {
     try{
       const admin = req.session["user"];
@@ -80,7 +77,6 @@ export class UserController {
       res.status(200).json({ message: "success", user: allUsers });
     }catch(err){
       logger.error(err.toString());
-      // console.error(err.message);
       res.status(500).json({ success: false, message: "internal server error" });
     }
 
