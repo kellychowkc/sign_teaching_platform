@@ -11,51 +11,67 @@
             crossorigin="anonymous"
         />
         <link rel="stylesheet" href="../css/login.css" />
-        <link rel="stylesheet" href="./css/navbar.css" />
+        <link rel="stylesheet" href="../css/navbar.css" />
         <title>手語學堂</title>
     </head>
 
     <body>
         <header id="header"></header>
         <article>
-            <section>
-                <main class="form-signin w-25 m-auto">
-                    <form id="login">
-                        <h1 class="h3 mb-3 fw-normal">LOGIN</h1>
-                        <div class="form-floating">
-                            <input
-                                type="text"
-                                class="form-control"
-                                id="username"
-                                name="username"
-                                placeholder="username"
-                                required
+            <section class="form my-7 mx-5">
+                <div class="container">
+                    <div class="row no-gutters">
+                        <div class="col-lg-7" id="image">
+                            <img
+                                src="../assets/login.png"
+                                class="img-fluid"
+                                alt=""
                             />
-                            <label for="username">Username</label>
                         </div>
-                        <div class="form-floating">
-                            <input
-                                type="password"
-                                class="form-control"
-                                id="password"
-                                name="password"
-                                placeholder="Password"
-                                required
-                            />
-                            <label for="password">Password</label>
+                        <div class="col-lg-5">
+                            <h1 class="font-weight-bold py-3">登入</h1>
+                            <form id="login">
+                                <div class="form-row">
+                                    <div class="col-lg-11">
+                                        <h5>登入名稱</h5>
+                                        <input
+                                            type="text"
+                                            class="form-control"
+                                            name="username"
+                                            required
+                                        />
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="col-lg-11">
+                                        <h5>密碼</h5>
+                                        <input
+                                            type="password"
+                                            class="form-control"
+                                            name="password"
+                                            required
+                                        />
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="col-lg-11">
+                                        <button
+                                            type="submit"
+                                            class="btn1 mt-3 mb-5"
+                                        >
+                                            登入
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="signUp-box">
+                                    <a href="./signUp.html" id="signUp-link"
+                                        >尚未註冊？立即註冊！</a
+                                    >
+                                </div>
+                            </form>
                         </div>
-                        <button
-                            class="w-100 btn btn-lg btn-primary"
-                            type="submit"
-                        >
-                            Login
-                        </button>
-
-                        <div id="signInLink">
-                            <a href="./signIn.html">Create New Account</a>
-                        </div>
-                    </form>
-                </main>
+                    </div>
+                </div>
             </section>
         </article>
         <script src="../js/navbar.js"></script>
