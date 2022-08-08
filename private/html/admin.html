@@ -24,11 +24,11 @@
                         <span class="navbar-toggler-icon"></span>
                     </button>
                     <div class="collapse navbar-collapse system_navbar" id="navbarNavAltMarkup">
-                        <div class="navbar-nav">
-                            <a class="nav-link active" aria-current="page" href="#">教學</a>
-                            <a class="nav-link" href="#">課程</a>
-                            <a class="nav-link" href="#">用戶管理</a>
-                            <a class="nav-link" href="#">設定</a>
+                        <div class="navbar-nav system_navbar_buttons">
+                            <a class="nav-link active" aria-current="page" id="teaching">教學</a>
+                            <a class="nav-link" id="lecture">課程</a>
+                            <a class="nav-link" id="users_control">用戶管理</a>
+                            <a class="nav-link" id="setting">設定</a>
                         </div>
                     </div>
                 </div>
@@ -37,24 +37,67 @@
     </div>
     <div id="content_box">
         <div class="content_box left_box">
-            <div class="system_button changing_system">
-                <div class="button_img"><img src="/assets/admin/system.gif" alt="refresh_lecture"></div>
-                <div class="button_title">更改</div>
+
+            <div class="system_buttons">
+                <div class="system_button adding_word">
+                    <div class="button_img"><img src="/assets/admin/add.gif" alt="adding_word"></div>
+                    <div class="button_title">新增詞語</div>
+                </div>
             </div>
-            
+            <div class="display_words">
+                <div class="title">已有詞語</div>
+                <div class="display_word words_box">
+                    <div class="words_form">
+                        <form action="/action_page.php">
+                            <input type="text" placeholder="Search.." name="search">
+                            <button type="submit" class="searching"><img
+                                    src="https://img.icons8.com/ios-glyphs/60/000000/search--v1.png" /></button>
+                            <input type="submit" value="刪除"><br>
+                            <div class="word">
+                                <label for="麵包">麵包</label>
+                                <input type="radio" id="麵包" name="words" value="麵包">
+                            </div>
+                            <div class="word">
+                                <label for="麵包">麵包</label>
+                                <input type="radio" id="麵包" name="words" value="麵包">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <nav aria-label="Page navigation example" class="page_box">
+                    <ul class="pagination">
+                        <li class="page-item">
+                            <a class="page-link" href="#" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        <li class="page-item"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item">
+                            <a class="page-link" href="#" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+
+
         </div>
-        <div class="content_box right_box">
-            <form action="/action_page.php" class="admin_changing_account">
-                <label for="email">郵箱:</label><br>
-                <input type="email" id="email" name="email" placeholder="輸入新郵箱"><br>
-                <label for="password">密碼:</label><br>
-                <input type="password" id="password" name="password" placeholder="輸入新密碼"><br>
-                <label for="password">確認密碼:</label><br>
-                <input type="password" id="confirm_password" name="confirm_password" placeholder="重複輸入新密碼"><br>
-                <div class="form_button">
+        <div class="content_box right_box" style=" margin-left: 20px;padding: 30px;display: flex;justify-content: center;align-items: center;">
+
+            <form action="/action_page.php" class="content_form">
+                <div class="form_input_buttons">
+                    <input type="text" id="title" name="title" placeholder="輸入詞語"><br>
+                    <input type="file" id="myFile" name="filename">
+                    <div class="submit_button_box">
                     <input type="submit" id="submit" value="確定">
                 </div>
+                </div>
             </form>
+
+
         </div>
 
     </div>
