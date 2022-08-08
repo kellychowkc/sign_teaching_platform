@@ -1,8 +1,8 @@
 import Swal from "https://cdn.jsdelivr.net/npm/sweetalert2@11/src/sweetalert2.js";
 
 window.onload = () => {
-  signUpForm();
   navbarCreate();
+  signUpForm();
 };
 
 function signUpForm() {
