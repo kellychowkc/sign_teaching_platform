@@ -35,3 +35,51 @@
         padding: 0;
     }
 }
+
+h2 {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: #f5b968;
+}
+
+.function {
+    cursor: pointer;
+    margin-top: 6rem;
+    margin-bottom: 2rem;
+}
+
+.function img {
+    transition: 0.3s all;
+}
+
+.function:hover img {
+    transition: 0.3s all;
+    opacity: 0.7;
+}
+
+.function .buy-btn {
+    background: #f2b02c;
+    border: 0;
+    border-radius: 4rem;
+    height: 3rem;
+    width: 7rem;
+    font-size: larger;
+    transform: translateY(20px);
+    opacity: 0;
+    transition: 0.3s all;
+}
+
+.function:hover .buy-btn {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.img-fluid {
+    height: 80%;
+    width: 80%;
+}
+
+hr {
+    border-top: 1px solid rgba(128, 128, 128, 0.654);
+    margin-bottom: 2rem;
+}

@@ -5,10 +5,11 @@ export interface User {
   first_name?: string;
   last_name?: string;
   email?: string;
-  phone_num?: number;
+  phone_num?: string;
+  identity?: string;
 }
 
-export interface SessionUser{
+export interface SessionUser {
   id: number;
   username: string;
   identity: string;

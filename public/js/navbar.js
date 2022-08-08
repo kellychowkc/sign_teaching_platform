@@ -1,4 +1,8 @@
 window.onload = () => {
+  navbarCreate();
+};
+
+function navbarCreate() {
   document.querySelector("#header").innerHTML = `
   <nav class="navbar navbar-expand-lg navbar-light bg-light py-3">
   <div class="container">
@@ -76,3 +80,4 @@ window.onload = () => {
             </div>
       `;
 };
+
