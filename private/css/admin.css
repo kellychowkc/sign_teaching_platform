@@ -1,0 +1,273 @@
+/* navbar */
+.system_navbar {
+    display: flex;
+    justify-content: flex-start;
+    margin-left: 200px;
+}
+
+
+
+/* content basic */
+#content_box {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 30px;
+    margin-left: 200px;
+    margin-right: 200px;
+    padding: 50px;
+    /* background-color: green; */
+}
+
+.left_box {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 20vw;
+}
+
+.right_box {
+    flex: 1;
+}
+
+
+/* left box */
+.system_buttons {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding: 5px;
+    width: 400px;
+}
+
+.system_button {
+    width: 100%;
+    border: solid 2px black;
+    border-radius: 10px;
+    padding: 10px;
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+}
+
+.system_button>.button_img {
+    width: 100px;
+    height: 100px;
+}
+
+.button_img>img {
+    max-height: 100%;
+}
+
+.system_button>.button_title {
+    padding-top: 10px;
+    font-size: larger;
+}
+
+
+.display_words {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.words_box {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 10px;
+    position: relative;
+    border: solid 2px black;
+    border-radius: 5px;
+    padding: 5px;
+    height: 100px;
+}
+
+.words_form {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.word {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.word>label {
+    width: 200px;
+    text-align: center;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.page_box {
+    display: flex;
+    justify-content: center;
+}
+
+.pagination {
+    margin-top: 20px;
+}
+
+
+
+
+
+
+/* right_box */
+/* .right_box{
+    margin-left: 20px;
+    padding: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+} */
+
+/* right_box: 課程 */
+.right_box {
+    margin-left: 20px;
+    padding: 30px;
+}
+.adding_lecture_button_box>.adding_lecture,
+.lecture_form>input,
+button.searching,
+.video>button,
+td>button,
+.changing_identity_box>button {
+    border: solid 1px black;
+    border-radius: 2px;
+}
+.content_form{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.content_form > .form_input_buttons{
+    width: 100%;
+}
+
+/* 教學 */
+.form_input_buttons > input{
+    margin: 10px;
+}
+.submit_button_box{
+    margin: 10px;
+    width: 100%;
+}
+
+
+
+
+
+
+
+
+button.searching {
+    margin-right: 20px;
+    margin-left: 10px;
+}
+
+button.searching>img {
+    width: 20px;
+    height: 20px;
+    font-size: 10px;
+    letter-spacing: 0cm;
+}
+
+
+.all_lecture_box {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.available_lecture_only{
+    margin-left: 570px;
+}
+
+
+.adding_lecture_button_box {
+    margin-right: 10px;
+}
+
+.lecture_form {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.showing_table_box {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.lecture_table {
+    margin-top: 10px;
+    width: 70%;
+}
+
+td>input,
+td>img,
+td>button {
+    margin-left: 50px;
+}
+
+td>img {
+    width: 20px;
+}
+.system_box {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.form_button {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+.holding_lecture_form > #submit{
+    margin-top: 10px;
+} 
+
+.admin_changing_account>label {
+    margin-top: 20px;
+}
+
+.admin_changing_account>input {
+    margin-top: 10px;
+}
+
+
+
+/* for showing video later */
+.right_box>.video {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 70%;
+}
+
+
+.video>button {
+    margin-top: 10px;
+}
+
+
+@media screen and (max-width: 1300px) {
+    #content_box {
+        display: flex;
+        flex-wrap: wrap;
+        margin-top: 30px;
+        margin-left: 0;
+        margin-right: 0;
+        padding: 0;
+    }
+
+    #content_box>.right_box {
+        width: 100%;
+    }
+
+}

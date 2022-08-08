@@ -49,5 +49,8 @@
 3. comment userService's getAllUsers()
 4. logger replace console.error
 5. !! delete one row of users -> id is weird
+6. linking
+7. adding footer into navbar.js
+8. footer css
 
 

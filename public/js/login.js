@@ -21,7 +21,7 @@ function loginForm() {
       body: JSON.stringify(formData),
     });
     const result = await resp.json();
-    if (result.success === true) {
+    if (result.success === true && result.identity === "student") {
       Swal.fire({
         icon: "success",
         title: result.message,
@@ -29,7 +29,24 @@ function loginForm() {
         timer: 1500,
       });
       window.location.href = `/user.html`;
-    } else {
+    } else if(result.success === true && result.identity === "teacher"){
+      Swal.fire({
+        icon: "success",
+        title: result.message,
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      window.location.href = `/teacher.html`;
+    } else if(result.success === true && result.identity === "admin"){
+      Swal.fire({
+        icon: "success",
+        title: result.message,
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      console.log("this is admin!")
+      window.location.href = `/admin.html`;
+    }else {
       Swal.fire({
         icon: "error",
         text: result.message,

@@ -25,7 +25,7 @@ export class UserController {
       if(match){
         if(req.session){
           req.session["user"] = { id: foundUserInfo["id"], username: foundUserInfo["username"], identity: foundUserInfo["identity"]};
-          res.status(200).json({ message: "success" });
+          res.status(200).json({ message: "success", identity: foundUserInfo["identity"]});
         };
       }else{
         res.status(401).json({ message: "no such user or wrong password" });
