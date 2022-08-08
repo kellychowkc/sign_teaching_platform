@@ -72,3 +72,7 @@
 5. !! delete one row of users -> id is weird
 
 
+# important
+1. admin css: right box is different when it is not 教學
+
+

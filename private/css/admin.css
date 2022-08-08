@@ -4,6 +4,9 @@
     justify-content: flex-start;
     margin-left: 200px;
 }
+.system_navbar_buttons a:hover{
+    cursor: pointer;
+}
 
 
 
@@ -23,6 +26,7 @@
     justify-content: center;
     flex-wrap: wrap;
     width: 20vw;
+    height: fit-content;
 }
 
 .right_box {
@@ -47,6 +51,10 @@
     display: flex;
     justify-content: space-around;
     margin-top: 20px;
+    height: fit-content;
+}
+.system_button:hover{
+    cursor: pointer;
 }
 
 .system_button>.button_img {
@@ -116,20 +124,7 @@
 
 
 
-/* right_box */
-/* .right_box{
-    margin-left: 20px;
-    padding: 30px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-} */
 
-/* right_box: 課程 */
-.right_box {
-    margin-left: 20px;
-    padding: 30px;
-}
 .adding_lecture_button_box>.adding_lecture,
 .lecture_form>input,
 button.searching,
@@ -238,6 +233,12 @@ td>img {
 
 .admin_changing_account>input {
     margin-top: 10px;
+}
+
+.admin_changing_account{
+    /* background-color: red; */
+    display: flex;
+    justify-content: center;
 }
 
 
