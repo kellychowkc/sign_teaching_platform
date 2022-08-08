@@ -1,0 +1,29 @@
+
+@import "./usersNavbar.css";
+@import "./timeTable.css";
+
+article {
+    display: flex;
+}
+
+#userInfoDisplay{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#userInfoData {
+    width: 50vw;
+}
+
+#usersImages {
+    width: 40px;
+    height: 40px;
+}
+
+#userInfoTitle {
+    display: flex;
+    justify-content: space-between;
+}
+

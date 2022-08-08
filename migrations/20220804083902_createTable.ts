@@ -11,8 +11,8 @@ export async function up(knex: Knex): Promise<void> {
             table.string("password").notNullable();
             table.string("first_name").notNullable();
             table.string("last_name").notNullable();
-            table.string("email").notNullable();
-            table.integer("phone_num").notNullable();
+            table.string("email").notNullable().unique;
+            table.integer("phone_num").notNullable().unique;
             table.string("identity").notNullable();
             table.timestamps(true, true);
         });
@@ -34,7 +34,7 @@ export async function up(knex: Knex): Promise<void> {
         await knex.schema.createTable("time_table", (table) => {
             table.increments();
             table.string("weekday").notNullable();
-            table.time("booking_time").notNullable();
+            table.string("booking_time").notNullable();
         })
     };
 

@@ -27,10 +27,10 @@ export class UserController {
             username: foundUserInfo["username"],
             identity: foundUserInfo["identity"],
           };
-          res.status(200).json({ message: "success", identity: foundUserInfo["identity"]});
+          res.status(200).json({ success: true, message: "success", identity: foundUserInfo["identity"]});
         }
       } else {
-        res.status(401).json({ message: "沒有這個用戶或密碼錯誤" });
+        res.status(401).json({ success: false, message: "沒有這個用戶或密碼錯誤" });
       }
     } catch (err) {
       logger.error(err.toString());
@@ -58,7 +58,7 @@ export class UserController {
   logOut = async (req: Request, res: Response) => {
     try {
       delete req.session["user"];
-      res.status(200).json({ message: "success" });
+      res.status(200).json({ success: true, message: "success" });
     } catch (err) {
       logger.error(err.toString());
       res.status(500).json({ success: false, message: "internal server error" });
@@ -70,7 +70,7 @@ export class UserController {
       const user = req.session["user"];
 
       const userInfo = await this.userService.getUserInfo(user);
-      res.status(200).json({ message: "success", user: userInfo });
+      res.status(200).json({ success: true, message: "success", user: userInfo });
     } catch (err) {
       logger.error(err.toString());
       res.status(500).json({ success: false, message: "internal server error" });
@@ -82,7 +82,7 @@ export class UserController {
     try {
       const admin = req.session["user"];
       const allUsers = await this.userService.getAllUsers(admin);
-      res.status(200).json({ message: "success", user: allUsers });
+      res.status(200).json({ success: true, message: "success", user: allUsers });
     } catch (err) {
       logger.error(err.toString());
       res.status(500).json({ success: false, message: "internal server error" });

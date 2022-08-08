@@ -31,25 +31,28 @@ function loginForm() {
         title: result.message,
         showConfirmButton: false,
         timer: 1500,
+      }).then(function(){
+        window.location.href = `/user.html`;
       });
-      window.location.href = `/user.html`;
     } else if(result.success === true && result.identity === "teacher"){
       Swal.fire({
         icon: "success",
         title: result.message,
         showConfirmButton: false,
         timer: 1500,
+      }).then(function(){
+        window.location.href = `/user.html`;
       });
-      window.location.href = `/teacher.html`;
     } else if(result.success === true && result.identity === "admin"){
       Swal.fire({
         icon: "success",
         title: result.message,
         showConfirmButton: false,
         timer: 1500,
+      }).then(function(){
+        console.log("this is admin!")
+        window.location.href = `/admin.html`;
       });
-      console.log("this is admin!")
-      window.location.href = `/admin.html`;
     } else {
       Swal.fire({
         icon: "error",

@@ -42,18 +42,28 @@ const knex = Knex(knexConfig);
 import { UserService } from "./service/userService";
 import { UserController } from "./controller/userController";
 
+import { UserInfoController } from "./controller/userInfoController";
+import { UserInfoService } from "./service/userInfoService";
+
 //server & controller set up
 const userService = new UserService(knex);
 export const userController = new UserController(userService);
+
+const userInfoService = new UserInfoService(knex);
+export const userInfoController = new UserInfoController(userInfoService);
 
 import { logInRoutes } from "./routers/logInRoutes";
 import { signUpRoutes } from "./routers/signUpRoutes";
 import { logOutRoutes } from "./routers/logOutRoutes";
 
+import { userInfoRoutes } from "./routers/userInfoRoutes";
+
 //route handling
 app.use("/signUp", signUpRoutes);
 app.use("/logIn", logInRoutes);
 app.use("/logOut", logOutRoutes);
+
+app.use("/userInfo", userInfoRoutes);
 
 //folder path
 app.use(express.static(path.join(__dirname, "public")));
