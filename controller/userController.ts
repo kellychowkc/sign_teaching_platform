@@ -1,6 +1,5 @@
 import { UserService } from "../service/userService";
 import type { Request, Response } from "express";
-// import { checkPassword } from "../utility/hash";
 import { logger } from "../server";
 import { checkPassword } from "../utility/hash";
 
@@ -31,7 +30,7 @@ export class UserController {
           res.status(200).json({ message: "success" });
         }
       } else {
-        res.status(401).json({ message: "no such user or wrong password" });
+        res.status(401).json({ message: "沒有這個用戶或密碼錯誤" });
       }
     } catch (err) {
       logger.error(err.toString());
@@ -43,14 +42,12 @@ export class UserController {
     try {
       const newUser = await this.userService.create(req.body);
       if (newUser) {
-        res.status(201).json({ success: true, message: "Created user" });
+        res.status(201).json({ success: true, message: "已創建用戶" });
       } else {
-        res
-          .status(405)
-          .json({
-            success: false,
-            message: "Method not allowed: user/email/phoneNumber already exists",
-          });
+        res.status(405).json({
+          success: false,
+          message: "用戶/電子郵件/電話號碼已經存在",
+        });
       }
     } catch (err) {
       logger.error(err.toString());

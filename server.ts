@@ -6,8 +6,6 @@ import Knex from "knex";
 
 import winston from "winston";
 
-
-
 const app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -23,20 +21,15 @@ app.use(
 // export const server = new http.Server(app);
 
 // logger set up
-const logFormat = winston.format.printf(function(info){
+const logFormat = winston.format.printf(function (info) {
   let date = new Date().toISOString();
   return `${date}[${info.level}]: ${info.message}\n`;
 });
 export const logger = winston.createLogger({
   level: "info",
-  format:winston.format.combine(
-    winston.format.colorize(),
-    logFormat
-  ),
-  transports:[
-    new winston.transports.Console()
-  ]
-})
+  format: winston.format.combine(winston.format.colorize(), logFormat),
+  transports: [new winston.transports.Console()],
+});
 
 //knex set up
 // const knexConfigs = require("./knexfile");
@@ -56,10 +49,11 @@ export const userController = new UserController(userService);
 import { logInRoutes } from "./routers/logInRoutes";
 import { signUpRoutes } from "./routers/signUpRoutes";
 import { logOutRoutes } from "./routers/logOutRoutes";
+
 //route handling
-app.use("/signUp",signUpRoutes)
-app.use("/logIn",logInRoutes)
-app.use("/logOut",logOutRoutes)
+app.use("/signUp", signUpRoutes);
+app.use("/logIn", logInRoutes);
+app.use("/logOut", logOutRoutes);
 
 //folder path
 app.use(express.static(path.join(__dirname, "public")));
