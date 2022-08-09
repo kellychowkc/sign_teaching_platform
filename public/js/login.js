@@ -32,7 +32,7 @@ function loginForm() {
         showConfirmButton: false,
         timer: 1500,
       }).then(function(){
-        window.location.href = `/user.html`;
+        window.location.href = `/html/user.html`;
       });
     } else if(result.success === true && result.identity === "teacher"){
       Swal.fire({
@@ -41,7 +41,7 @@ function loginForm() {
         showConfirmButton: false,
         timer: 1500,
       }).then(function(){
-        window.location.href = `/user.html`;
+        window.location.href = `/html/user.html`;
       });
     } else if(result.success === true && result.identity === "admin"){
       Swal.fire({
@@ -51,7 +51,7 @@ function loginForm() {
         timer: 1500,
       }).then(function(){
         console.log("this is admin!")
-        window.location.href = `/admin.html`;
+        window.location.href = `/html/admin.html`;
       });
     } else {
       Swal.fire({
