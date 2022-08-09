@@ -21,7 +21,7 @@
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                         data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false"
                         aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
+                        <span class="navbar_icon"><img src="/assets/admin/menu.png"/></span>
                     </button>
                     <div class="collapse navbar-collapse system_navbar" id="navbarNavAltMarkup">
                         <div class="navbar-nav system_navbar_buttons">
@@ -51,8 +51,8 @@
                         <form action="/action_page.php">
                             <input type="text" placeholder="Search.." name="search">
                             <button type="submit" class="searching"><img
-                                    src="https://img.icons8.com/ios-glyphs/60/000000/search--v1.png" /></button>
-                            <input type="submit" value="刪除"><br>
+                                    src="/assets/admin/searching.png" /></button>
+                            <input type="submit" class="deleting" value="刪除"><br>
                             <div class="word">
                                 <label for="麵包">麵包</label>
                                 <input type="radio" id="麵包" name="words" value="麵包">
@@ -85,15 +85,16 @@
 
 
         </div>
-        <div class="content_box right_box" style=" margin-left: 20px;padding: 30px;display: flex;justify-content: center;align-items: center;">
+        <div class="content_box right_box"
+            style="padding: 30px;display: flex;justify-content: center;align-items: center;">
 
             <form action="/action_page.php" class="content_form">
                 <div class="form_input_buttons">
                     <input type="text" id="title" name="title" placeholder="輸入詞語"><br>
                     <input type="file" id="myFile" name="filename">
                     <div class="submit_button_box">
-                    <input type="submit" id="submit" value="確定">
-                </div>
+                        <input type="submit" id="submit" value="確定">
+                    </div>
                 </div>
             </form>
 
