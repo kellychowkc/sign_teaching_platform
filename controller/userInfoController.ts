@@ -90,7 +90,7 @@ export class UserInfoController {
     }
 
 
-
+    // Teacher
     displayTeacherTime = async (req: Request, res: Response) => {
         try {
             const userId = parseInt(req.session["user"].id as string, 10);
@@ -130,11 +130,70 @@ export class UserInfoController {
     }
 
 
+    displayTeacherImage = async (req: Request, res: Response) => {
+        try {
+            const userId = parseInt(req.session["user"].id as string, 10);
+            const teacherData = await this.userInfoService.getTeacherImage(userId);
+            res.status(200).json({ success: true, message: teacherData });
+        }
+        catch (err) {
+            logger.error(err.toString());
+            res.status(400).json({ success: false, message: "Select Error" })
+            return;
+        }
+    }
+
+
+    // editTeacherImage = (req: Request, res: Response) => {
+    //     form.parse(req, async (err, fields, files) => {
+    //         try {
+    //             const userId = parseInt(req.session["user"].id as string, 10);
+    //             const imageTitle = files.image["newFilename"] as string;
+    //             const oldImage = await this.userInfoService.editTeacherImage(userId, imageTitle);
+    //             if (oldImage) {
+    //                 if (oldImage !== "teacher_icon.png") {
+    //                     fs.unlink(path.join(__dirname, `../assets/usersImages/${oldImage}`), (err) => {
+    //                         if (err) {
+    //                             logger.error(err.toString());
+    //                             throw err;
+    //                         }
+    //                     });
+    //                 }
+    //             }
+    //             res.status(200).json({ success: true, message: "Edit success" });
+    //         }
+    //         catch (err) {
+    //             logger.error(err.toString());
+    //             res.status(400).json({ success: false, message: "Edit Error" })
+    //             return;
+    //         }
+    //     })
+    // }
+
+
+    displayTeachingRecord = async (req: Request, res: Response) => {
+        try {
+            const userId = parseInt(req.session["user"].id as string, 10);
+            const teachingRecord = await this.userInfoService.getTeachingRecord(userId);
+            res.status(200).json({ success: true, message: teachingRecord });
+        }
+        catch (err) {
+            logger.error(err.toString());
+            res.status(400).json({ success: false, message: "Display Error" })
+            return;
+        }
+
+    }
+
+
+    // Student
     displayTeacher = async (req: Request, res: Response) => {
         try {
             const teacherData = await this.userInfoService.getTeacherData();
             if (teacherData) {
                 res.status(200).json({ success: true, message: teacherData })
+            } else {
+                res.status(400).json({ success: false, message: "Cannot Find Teacher Data" })
             }
         }
         catch (err) {
@@ -205,46 +264,97 @@ export class UserInfoController {
         }
     }
 
-
-    displayTeacherImage = async (req: Request, res: Response) => {
+    displayShoppingRecord = async (req: Request, res: Response) => {
         try {
             const userId = parseInt(req.session["user"].id as string, 10);
-            const teacherData = await this.userInfoService.getTeacherImage(userId);
-            res.status(200).json({ success: true, message: teacherData });
+            const shoppingRecord = await this.userInfoService.getShoppingRecord(userId);
+            if (shoppingRecord) {
+                res.status(200).json({ success: true, message: shoppingRecord });
+            } else {
+                res.status(400).json({ success: false, message: "Cannot Find Shopping List" })
+            }
         }
         catch (err) {
             logger.error(err.toString());
-            res.status(400).json({ success: false, message: "Select Error" })
+            res.status(400).json({ success: false, message: "Display Error" })
+            return;
+        }
+    }
+
+    displayOrderRecord = async (req: Request, res: Response) => {
+        try {
+            const userId = parseInt(req.session["user"].id as string, 10);
+            const orderRecord = await this.userInfoService.getOrderRecord(userId);
+            if (orderRecord) {
+                res.status(200).json({ success: true, message: orderRecord });
+            } else {
+                res.status(400).json({ success: false, message: "Not Order Record" })
+            }
+        }
+        catch (err) {
+            logger.error(err.toString());
+            res.status(400).json({ success: false, message: "Display Error" })
+            return;
+        }
+    }
+
+    displayOrderData = async (req: Request, res: Response) => {
+        try {
+            const orderId = parseInt(req.body.id as string, 10);
+            const orderData = await this.userInfoService.getOrderData(orderId);
+            if (orderData) {
+                const thisOrderData = orderData.thisOrder;
+                const lessonDataInOrder = orderData.lessonList;
+                if (lessonDataInOrder.length === 0) {
+                    res.status(200).json({ success: true, message: { "order": thisOrderData } });
+                } else {
+                    res.status(200).json({ success: true, message: { "order": thisOrderData, "lessonList": lessonDataInOrder } });
+                }
+            }
+        }
+        catch (err) {
+            logger.error(err.toString());
+            res.status(400).json({ success: false, message: "Display Error" })
             return;
         }
     }
 
 
-    // editTeacherImage = (req: Request, res: Response) => {
-    //     form.parse(req, async (err, fields, files) => {
-    //         try {
-    //             const userId = parseInt(req.session["user"].id as string, 10);
-    //             const imageTitle = files.image["newFilename"] as string;
-    //             const oldImage = await this.userInfoService.editTeacherImage(userId, imageTitle);
-    //             if (oldImage) {
-    //                 if (oldImage !== "teacher_icon.png") {
-    //                     fs.unlink(path.join(__dirname, `../assets/usersImages/${oldImage}`), (err) => {
-    //                         if (err) {
-    //                             logger.error(err.toString());
-    //                             throw err;
-    //                         }
-    //                     });
-    //                 }
-    //             }
-    //             res.status(200).json({ success: true, message: "Edit success" });
-    //         }
-    //         catch (err) {
-    //             logger.error(err.toString());
-    //             res.status(400).json({ success: false, message: "Edit Error" })
-    //             return;
-    //         }
-    //     })
-    // }
+    toPayPal = async (req: Request, res: Response) => {
+        try {
+            const packageId = parseInt(req.query["id"] as string, 10);
+            const packagePrice = await this.userInfoService.getPackagePrice(packageId);
+            if(packagePrice) {
+                res.status(200).json({ success: true, message: { "price": packagePrice } });
+            } else {
+                res.status(400).json({ success: false, message: "PayPal Error" })
+            }
+        }
+        catch (err) {
+            logger.error(err.toString());
+            res.status(400).json({ success: false, message: "PayPal Error" })
+            return;
+        }
+    }
 
+    
+    addNewOrder = async (req: Request, res: Response) => {
+        try {
+            const userId = parseInt(req.session["user"].id as string, 10);
+            const packageId = parseInt(req.query["id"] as string, 10);
+            const addOrder = await this.userInfoService.insertNewOrder(userId, packageId);
+            if (addOrder === true) {
+                res.status(200).json({ success: true, message: "Add New Order" });
+            } else {
+                res.status(400).json({ success: false, message: "Add Order Error" });
+            }
+        }
+        catch (err) {
+            logger.error(err.toString());
+            res.status(400).json({ success: false, message: "Add Order Error" })
+            return;
+        }
+    }
+    
 }
 

@@ -208,41 +208,54 @@ async function displayTeacher() {
                 const bookingId = booking.getAttribute("id");
                 if (bookingId === teacher["bookingId"]) {
                     booking.innerHTML += `
-                    <span class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13" id="${teacher["name"]}_${teacher["bookingId"]}">${teacher["name"]}</span>
+                    <span class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13 bookingBtn" id="${teacher["name"]}" value="${teacher["bookingId"]}">${teacher["name"]}</span>
                     `;
-                    selectTeacher(teacher["id"], teacher["name"], teacher["image"], teacher["bookingId"]);
+                    selectTeacher();
                 }
             })
         }
     }
 }
 
-async function selectTeacher(id, name, image, bookingId) {
-    document.querySelector(`#${name}_${bookingId}`).addEventListener("click", () => {
-        const weekday = bookingId.substring(0, bookingId.length - 2);
-        const time = bookingId.substring(bookingId.length - 2,) + ":00:00";
-        const swalWithBootstrapButtons = Swal.mixin({
-            customClass: {
-                confirmButton: 'btn btn-success',
-                cancelButton: 'btn btn-danger'
-            },
-            buttonsStyling: false
-        })
+function selectTeacher() {
+    document.querySelectorAll(".bookingBtn").forEach((item) => {
+        item.addEventListener("click", async () => {
+            const teacherName = item.getAttribute("id");
+            const bookingData = item.getAttribute("value");
+            const resp = await fetch("/userInfo/displayTeacher", { method: "POST" });
+            const result = await resp.json();
+            if (result.success === true) {
+                const teacherData = result.message;
+                for (let teacher of teacherData) {
+                    if ((teacherName === teacher["name"]) && (bookingData === teacher["bookingId"])) {
+                        const weekday = teacher["bookingId"].substring(0, teacher["bookingId"].length - 2);
+                        const time = teacher["bookingId"].substring(teacher["bookingId"].length - 2,) + ":00:00";
+                        const swalWithBootstrapButtons = Swal.mixin({
+                            customClass: {
+                                confirmButton: 'btn btn-success',
+                                cancelButton: 'btn btn-danger'
+                            },
+                            buttonsStyling: false
+                        })
 
-        swalWithBootstrapButtons.fire({
-            title: '是否選擇此時段, 此導師？',
-            text: `導師 : ${name}, ${weekday} ${time}`,
-            imageUrl: `../assets/usersImages/${image}`,
-            imageWidth: 300,
-            imageHeight: 300,
-            imageAlt: `${name}`,
-            showCancelButton: true,
-            confirmButtonText: '是',
-            cancelButtonText: '否',
-            reverseButtons: true
-        }).then((result) => {
-            if (result.isConfirmed) {
-                selectBookingDate(id, weekday, time);
+                        swalWithBootstrapButtons.fire({
+                            title: '是否選擇此時段, 此導師？',
+                            text: `導師 : ${teacher["name"]}, ${weekday} ${time}`,
+                            imageUrl: `../assets/usersImages/${teacher["image"]}`,
+                            imageWidth: 300,
+                            imageHeight: 300,
+                            imageAlt: `${teacher["name"]}`,
+                            showCancelButton: true,
+                            confirmButtonText: '是',
+                            cancelButtonText: '否',
+                            reverseButtons: true
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                selectBookingDate(teacher["id"], weekday, time);
+                            }
+                        })
+                    }
+                }
             }
         })
     })
@@ -276,7 +289,9 @@ async function selectBookingDate(id, weekday, time) {
                 title: "預約成功",
                 showConfirmButton: false,
                 timer: 1500
-            }, window.location.reload())
+            }).then(function() {
+                window.location.reload();
+            })
         }
     } else {
         Swal.fire({
@@ -284,7 +299,9 @@ async function selectBookingDate(id, weekday, time) {
             title: "預約失敗",
             showConfirmButton: false,
             timer: 1500
-        }, window.location.reload())
+        }).then(function() {
+            window.location.reload();
+        })
     }
 }
 

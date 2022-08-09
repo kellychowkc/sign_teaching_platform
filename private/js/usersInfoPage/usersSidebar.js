@@ -3,6 +3,9 @@ import { userInfoData } from "./usersInfoData.js";
 import { teacherTimeTable } from "./teachersTimeTable.js";
 import { displayBookingTable } from "./studentLessonBooking.js";
 import { teacherImage } from "./teacherImage.js";
+import { displayLearningRecord } from "./studentLearnRecord.js";
+import { teacherTeachingRecord } from "./teacherTeachingRecord.js";
+
 
 export async function studentSidebar() {    
     document.querySelector("#userInfoList").innerHTML = `
@@ -44,15 +47,7 @@ export async function studentSidebar() {
                 <svg class="bi pe-none me-2" width="16" height="16">
                     <i class="fa-brands fa-leanpub"></i>
                 </svg>
-                學習記錄
-            </div>
-        </li>
-        <li class="nav-item">
-            <div class="nav-link link-dark" id="shoppingRecord>
-                <svg class="bi pe-none me-2" width="16" height="16">
-                    <i class="fa-solid fa-money-check-dollar"></i>
-                </svg>
-                購買記錄
+                課堂記錄
             </div>
         </li>
         <li class="nav-item">
@@ -69,15 +64,13 @@ export async function studentSidebar() {
 
     userInfoData();
     displayBookingTable();
+    displayLearningRecord();
 }
 
 
 
 
 export async function teacherSidebar() {
-    // const resp = await fetch("/users/info");
-    // const result = await resp.json();
-    
     document.querySelector("#userInfoList").innerHTML = `
     <div class="d-flex flex-column flex-shrink-0 p-3 bg-light" style="width: 280px;">
     <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
@@ -143,4 +136,5 @@ export async function teacherSidebar() {
     userInfoData();
     teacherImage();
     teacherTimeTable();
+    teacherTeachingRecord();
 }
