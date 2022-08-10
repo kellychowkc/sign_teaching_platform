@@ -72,7 +72,46 @@
 5. !! delete one row of users -> id is weird
 
 
-# important
-1. admin css: right box is different when it is not 教學
+## 10/8
+1. web demo
+- [x] feature
+- [ ] combine
+2. isLoggedInAPI
+- [ ] adding...
+3. testCase
+- [ ] any
+4. login test
+- [ ] mock logger
+- [ ] logger -> (put in) ts
+5. logOut trigger
+6. user page
+- [ ] timeTable
+- [ ] realTime
+7. admin page
+- [x] ui
+- [ ] ui logic
+- [ ] router
+- [ ] server
+8. style
+
+
+
+
+
+
+
+
+
+
+
+# plan 
+1. 新增 form /
+2. wireFrame 修改 /
+3. try bonus until lunch
+- [x] get content_box
+- [x] delete its child
+- [x] add element in content_box(with the className left / right box )
+- [ ] isStaySamePage -> true: reload()
+4. write server side
 
 

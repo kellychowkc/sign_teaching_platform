@@ -1,19 +1,3 @@
-/**
- * Copyright 2021 Google LLC
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 "use strict";
 
 const formatSign = (sign) => {
@@ -31,8 +15,9 @@ export const initVideoSeleciton = async () => {
    */
 
   const label_list = await $.getJSON("./assets/label_list.json");
-  console.log(label_list);
+  const label_list_chin = await $.getJSON("./assets/label_list_chin.json");
 
+  console.log(label_list_chin);
   const handleSelectSign = (group, input) => {
     window.recoil["selectSign"] = input;
     let pickerGroup = document.getElementsByClassName(group);
@@ -51,26 +36,6 @@ export const initVideoSeleciton = async () => {
     outputVideo.src = videoSrc;
   };
 
-  // add jsl selection list
-  const jsl_table = document.createElement("div");
-  jsl_table.classList.add("jsl-sign-table");
-  jsl_table.style.display = "none";
-  $(".demo-section-sign-wrapper-sign-table-wrapper").append(jsl_table);
-
-  for (const jsl_sign of label_list.JSL_LABELS) {
-    console.log(jsl_sign);
-    const jsl_button = document.createElement("button");
-    jsl_button.classList.add("jsl-sign-button");
-    jsl_button.setAttribute("id", jsl_sign);
-    jsl_button.innerHTML = formatSign(jsl_sign);
-
-    jsl_button.addEventListener("click", () => {
-      console.log("click: ", jsl_sign);
-      handleSelectSign("jsl-sign-button", jsl_sign);
-    });
-    $(".jsl-sign-table").append(jsl_button);
-  }
-
   // add hksl selection list
   const hksl_table = document.createElement("div");
   hksl_table.classList.add("hksl-sign-table");
@@ -80,12 +45,17 @@ export const initVideoSeleciton = async () => {
     const hksl_button = document.createElement("button");
     hksl_button.classList.add("hksl-sign-button");
     hksl_button.setAttribute("id", hksl_sign);
-    hksl_button.innerHTML = formatSign(hksl_sign);
 
     hksl_button.addEventListener("click", () => {
       console.log("click: ", hksl_sign);
       handleSelectSign("hksl-sign-button", hksl_sign);
     });
     $(".hksl-sign-table").append(hksl_button);
+  }
+
+  //translate into chin
+  const hksl_button_chin = document.querySelectorAll(".hksl-sign-button");
+  for (let i = 0; i < label_list_chin.HKSL_LABELS.length; i++) {
+    hksl_button_chin[i].innerHTML = label_list_chin.HKSL_LABELS[i];
   }
 };

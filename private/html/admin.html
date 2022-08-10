@@ -21,7 +21,7 @@
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                         data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false"
                         aria-label="Toggle navigation">
-                        <span class="navbar_icon"><img src="/assets/admin/menu.png"/></span>
+                        <span class="navbar_icon"><img src="/assets/admin/menu.png" /></span>
                     </button>
                     <div class="collapse navbar-collapse system_navbar" id="navbarNavAltMarkup">
                         <div class="navbar-nav system_navbar_buttons">
@@ -50,17 +50,30 @@
                     <div class="words_form">
                         <form action="/action_page.php">
                             <input type="text" placeholder="Search.." name="search">
-                            <button type="submit" class="searching"><img
-                                    src="/assets/admin/searching.png" /></button>
+                            <button type="submit" class="searching"><img src="/assets/admin/searching.png" /></button>
                             <input type="submit" class="deleting" value="刪除"><br>
-                            <div class="word">
+                            <div class="table-section">
+                                <table id="table">
+                                    <tr class="table-rows">
+                                        <td class="items">麵包<input type="checkbox" id="麵包" name="words" value="麵包"></td>
+
+                                    </tr>
+                                    <tr class="table-rows">
+                                        <td class="items">麵包<input type="checkbox" id="麵包" name="words" value="麵包"></td>
+                                    </tr>
+                                    <tr class="table-rows">
+                                        <td class="items">麵包<input type="checkbox" id="麵包" name="words" value="麵包"></td>
+                                    </tr>
+                                </table>
+
+                                <!-- <div class="word">
                                 <label for="麵包">麵包</label>
                                 <input type="radio" id="麵包" name="words" value="麵包">
                             </div>
                             <div class="word">
                                 <label for="麵包">麵包</label>
                                 <input type="radio" id="麵包" name="words" value="麵包">
-                            </div>
+                            </div> -->
                         </form>
                     </div>
                 </div>
@@ -85,28 +98,47 @@
 
 
         </div>
-        <div class="content_box right_box"
-            style="padding: 30px;display: flex;justify-content: center;align-items: center;">
+    </div>
+    <div class="content_box right_box"
+        style="padding: 30px;display: flex;justify-content: center;align-items: center; flex-wrap: wrap;">
 
-            <form action="/action_page.php" class="content_form">
-                <div class="form_input_buttons">
-                    <input type="text" id="title" name="title" placeholder="輸入詞語"><br>
-                    <input type="file" id="myFile" name="filename">
-                    <div class="submit_button_box">
-                        <input type="submit" id="submit" value="確定">
-                    </div>
-                </div>
-            </form>
+        <form action="/action_page.php" class="content_form">
+            <div class="container">
+                <h1>上載影片</h1>
+                <hr /><br>
 
 
-        </div>
+                <label for="fn" class="uploading"><b>詞語： </b></label>
+                <input type="text" placeholder="輸入新詞語" name=“title” id=“title” required />
+                <br><br>
 
+                <label for="file"><b>選擇上載文件 : </b></label>
+                <br>
+                <input type="file" name="myFile" id="myFile">
+                <br>
+                <br>
+
+                <hr />
+                <button class='registerbtn' type='submit'>上載</button>
+
+            </div>
+
+        </form>
+
+        <!-- <label for="word">詞語：</label><br>
+                <input type="text" id="title" name="title" placeholder="輸入詞語"><br>
+                <input type="file" id="myFile" name="filename">
+                <div class="submit_button_box">
+                    <input type="submit" id="submit" value="確定"> -->
+    </div>
     </div>
     <div id="footer" class="mt-5 py-5"></div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
         crossorigin="anonymous"></script>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
     <script src="/js/navbar.js"></script>
     <script src="/js/admin.js"></script>
 </body>
