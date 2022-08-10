@@ -11,7 +11,7 @@ export function userInfoData() {
                 title: "資料失敗",
                 showConfirmButton: false,
                 timer: 1500
-            }, function(){
+            }).then(function(){
                 window.location.href = "/user.html";
             })
         } else {
@@ -166,7 +166,6 @@ export function editUserInfo(username, firstName, lastName, email, phoneNum) {
             formData["lastName"] = form.lastName.value;
             formData["email"] = form.email.value;
             formData["phoneNum"] = form.phoneNum.value;
-            console.log(formData);
             const resp = await fetch("/userInfo/editUserInfo", {
                 method: 'POST',
                 headers: {
@@ -181,7 +180,7 @@ export function editUserInfo(username, firstName, lastName, email, phoneNum) {
                     title: "更改成功",
                     showConfirmButton: false,
                     timer: 1500
-                }, function(){
+                }).then(function(){
                     window.location.reload();
                 })
             } else {
@@ -190,7 +189,7 @@ export function editUserInfo(username, firstName, lastName, email, phoneNum) {
                     title: "更改失敗",
                     showConfirmButton: false,
                     timer: 1500
-                }, function(){
+                }).then(function(){
                     window.location.reload();
                 })
             }
@@ -299,7 +298,7 @@ export function editUserPassword() {
                     title: "更改成功",
                     showConfirmButton: false,
                     timer: 1500
-                }, function(){
+                }).then(function(){
                     window.location.reload();
                 })
             } else {
@@ -308,7 +307,7 @@ export function editUserPassword() {
                     title: "更改失敗",
                     showConfirmButton: false,
                     timer: 1500
-                }, function(){
+                }).then(function(){
                     window.location.reload();
                 })
             }
