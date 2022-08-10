@@ -1,20 +1,5 @@
-/**
- * Copyright 2021 Google LLC
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 "use strict";
+import Swal from "https://cdn.jsdelivr.net/npm/sweetalert2@11/src/sweetalert2.js";
 
 import { initVideoSeleciton } from "./selection.js";
 import { setupCamera, captureImage } from "./record.js";
@@ -47,9 +32,7 @@ $(document).ready(() => {
 
     switch (input) {
       case "mobilemodal":
-        const allElement = document.querySelectorAll(
-          "body > div:not(.mobile-device-modal)"
-        );
+        const allElement = document.querySelectorAll("body > div:not(.mobile-device-modal)");
         allElement.forEach((el) => (el.style.display = "none"));
         mobileModal.style.display = "flex";
         break;
@@ -83,7 +66,7 @@ $(document).ready(() => {
         break;
       case "processingmodel":
         processingModal.style.display = "flex";
-        processingText.innerHTML = "Processing model";
+        processingText.innerHTML = "加載中...";
         console.log("processing model");
         break;
       case "upload":
@@ -160,14 +143,12 @@ $(document).ready(() => {
   let showResultCanvas = 0;
   const sliderFrame = document.getElementById("frame-canvas-slider");
   const selectFrameResult = (index) => {
-    const previousCanvas = document.getElementById(
-      `image-frame-${showResultCanvas}`
-    );
+    const previousCanvas = document.getElementById(`image-frame-${showResultCanvas}`);
     if (previousCanvas) previousCanvas.style.display = "none";
     const selectedCanvas = document.getElementById(`image-frame-${index}`);
     if (selectedCanvas) selectedCanvas.style.display = "flex";
     const frameCanvasText = document.getElementById("frame-canvas-text-id");
-    frameCanvasText.innerHTML = `frame: ${Number(index) + 1}`;
+    frameCanvasText.innerHTML = ` 框架 : ${Number(index) + 1}`;
     sliderFrame.value = index;
     showResultCanvas = index;
   };
@@ -261,14 +242,12 @@ $(document).ready(() => {
       const cmp = (a, b) => {
         return b[1] > a[1] ? 1 : -1;
       };
+
       // sorted the rank of sign result
       const sortedArray = classifyResult.resultArray.sort(cmp);
-      console.log(sortedArray);
 
       // get all stack keypoints and image stack send to draw key points
-      const canvasWrapperEl = document.getElementById(
-        "frame-canvas-wrapper-id"
-      );
+      const canvasWrapperEl = document.getElementById("frame-canvas-wrapper-id");
       for (const i in PREDICTION_IMAGE_STACK) {
         const canvasEl = drawResult({
           imageData: PREDICTION_IMAGE_STACK[i].imageData,
@@ -310,14 +289,10 @@ $(document).ready(() => {
           isFaceNode.style.backgroundColor = item.face ? "#7ecbbd" : "#de5246";
           const isLeftHandNode = document.createElement("td");
           isLeftHandNode.innerHTML = item.leftHand ? "yes" : "no";
-          isLeftHandNode.style.backgroundColor = item.leftHand
-            ? "#7ecbbd"
-            : "#de5246";
+          isLeftHandNode.style.backgroundColor = item.leftHand ? "#7ecbbd" : "#de5246";
           const isRightHandNode = document.createElement("td");
           isRightHandNode.innerHTML = item.rightHand ? "yes" : "no";
-          isRightHandNode.style.backgroundColor = item.rightHand
-            ? "#7ecbbd"
-            : "#de5246";
+          isRightHandNode.style.backgroundColor = item.rightHand ? "#7ecbbd" : "#de5246";
 
           thisTable.appendChild(frameNode);
           thisTable.appendChild(isPoseNode);
@@ -331,29 +306,44 @@ $(document).ready(() => {
       // update to result state
       // update top 5 result
       // remove exits table
-      const parentTable = document.getElementById("table-body");
-      console.log("check remove child");
-      for (let i = 0; i < 5; i++) {
-        topFiveResultArr.push({
-          sign: sortedArray[i][0],
-          acc: (sortedArray[i][1] * 100).toFixed(2),
-        });
 
-        // create top 5 table
-        const thisTable = document.createElement("tr");
-        thisTable.setAttribute("key", i);
-        const rankNode = document.createElement("td");
-        rankNode.innerHTML = i + 1;
-        const resultNode = document.createElement("td");
-        resultNode.innerHTML = sortedArray[i][0];
-        const accNode = document.createElement("td");
-        accNode.innerHTML = sortedArray[i][1].toFixed(2);
-        thisTable.appendChild(rankNode);
-        thisTable.appendChild(resultNode);
-        thisTable.appendChild(accNode);
-        console.log("append table child");
-        parentTable.appendChild(thisTable);
+      const parentContainer = document.querySelector(".result-container");
+      try {
+        const hksl_selected = document.querySelector(".hksl-sign-button.active").id;
+        const hksl_selectedSign = document.querySelector(".hksl-sign-button.active").innerHTML;
+        for (let i = 0; i < sortedArray.length; i++) {
+          if (sortedArray[i][0] == hksl_selected) {
+            let acc = (sortedArray[i][1] * 100).toFixed(2);
+            const signLanguage = document.createElement("sign");
+            const score = document.createElement("score");
+            const caption = document.createElement("caption");
+            signLanguage.innerHTML = `手語：${hksl_selectedSign}`;
+            score.innerHTML = `分數：${acc}`;
+            parentContainer.appendChild(signLanguage);
+            parentContainer.appendChild(score);
+            if (acc >= 80) {
+              let performance = "好勁啊手語大王！😍";
+              caption.innerHTML = performance;
+            } else if (acc >= 60) {
+              let performance = "好叻呀你！🥳";
+              caption.innerHTML = performance;
+            } else if (acc >= 40) {
+              let performance = "繼續努力！再試多次！💪";
+              caption.innerHTML = performance;
+            } else {
+              let performance = "睇嚟你需要一對一真人教學了～🥺 ";
+              caption.innerHTML = performance;
+            }
+            parentContainer.appendChild(caption);
+            console.log(parentContainer.innerHTML);
+          } else {
+            continue;
+          }
+        }
+      } catch (err) {
+        console.log(err);
       }
+
       page_changeState("result");
     };
     predictionImage();
@@ -388,6 +378,16 @@ $(document).ready(() => {
   });
 
   $("#record-btn-id").on("click", () => {
+    if (!document.querySelector(".hksl-sign-button.active")) {
+      Swal.fire({
+        icon: "error",
+        text: "你未揀一個字啊><",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      return;
+    }
+
     // count down 3 sec
     if (window.recoil.recordClickable) {
       window.recoil.recordClickable = false;
@@ -408,33 +408,33 @@ $(document).ready(() => {
     }
   });
 
-  $("#language-hksl-btn").on("click", (e) => {
-    const jsl_table = document.querySelector(".jsl-sign-table");
-    const hksl_table = document.querySelector(".hksl-sign-table");
-    jsl_table.style.display = "none";
-    hksl_table.style.display = "block";
+  // $("#language-hksl-btn").on("click", (e) => {
+  //   const jsl_table = document.querySelector(".jsl-sign-table");
+  //   const hksl_table = document.querySelector(".hksl-sign-table");
+  //   jsl_table.style.display = "none";
+  //   hksl_table.style.display = "block";
 
-    document.getElementsByClassName("language-btn").forEach((item) => {
-      item.classList.remove("active");
-    });
-    e.target.classList.add("active");
-  });
-  $("#language-jsl-btn").on("click", (e) => {
-    const jsl_table = document.querySelector(".jsl-sign-table");
-    const hksl_table = document.querySelector(".hksl-sign-table");
-    jsl_table.style.display = "block";
-    hksl_table.style.display = "none";
+  //   document.getElementsByClassName("language-btn").forEach((item) => {
+  //     item.classList.remove("active");
+  //   });
+  //   e.target.classList.add("active");
+  // });
+  // $("#language-jsl-btn").on("click", (e) => {
+  //   const jsl_table = document.querySelector(".jsl-sign-table");
+  //   const hksl_table = document.querySelector(".hksl-sign-table");
+  //   jsl_table.style.display = "block";
+  //   hksl_table.style.display = "none";
 
-    document.getElementsByClassName("language-btn").forEach((item) => {
-      item.classList.remove("active");
-    });
-    e.target.classList.add("active");
-  });
+  //   document.getElementsByClassName("language-btn").forEach((item) => {
+  //     item.classList.remove("active");
+  //   });
+  //   e.target.classList.add("active");
+  // });
 
   // click tryagain
   const clearStack = () => {
     removeChild("#frame-table-body-id");
-    removeChild("#table-body");
+    removeChild(".result-container");
     removeChild("#frame-canvas-wrapper-id");
     IMAGE_STACK.length = 0;
     PREDICTION_IMAGE_STACK.length = 0;

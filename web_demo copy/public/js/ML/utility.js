@@ -1,19 +1,3 @@
-/**
- * Copyright 2021 Google LLC
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 import { partNames } from "./const.js";
 
 const NUM_KEYPOINTS = partNames.length;
@@ -56,12 +40,7 @@ function getOffsetVectors(heatMapCoordsBuffer, offsetsBuffer) {
     const heatmapY = heatMapCoordsBuffer.get(keypoint, 0).valueOf();
     const heatmapX = heatMapCoordsBuffer.get(keypoint, 1).valueOf();
 
-    const { x, y } = getOffsetPoint(
-      heatmapY,
-      heatmapX,
-      keypoint,
-      offsetsBuffer
-    );
+    const { x, y } = getOffsetPoint(heatmapY, heatmapX, keypoint, offsetsBuffer);
 
     result.push(y);
     result.push(x);
@@ -108,16 +87,10 @@ export const decodePose = async (heatmapScores, offsets, outputStride) => {
   const offsetsBuffer = allTensorBuffers[1];
   const heatmapValuesBuffer = allTensorBuffers[2];
 
-  const offsetPoints = getOffsetPoints(
-    heatmapValuesBuffer,
-    outputStride,
-    offsetsBuffer
-  );
+  const offsetPoints = getOffsetPoints(heatmapValuesBuffer, outputStride, offsetsBuffer);
   const offsetPointsBuffer = await offsetPoints.buffer();
 
-  const keypointConfidence = Array.from(
-    getPointsConfidence(scoresBuffer, heatmapValuesBuffer)
-  );
+  const keypointConfidence = Array.from(getPointsConfidence(scoresBuffer, heatmapValuesBuffer));
 
   const keypoints = keypointConfidence.map((score, keypointId) => {
     totalScore += score;
@@ -137,11 +110,7 @@ export const decodePose = async (heatmapScores, offsets, outputStride) => {
   return { keypoints, score: totalScore / keypoints.length };
 };
 
-export const local2GlobalKeypoints = (
-  localKeypoints,
-  globalBox,
-  netSize = 256
-) => {
+export const local2GlobalKeypoints = (localKeypoints, globalBox, netSize = 256) => {
   return new Promise((resolve, reject) => {
     const globalBoxCenter = globalBox[0];
     const globalBoxSize = globalBox[1];
@@ -150,9 +119,7 @@ export const local2GlobalKeypoints = (
     try {
       const localKeypointsTensor = tf.tensor2d(localKeypoints);
       // denormalize keypoints.
-      const localKeypointsTensorMul = localKeypointsTensor.mul(
-        globalBoxSize / netSize
-      );
+      const localKeypointsTensorMul = localKeypointsTensor.mul(globalBoxSize / netSize);
       // center at 0.
       const localKeypointsNorm = localKeypointsTensorMul.sub(globalBoxSize / 2);
       // rotate keypoints.
@@ -179,20 +146,13 @@ export function buildRotationMatrix(rotation) {
 export function getRadians(pointA, pointB, rotationFactor = 1) {
   return new Promise((resolve) => {
     const radians =
-      Math.PI / rotationFactor -
-      Math.atan2(-(pointB[1] - pointA[1]), pointB[0] - pointA[0]);
-    resolve(
-      radians - 2 * Math.PI * Math.floor((radians + Math.PI) / (2 * Math.PI))
-    );
+      Math.PI / rotationFactor - Math.atan2(-(pointB[1] - pointA[1]), pointB[0] - pointA[0]);
+    resolve(radians - 2 * Math.PI * Math.floor((radians + Math.PI) / (2 * Math.PI)));
   });
 }
 
 export function getDistance(pointA, pointB) {
   return new Promise((resolve) => {
-    resolve(
-      Math.sqrt(
-        Math.pow(pointA[0] - pointB[0], 2) + Math.pow(pointA[1] - pointB[1], 2)
-      )
-    );
+    resolve(Math.sqrt(Math.pow(pointA[0] - pointB[0], 2) + Math.pow(pointA[1] - pointB[1], 2)));
   });
 }

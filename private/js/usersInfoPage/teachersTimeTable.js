@@ -264,7 +264,9 @@ async function editTeacherTime() {
                                         title: "更改成功",
                                         showConfirmButton: false,
                                         timer: 1500
-                                    }, window.location.reload())
+                                    }).then(function(){
+                                        window.location.reload()
+                                    })
                                 }
                             } else {
                                 Swal.fire({
@@ -272,7 +274,9 @@ async function editTeacherTime() {
                                     title: "更改失敗",
                                     showConfirmButton: false,
                                     timer: 1500
-                                }, window.location.reload())
+                                }).then(function(){
+                                    window.location.reload()
+                                })
                             }
                         }
                     })

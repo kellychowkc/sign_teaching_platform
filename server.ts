@@ -1,6 +1,6 @@
 import express from "express";
 import path from "path";
-// import http from "http";
+import http from "http";
 import expressSession from "express-session";
 import Knex from "knex";
 
@@ -17,8 +17,6 @@ app.use(
     saveUninitialized: true,
   })
 );
-
-// export const server = new http.Server(app);
 
 // logger set up
 const logFormat = winston.format.printf(function (info) {
@@ -75,6 +73,9 @@ app.use((req, res) => {
 });
 
 const PORT = 8080;
-app.listen(PORT, () => {
+
+const server = http.createServer(app);
+
+server.listen(PORT, () => {
   console.log(`listening at http://localhost:${PORT}`);
 });
