@@ -75,7 +75,7 @@ export function userInfoData() {
             `;
 
             editUserInfo(result.username, result.firstName, result.lastName, result.email, result.phoneNum);
-            editUserPassword();
+            editUserPassword(result.username, result.firstName, result.lastName, result.email, result.phoneNum);
         };
     })
 }
@@ -144,7 +144,7 @@ export function editUserInfo(username, firstName, lastName, email, phoneNum) {
         </div>
         `;
 
-        editUserPassword();
+        editUserPassword(username, firstName, lastName, email, phoneNum);
         submitNewUserInfo();
     })
 
@@ -200,7 +200,7 @@ export function editUserInfo(username, firstName, lastName, email, phoneNum) {
 
 
 
-export function editUserPassword() {
+export function editUserPassword(username, firstName, lastName, email, phoneNum) {
     document.querySelector("#editUserPassword").addEventListener("click", () => {
         document.querySelector("#userInfoDisplay").innerHTML = `
         <div class="col-md-7 col-lg-8 m-auto" id="userInfoData">
@@ -244,7 +244,7 @@ export function editUserPassword() {
         </div>
         `;
 
-        editUserInfo();
+        editUserInfo(username, firstName, lastName, email, phoneNum);
         confirmPassword();
         submitNewUserPassword();
     });

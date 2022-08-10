@@ -25,12 +25,9 @@ export function teacherImage() {
                     </div>
                 </div>
                 <div class="p-4 border border-primary">
-                    <form>
-                        <input type="file" name="image" class="form-control" accept="image/*" onchange="updatePreview(this, 'image-preview')">
-                        <div class="text-end">
-                            <button class="btn btn-primary mt-3 ">Upload</button>
-                        </div>
-                    </form>
+                <div class="text-center">
+                <h4 class="mb-3 ">${description}</h4>
+            </div>
                 </div>
             </div>
             `;
@@ -52,62 +49,62 @@ function editTeacherImage() {
                     </div>
                 </div>
                 <div class="p-4 border border-primary">
-                    <form id="editImage">
+                    <form id="updateTeacherData" method="post" enctype="multipart/form-data">
+                        <input type="text" name="description" id="description" class="form-control" placeholder="description" />
                         <input type="file" name="image" id="image" class="form-control" accept="image/*">
                         <div class="text-end">
-                            <button type="submit" class="btn btn-primary mt-3" id="uploadImage">Upload</button>
+                            <button type="submit" class="btn btn-primary mt-3" form="updateTeacherData">Upload</button>
                         </div>
                     </form>
                 </div>
             </div>
         `;
-
         const newImage = document.querySelector("#image");
         const imagePreview = document.querySelector("#image_preview");
         newImage.onchange = () => {
             const [file] = newImage.files
             if (file) {
                 imagePreview.src = URL.createObjectURL(file)
+                uploadTeacherImage();
             }
         }
-
-        //editTeacherImage();
-
     })
 }
 
 
-
-// function editTeacherImage() {
-//     document.querySelector("#editImage").addEventListener("submit", async (event) => {
-//         event.preventDefault();
-//         const form = event.target;
-//         const formData = new FormData();
-//         formData.append("image", form.profile.file[0]);
-//         const resp = await fetch("/userInfo/editTeacherImage", {
-//             method: 'POST',
-//             body: formData,
-//         })
-//         const result = await resp.json();
-//         if (result.success === true) {
-//             Swal.fire({
-//                 icon: 'success',
-//                 title: "更改成功",
-//                 showConfirmButton: false,
-//                 timer: 1500
-//             }, function(){
-//                 window.location.reload();
-//             })
-//         } else {
-//             Swal.fire({
-//                 icon: 'error',
-//                 title: "更改失敗",
-//                 showConfirmButton: false,
-//                 timer: 1500
-//             }, function(){
-//                 window.location.reload();
-//             })
-//         }
-//     })
-// }
+function uploadTeacherImage() {
+    document.querySelector("#updateTeacherData").addEventListener("submit", async (event) => {
+        event.preventDefault();
+        const form = event.target;
+        const formData = new FormData();
+        formData.append("teacherDescription", form.description?.value);
+        formData.append("teacherImage", form.image?.files[0]);
+        console.log(form.image.files[0]);
+        const resp = await fetch("/userInfo/editTeacherData", {
+            method: 'POST',
+            body: formData,
+        })
+        const result = await resp.json();
+        console.log(result)
+        // if (result.success === true) {
+        //     Swal.fire({
+        //         icon: 'success',
+        //         title: "更改成功",
+        //         showConfirmButton: false,
+        //         timer: 1500
+        //     }).then(() => {
+        //         window.location.reload();
+        //     })
+        // } else {
+        //     Swal.fire({
+        //         icon: 'error',
+        //         title: "更改失敗",
+        //         showConfirmButton: false,
+        //         timer: 1500
+        //     }).then(() => {
+        //         window.location.reload();
+        //     })
+        // }
+    })
+}
 

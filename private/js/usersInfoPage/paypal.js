@@ -31,10 +31,17 @@ paypal.Buttons({
     },
     onApprove: function (data, actions) {
         return actions.order.capture().then( async () => {
-            const resp = await fetch("/userInfo/insertNewOrder", { method: "POST" });
+            const resp = await fetch(`/userInfo/insertNewOrder?id=${packageId}`, { method: "POST" });
             const result = await resp.json();
             if (result.success === true) {
-                window.location.href = "./userInfo.html";
+                Swal.fire({
+                    icon: 'success',
+                    title: "成功",
+                    showConfirmButton: false,
+                    timer: 1500
+                }).then(function() {
+                    window.location.href = "./userInfo.html";
+                })
             } else {
                 Swal.fire({
                     icon: 'error',

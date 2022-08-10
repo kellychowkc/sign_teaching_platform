@@ -202,7 +202,6 @@ async function displayTeacher() {
     const result = await resp.json();
     if (result.success === true) {
         const teacherData = result.message;
-
         for (let teacher of teacherData) {
             document.querySelectorAll(".bookingTime").forEach((booking) => {
                 const bookingId = booking.getAttribute("id");
@@ -210,6 +209,7 @@ async function displayTeacher() {
                     booking.innerHTML += `
                     <span class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13 bookingBtn" id="${teacher["name"]}" value="${teacher["bookingId"]}">${teacher["name"]}</span>
                     `;
+
                     selectTeacher();
                 }
             })
@@ -267,7 +267,7 @@ async function selectBookingDate(id, weekday, time) {
     const { value: selectedDate } = await Swal.fire({
         title: '請選擇日子',
         input: 'select',
-        inputOptions: displayBookingDate(id, weekday, time),
+        inputOptions: await displayBookingDate(id, weekday, time),
         inputPlaceholder: '請選擇日子',
         showCancelButton: true,
         inputValidator: (value) => {
@@ -282,7 +282,7 @@ async function selectBookingDate(id, weekday, time) {
     })
 
     if (selectedDate) {
-        const result = bookingLesson(id, selectedDate, time);
+        const result = await bookingLesson(id, selectedDate, time);
         if (result === true) {
             Swal.fire({
                 icon: 'success',
@@ -344,5 +344,9 @@ async function bookingLesson(id, date, time) {
         body: JSON.stringify(bookingData),
     })
     const result = await resp.json();
-    return result.success;
+    if (result.success === true) {
+        return true;
+    } else {
+        return false;
+    }
 }

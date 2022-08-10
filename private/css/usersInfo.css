@@ -4,6 +4,19 @@
 
 article {
     display: flex;
+    width: 90vw;
+}
+
+aside {
+    width: 20vw;
+}
+
+section {
+    width: 80vw;
+}
+
+#calendar {
+    width: 75vw;
 }
 
 #userInfoDisplay{
@@ -11,10 +24,6 @@ article {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-}
-
-#userInfoData {
-    width: 50vw;
 }
 
 #usersImages {
