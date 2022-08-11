@@ -1,4 +1,3 @@
-
 import { Request, Response } from "express";
 // import fs from "fs";
 // import path from "path";
@@ -13,56 +12,50 @@ export class TeacherController {
         try {
             const userId = parseInt(req.session["user"].id as string, 10);
             const timeList = await this.teacherService.getTeacherTimeList(userId);
-            console.log(timeList)
+            console.log(timeList);
             let result = [];
             if (timeList) {
                 for (let data of timeList) {
-                    const timeHour = (data["time"]).substring(0, 2);
+                    const timeHour = data["time"].substring(0, 2);
                     const bookClass = data["weekday"] + timeHour;
                     result.push(bookClass);
                 }
             }
             res.status(200).json({ success: true, message: result });
-        }
-        catch (err) {
+        } catch (err) {
             logger.error(err.toString());
-            res.status(400).json({ success: false, message: "Display Error" })
+            res.status(400).json({ success: false, message: "Display Error" });
             return;
         }
-    }
-
+    };
 
     editTeacherTime = async (req: Request, res: Response) => {
         try {
             const userId = parseInt(req.session["user"].id as string, 10);
             const weekdayData = req.body.weekdayData as string;
-            const timeData = req.body.timeData as string + ":00:00";
+            const timeData = (req.body.timeData as string) + ":00:00";
             const result = await this.teacherService.editTeacherTimeList(userId, weekdayData, timeData);
             if (result === true) {
                 res.status(200).json({ success: true, message: "Edit Success" });
             }
-        }
-        catch (err) {
+        } catch (err) {
             logger.error(err.toString());
-            res.status(400).json({ success: false, message: "Edit Error" })
+            res.status(400).json({ success: false, message: "Edit Error" });
             return;
         }
-    }
-
+    };
 
     displayTeacherImage = async (req: Request, res: Response) => {
         try {
             const userId = parseInt(req.session["user"].id as string, 10);
             const teacherData = await this.teacherService.getTeacherImage(userId);
             res.status(200).json({ success: true, message: teacherData });
-        }
-        catch (err) {
+        } catch (err) {
             logger.error(err.toString());
-            res.status(400).json({ success: false, message: "Select Error" })
+            res.status(400).json({ success: false, message: "Select Error" });
             return;
         }
-    }
-
+    };
 
     editTeacherData = (req: Request, res: Response) => {
         teacherImage.parse(req, async (err, fields, files) => {
@@ -97,7 +90,6 @@ export class TeacherController {
         })
     }
 
-
     displayTeachingRecord = async (req: Request, res: Response) => {
         try {
             const userId = parseInt(req.session["user"].id as string, 10);
@@ -107,13 +99,10 @@ export class TeacherController {
             } else {
                 res.status(400).json({ success: true, message: "No Teaching Record" });
             }
-        }
-        catch (err) {
+        } catch (err) {
             logger.error(err.toString());
-            res.status(400).json({ success: false, message: "Display Error" })
+            res.status(400).json({ success: false, message: "Display Error" });
             return;
         }
-    }
-
+    };
 }
-
