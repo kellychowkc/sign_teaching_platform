@@ -25,12 +25,9 @@ export function teacherImage() {
                     </div>
                 </div>
                 <div class="p-4 border border-primary">
-                    <form>
-                        <input type="file" name="image" class="form-control" accept="image/*" onchange="updatePreview(this, 'image-preview')">
-                        <div class="text-end">
-                            <button class="btn btn-primary mt-3 ">Upload</button>
-                        </div>
-                    </form>
+                <div class="text-center">
+                <h4 class="mb-3 ">${description}</h4>
+            </div>
                 </div>
             </div>
             `;
@@ -52,16 +49,30 @@ function editTeacherImage() {
                     </div>
                 </div>
                 <div class="p-4 border border-primary">
-                    <form id="editImage">
-                        <input type="file" name="image" id="image" class="form-control" accept="image/*">
-                        <div class="text-end">
-                            <button type="submit" class="btn btn-primary mt-3" id="uploadImage">Upload</button>
+                    <form class="needs-validation"  enctype="multipart/form-data" novalidate="">
+                        <div class="row g-3" id="userInfoInput">
+                            <div class="col-12">
+                                <label for="text" class="form-label">自我介紹</label>
+                                <input type="text" class="form-control" id="description" placeholder="description">
+                                <div class="invalid-feedback">
+                                    At least One Input.
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <label for="file" class="form-label">新形象</label>
+                                <input type="file" class="form-control" id="image" accept="image/*">
+                                <div class="invalid-feedback">
+                                    At least One Input.
+                                </div>
+                            </div>
+                            <div class="text-end">
+                            <button type="submit" class="btn btn-primary mt-3">提交</button>
+                            </div>
                         </div>
                     </form>
                 </div>
             </div>
         `;
-
         const newImage = document.querySelector("#image");
         const imagePreview = document.querySelector("#image_preview");
         newImage.onchange = () => {
@@ -70,44 +81,45 @@ function editTeacherImage() {
                 imagePreview.src = URL.createObjectURL(file)
             }
         }
-
-        //editTeacherImage();
-
+        uploadTeacherData();
     })
 }
 
 
 
-// function editTeacherImage() {
-//     document.querySelector("#editImage").addEventListener("submit", async (event) => {
-//         event.preventDefault();
-//         const form = event.target;
-//         const formData = new FormData();
-//         formData.append("image", form.profile.file[0]);
-//         const resp = await fetch("/userInfo/editTeacherImage", {
-//             method: 'POST',
-//             body: formData,
-//         })
-//         const result = await resp.json();
-//         if (result.success === true) {
-//             Swal.fire({
-//                 icon: 'success',
-//                 title: "更改成功",
-//                 showConfirmButton: false,
-//                 timer: 1500
-//             }, function(){
-//                 window.location.reload();
-//             })
-//         } else {
-//             Swal.fire({
-//                 icon: 'error',
-//                 title: "更改失敗",
-//                 showConfirmButton: false,
-//                 timer: 1500
-//             }, function(){
-//                 window.location.reload();
-//             })
-//         }
-//     })
-// }
+function uploadTeacherData() {
+    const updateData = document.querySelector(".needs-validation");
+    updateData.addEventListener("submit", async (event) => {
+        event.preventDefault();
+        const form = event.target;
+        const formData = new FormData();
+        formData.append("description", form.description.value);
+        formData.append("image", form.image.files[0]);
+        const resp = await fetch("/userInfo/editTeacherData", {
+            method: "POST",
+            body: formData,
+        })
+        const result = await resp.json();
+        console.log(result)
+        // if (result.success === true) {
+        //     Swal.fire({
+        //         icon: 'success',
+        //         title: "更改成功",
+        //         showConfirmButton: false,
+        //         timer: 1500
+        //     }).then(() => {
+        //         window.location.reload();
+        //     })
+        // } else {
+        //     Swal.fire({
+        //         icon: 'error',
+        //         title: "更改失敗",
+        //         showConfirmButton: false,
+        //         timer: 1500
+        //     }).then(() => {
+        //         window.location.reload();
+        //     })
+        // }
+    })
+}
 

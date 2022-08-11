@@ -42,19 +42,19 @@ export default class SignLanguageClassifyModel {
   async initModel() {
     return new Promise(async (resolve) => {
       // init poseModel
-      this.poseModel = await tf.loadGraphModel("./model/midfin/model.json");
+      this.poseModel = await tf.loadGraphModel("../../model/midfin/model.json");
       await this.poseModel.predict(tf.zeros([1, 257, 257, 3]));
       console.log(`Pose model loaded`);
       // init faceMeshModel
-      this.faceMeshModel = await tf.loadGraphModel("./model/face/js_f16/model.json");
+      this.faceMeshModel = await tf.loadGraphModel("../../model/face/js_f16/model.json");
       await this.faceMeshModel.predict(tf.zeros([1, 192, 192, 3]));
       console.log(`Face model loaded`);
       // init handPoseModel
-      this.handPoseModel = await tf.loadGraphModel("./model/hand/js_f16/model.json");
+      this.handPoseModel = await tf.loadGraphModel("../../model/hand/js_f16/model.json");
       await this.handPoseModel.predict(tf.zeros([1, 256, 256, 3]));
       console.log(`hand model loaded`);
       // init classifyModel
-      this.classifyModel = await tf.loadGraphModel("./model/classification/phase_1/model.json");
+      this.classifyModel = await tf.loadGraphModel("../../model/classification/phase_1/model.json");
 
       const poseArr = tf.zeros([1, 16, 13, 2]);
       const faceArr = tf.zeros([1, 16, 24, 2]);
@@ -81,7 +81,7 @@ export default class SignLanguageClassifyModel {
   async initPose() {
     return new Promise(async (resolve) => {
       // init poseModel
-      this.poseModel = await tf.loadGraphModel("./model/midfin/model.json");
+      this.poseModel = await tf.loadGraphModel("../../model/midfin/model.json");
       await this.poseModel.predict(tf.zeros([1, 257, 257, 3]));
       console.log(`Pose model loaded`);
       resolve(true);
@@ -90,7 +90,7 @@ export default class SignLanguageClassifyModel {
 
   async initFace() {
     return new Promise(async (resolve) => {
-      this.faceMeshModel = await tf.loadGraphModel("./model/face/js_f16/model.json");
+      this.faceMeshModel = await tf.loadGraphModel("../../model/face/js_f16/model.json");
       await this.faceMeshModel.predict(tf.zeros([1, 192, 192, 3]));
       console.log(`Face model loaded`);
       resolve(true);
@@ -99,7 +99,7 @@ export default class SignLanguageClassifyModel {
 
   async initHand() {
     return new Promise(async (resolve) => {
-      this.handPoseModel = await tf.loadGraphModel("./model/hand/js_f16/model.json");
+      this.handPoseModel = await tf.loadGraphModel("../../model/hand/js_f16/model.json");
       await this.handPoseModel.predict(tf.zeros([1, 256, 256, 3]));
       console.log(`hand model loaded`);
       resolve(true);
@@ -108,7 +108,7 @@ export default class SignLanguageClassifyModel {
 
   async initClassify() {
     return new Promise(async (resolve) => {
-      this.classifyModel = await tf.loadGraphModel("./model/classification/phase_1/model.json");
+      this.classifyModel = await tf.loadGraphModel("../../model/classification/phase_1/model.json");
 
       const poseArr = tf.zeros([1, 16, 13, 2]);
       const faceArr = tf.zeros([1, 16, 24, 2]);

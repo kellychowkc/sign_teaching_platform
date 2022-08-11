@@ -28,163 +28,163 @@ export function displayBookingTable() {
                     <tbody>
                         <tr>
                             <td class="align-middle">07:00am</td>
-                            <td class="bookingTime" id="monday07"></td>
-                            <td class="bookingTime" id="tuesday07"></td>
-                            <td class="bookingTime" id="wednesday07"></td>
-                            <td class="bookingTime" id="thursday07"></td>
-                            <td class="bookingTime" id="friday07"></td>
-                            <td class="bookingTime" id="saturday07"></td>
-                            <td class="bookingTime" id="sunday07"></td>
+                            <td><div class="bookingTime" id="monday07"></div></td>
+                            <td><div class="bookingTime" id="wednesday07"></div></td>
+                            <td><div class="bookingTime" id="tuesday07"></div></td>
+                            <td><div class="bookingTime" id="thursday07"></div></td>
+                            <td><div class="bookingTime" id="friday07"></div></td>
+                            <td><div class="bookingTime" id="saturday07"></div></td>
+                            <td><div class="bookingTime" id="sunday07"></div></td>
                         </tr>
                         <tr>
                             <td class="align-middle">08:00am</td>
-                            <td class="bookingTime" id="monday08"></td>
-                            <td class="bookingTime" id="tuesday08"></td>
-                            <td class="bookingTime" id="wednesday08"></td>
-                            <td class="bookingTime" id="thursday08"></td>
-                            <td class="bookingTime" id="friday08"></td>
-                            <td class="bookingTime" id="staurday08"></td>
-                            <td class="bookingTime" id="sunday08"></td>
+                            <td><div class="bookingTime" id="monday08"></div></td>
+                            <td><div class="bookingTime" id="tuesday08"></div></td>
+                            <td><div class="bookingTime" id="wednesday08"></div></td>
+                            <td><div class="bookingTime" id="thursday08"></div></td>
+                            <td><div class="bookingTime" id="friday08"></div></td>
+                            <td><div class="bookingTime" id="staurday08"></div></td>
+                            <td><div class="bookingTime" id="sunday08"></div></td>
                         </tr>
                         <tr>
                             <td class="align-middle">09:00am</td>
-                            <td class="bookingTime" id="monday09"></td>
-                            <td class="bookingTime" id="tuesday09"></td>
-                            <td class="bookingTime" id="wednesday09"></td>
-                            <td class="bookingTime" id="thursday09"></td>
-                            <td class="bookingTime" id="friday09"></td>
-                            <td class="bookingTime" id="staurday09"></td>
-                            <td class="bookingTime" id="sunday09"></td>
+                            <td><div class="bookingTime" id="monday09"></div></td>
+                            <td><div class="bookingTime" id="tuesday09"></div></td>
+                            <td><div class="bookingTime" id="wednesday09"></div></td>
+                            <td><div class="bookingTime" id="thursday09"></div></td>
+                            <td><div class="bookingTime" id="friday09"></div></td>
+                            <td><div class="bookingTime" id="staurday09"></div></td>
+                            <td><div class="bookingTime" id="sunday09"></div></td>
                         </tr>
                         <tr>
                             <td class="align-middle">10:00am</td>
-                            <td class="bookingTime" id="monday10"></td>
-                            <td class="bookingTime" id="tuesday10"></td>
-                            <td class="bookingTime" id="wednesday10"></td>
-                            <td class="bookingTime" id="thursday10"></td>
-                            <td class="bookingTime" id="friday10"></td>
-                            <td class="bookingTime" id="staurday10"></td>
-                            <td class="bookingTime" id="sunday10"></td>
+                            <td><div class="bookingTime" id="monday10"></div></td>
+                            <td><div class="bookingTime" id="tuesday10"></div></td>
+                            <td><div class="bookingTime" id="wednesday10"></div></td>
+                            <td><div class="bookingTime" id="thursday10"></div></td>
+                            <td><div class="bookingTime" id="friday10"></div></td>
+                            <td><div class="bookingTime" id="staurday10"></div></td>
+                            <td><div class="bookingTime" id="sunday10"></div></td>
                         </tr>
                         <tr>
                             <td class="align-middle">11:00am</td>
-                            <td class="bookingTime" id="monday11"></td>
-                            <td class="bookingTime" id="tuesday11"></td>
-                            <td class="bookingTime" id="wednesday11"></td>
-                            <td class="bookingTime" id="thursday11"></td>
-                            <td class="bookingTime" id="friday11"></td>
-                            <td class="bookingTime" id="staurday11"></td>
-                            <td class="bookingTime" id="sunday11"></td>
+                            <td><div class="bookingTime" id="monday11"></div></td>
+                            <td><div class="bookingTime" id="tuesday11"></div></td>
+                            <td><div class="bookingTime" id="wednesday11"></div></td>
+                            <td><div class="bookingTime" id="thursday11"></div></td>
+                            <td><div class="bookingTime" id="friday11"></div></td>
+                            <td><div class="bookingTime" id="staurday11"></div></td>
+                            <td><div class="bookingTime" id="sunday11"></div></td>
                         </tr>
                         <tr>
                             <td class="align-middle">12:00pm</td>
-                            <td class="bookingTime" id="monday12"></td>
-                            <td class="bookingTime" id="tuesday12"></td>
-                            <td class="bookingTime" id="wednesday12"></td>
-                            <td class="bookingTime" id="thursday12"></td>
-                            <td class="bookingTime" id="friday12"></td>
-                            <td class="bookingTime" id="staurday12"></td>
-                            <td class="bookingTime" id="sunday12"></td>
+                            <td><div class="bookingTime" id="monday12"></div></td>
+                            <td><div class="bookingTime" id="tuesday12"></div></td>
+                            <td><div class="bookingTime" id="wednesday12"></div></td>
+                            <td><div class="bookingTime" id="thursday12"></div></td>
+                            <td><div class="bookingTime" id="friday12"></div></td>
+                            <td><div class="bookingTime" id="staurday12"></div></td>
+                            <td><div class="bookingTime" id="sunday12"></div></td>
                         </tr>
                         <tr>
                             <td class="align-middle">01:00pm</td>
-                            <td class="bookingTime" id="monday13"></td>
-                            <td class="bookingTime" id="tuesday13"></td>
-                            <td class="bookingTime" id="wednesday13"></td>
-                            <td class="bookingTime" id="thursday13"></td>
-                            <td class="bookingTime" id="friday13"></td>
-                            <td class="bookingTime" id="staurday13"></td>
-                            <td class="bookingTime" id="sunday13"></td>
+                            <td><div class="bookingTime" id="monday13"></div></td>
+                            <td><div class="bookingTime" id="tuesday13"></div></td>
+                            <td><div class="bookingTime" id="wednesday13"></div></td>
+                            <td><div class="bookingTime" id="thursday13"></div></td>
+                            <td><div class="bookingTime" id="friday13"></div></td>
+                            <td><div class="bookingTime" id="staurday13"></div></td>
+                            <td><div class="bookingTime" id="sunday13"></div></td>
                         </tr>
                         <tr>
                             <td class="align-middle">02:00pm</td>
-                            <td class="bookingTime" id="monday14"></td>
-                            <td class="bookingTime" id="tuesday14"></td>
-                            <td class="bookingTime" id="wednesday14"></td>
-                            <td class="bookingTime" id="thursday14"></td>
-                            <td class="bookingTime" id="friday14"></td>
-                            <td class="bookingTime" id="staurday14"></td>
-                            <td class="bookingTime" id="sunday14"></td>
+                            <td><div class="bookingTime" id="monday14"></div></td>
+                            <td><div class="bookingTime" id="tuesday14"></div></td>
+                            <td><div class="bookingTime" id="wednesday14"></div></td>
+                            <td><div class="bookingTime" id="thursday14"></div></td>
+                            <td><div class="bookingTime" id="friday14"></div></td>
+                            <td><div class="bookingTime" id="staurday14"></div></td>
+                            <td><div class="bookingTime" id="sunday14"></div></td>
                         </tr>
                         <tr>
                             <td class="align-middle">03:00pm</td>
-                            <td class="bookingTime" id="monday15"></td>
-                            <td class="bookingTime" id="tuesday15"></td>
-                            <td class="bookingTime" id="wednesday15"></td>
-                            <td class="bookingTime" id="thursday15"></td>
-                            <td class="bookingTime" id="friday15"></td>
-                            <td class="bookingTime" id="staurday15"></td>
-                            <td class="bookingTime" id="sunday15"></td>
+                            <td><div class="bookingTime" id="monday15"></div></td>
+                            <td><div class="bookingTime" id="tuesday15"></div></td>
+                            <td><div class="bookingTime" id="wednesday15"></div></td>
+                            <td><div class="bookingTime" id="thursday15"></div></td>
+                            <td><div class="bookingTime" id="friday15"></div></td>
+                            <td><div class="bookingTime" id="staurday15"></div></td>
+                            <td><div class="bookingTime" id="sunday15"></div></td>
                         </tr>
                         <tr>
                             <td class="align-middle">04:00pm</td>
-                            <td class="bookingTime" id="monday16"></td>
-                            <td class="bookingTime" id="tuesday16"></td>
-                            <td class="bookingTime" id="wednesday16"></td>
-                            <td class="bookingTime" id="thursday16"></td>
-                            <td class="bookingTime" id="friday16"></td>
-                            <td class="bookingTime" id="staurday16"></td>
-                            <td class="bookingTime" id="sunday16"></td>
+                            <td><div class="bookingTime" id="monday16"></div></td>
+                            <td><div class="bookingTime" id="tuesday16"></div></td>
+                            <td><div class="bookingTime" id="wednesday16"></div></td>
+                            <td><div class="bookingTime" id="thursday16"></div></td>
+                            <td><div class="bookingTime" id="friday16"></div></td>
+                            <td><div class="bookingTime" id="staurday16"></div></td>
+                            <td><div class="bookingTime" id="sunday16"></div></td>
                         </tr>
                         <tr>
                             <td class="align-middle">05:00pm</td>
-                            <td class="bookingTime" id="monday17"></td>
-                            <td class="bookingTime" id="tuesday17"></td>
-                            <td class="bookingTime" id="wednesday17"></td>
-                            <td class="bookingTime" id="thursday17"></td>
-                            <td class="bookingTime" id="friday17"></td>
-                            <td class="bookingTime" id="staurday17"></td>
-                            <td class="bookingTime" id="sunday17"></td>
+                            <td><div class="bookingTime" id="monday17"></div></td>
+                            <td><div class="bookingTime" id="tuesday17"></div></td>
+                            <td><div class="bookingTime" id="wednesday17"></div></td>
+                            <td><div class="bookingTime" id="thursday17"></div></td>
+                            <td><div class="bookingTime" id="friday17"></div></td>
+                            <td><div class="bookingTime" id="staurday17"></div></td>
+                            <td><div class="bookingTime" id="sunday17"></div></td>
                         </tr>
                         <tr>
                             <td class="align-middle">06:00pm</td>
-                            <td class="bookingTime" id="monday18"></td>
-                            <td class="bookingTime" id="tuesday18"></td>
-                            <td class="bookingTime" id="wednesday18"></td>
-                            <td class="bookingTime" id="thursday18"></td>
-                            <td class="bookingTime" id="friday18"></td>
-                            <td class="bookingTime" id="staurday18"></td>
-                            <td class="bookingTime" id="sunday18"></td>
+                            <td><div class="bookingTime" id="monday18"></div></td>
+                            <td><div class="bookingTime" id="tuesday18"></div></td>
+                            <td><div class="bookingTime" id="wednesday18"></div></td>
+                            <td><div class="bookingTime" id="thursday18"></div></td>
+                            <td><div class="bookingTime" id="friday18"></div></td>
+                            <td><div class="bookingTime" id="staurday18"></div></td>
+                            <td><div class="bookingTime" id="sunday18"></div></td>
                         </tr>
                         <tr>
                             <td class="align-middle">07:00pm</td>
-                            <td class="bookingTime" id="monday19"></td>
-                            <td class="bookingTime" id="tuesday19"></td>
-                            <td class="bookingTime" id="wednesday19"></td>
-                            <td class="bookingTime" id="thursday19"></td>
-                            <td class="bookingTime" id="friday19"></td>
-                            <td class="bookingTime" id="staurday19"></td>
-                            <td class="bookingTime" id="sunday19"></td>
+                            <td><div class="bookingTime" id="monday19"></div></td>
+                            <td><div class="bookingTime" id="tuesday19"></div></td>
+                            <td><div class="bookingTime" id="wednesday19"></div></td>
+                            <td><div class="bookingTime" id="thursday19"></div></td>
+                            <td><div class="bookingTime" id="friday19"></div></td>
+                            <td><div class="bookingTime" id="staurday19"></div></td>
+                            <td><div class="bookingTime" id="sunday19"></div></td>
                         </tr>
                         <tr>
                             <td class="align-middle">08:00pm</td>
-                            <td class="bookingTime" id="monday20"></td>
-                            <td class="bookingTime" id="tuesday20"></td>
-                            <td class="bookingTime" id="wednesday20"></td>
-                            <td class="bookingTime" id="thursday20"></td>
-                            <td class="bookingTime" id="friday20"></td>
-                            <td class="bookingTime" id="staurday20"></td>
-                            <td class="bookingTime" id="sunday20"></td>
+                            <td><div class="bookingTime" id="monday20"></div></td>
+                            <td><div class="bookingTime" id="tuesday20"></div></td>
+                            <td><div class="bookingTime" id="wednesday20"></div></td>
+                            <td><div class="bookingTime" id="thursday20"></div></td>
+                            <td><div class="bookingTime" id="friday20"></div></td>
+                            <td><div class="bookingTime" id="staurday20"></div></td>
+                            <td><div class="bookingTime" id="sunday20"></div></td>
                         </tr>
                         <tr>
                             <td class="align-middle">09:00pm</td>
-                            <td class="bookingTime" id="monday21"></td>
-                            <td class="bookingTime" id="tuesday21"></td>
-                            <td class="bookingTime" id="wednesday21"></td>
-                            <td class="bookingTime" id="thursday21"></td>
-                            <td class="bookingTime" id="friday21"></td>
-                            <td class="bookingTime" id="staurday21"></td>
-                            <td class="bookingTime" id="sunday21"></td>
+                            <td><div class="bookingTime" id="monday21"></div></td>
+                            <td><div class="bookingTime" id="tuesday21"></div></td>
+                            <td><div class="bookingTime" id="wednesday21"></div></td>
+                            <td><div class="bookingTime" id="thursday21"></div></td>
+                            <td><div class="bookingTime" id="friday21"></div></td>
+                            <td><div class="bookingTime" id="staurday21"></div></td>
+                            <td><div class="bookingTime" id="sunday21"></div></td>
                         </tr>
                         <tr>
                             <td class="align-middle">10:00pm</td>
-                            <td class="bookingTime" id="monday22"></td>
-                            <td class="bookingTime" id="tuesday22"></td>
-                            <td class="bookingTime" id="wednesday22"></td>
-                            <td class="bookingTime" id="thursday22"></td>
-                            <td class="bookingTime" id="friday22"></td>
-                            <td class="bookingTime" id="staurday22"></td>
-                            <td class="bookingTime" id="sunday22"></td>
+                            <td><div class="bookingTime" id="monday22"></div></td>
+                            <td><div class="bookingTime" id="tuesday22"></div></td>
+                            <td><div class="bookingTime" id="wednesday22"></div></td>
+                            <td><div class="bookingTime" id="thursday22"></div></td>
+                            <td><div class="bookingTime" id="friday22"></div></td>
+                            <td><div class="bookingTime" id="staurday22"></div></td>
+                            <td><div class="bookingTime" id="sunday22"></div></td>
                         </tr>
                     </tbody>
                 </table>
@@ -202,14 +202,14 @@ async function displayTeacher() {
     const result = await resp.json();
     if (result.success === true) {
         const teacherData = result.message;
-
         for (let teacher of teacherData) {
             document.querySelectorAll(".bookingTime").forEach((booking) => {
                 const bookingId = booking.getAttribute("id");
                 if (bookingId === teacher["bookingId"]) {
                     booking.innerHTML += `
-                    <span class="bg-green padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16  xs-font-size13 bookingBtn" id="${teacher["name"]}" value="${teacher["bookingId"]}">${teacher["name"]}</span>
+                    <span class="bg-green padding-5px border-radius-5 margin-1px-lr text-white font-size16  xs-font-size13 bookingBtn" id="${teacher["name"]}" value="${teacher["bookingId"]}">${teacher["name"]}</span>
                     `;
+
                     selectTeacher();
                 }
             })
@@ -267,7 +267,7 @@ async function selectBookingDate(id, weekday, time) {
     const { value: selectedDate } = await Swal.fire({
         title: '請選擇日子',
         input: 'select',
-        inputOptions: displayBookingDate(id, weekday, time),
+        inputOptions: await displayBookingDate(id, weekday, time),
         inputPlaceholder: '請選擇日子',
         showCancelButton: true,
         inputValidator: (value) => {
@@ -282,7 +282,7 @@ async function selectBookingDate(id, weekday, time) {
     })
 
     if (selectedDate) {
-        const result = bookingLesson(id, selectedDate, time);
+        const result = await bookingLesson(id, selectedDate, time);
         if (result === true) {
             Swal.fire({
                 icon: 'success',
@@ -344,5 +344,9 @@ async function bookingLesson(id, date, time) {
         body: JSON.stringify(bookingData),
     })
     const result = await resp.json();
-    return result.success;
+    if (result.success === true) {
+        return true;
+    } else {
+        return false;
+    }
 }

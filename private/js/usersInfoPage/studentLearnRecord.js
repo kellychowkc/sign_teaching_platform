@@ -5,14 +5,13 @@ export async function displayLearningRecord() {
     document.querySelector("#learningRecord").addEventListener("click", () => {
         document.querySelector("#userInfoDisplay").innerHTML = `
             <div class="col-md-7 col-lg-8 m-auto">
-                <h4 class="mb-3">課堂卷</h4>
+                <h3 class="mb-3">課堂卷</h3>
             </div>
             <div class="container text-center">
                 <div class="row row-cols-3" id="buyLessonList"></div>
             </div>
-
             <div class="col-md-7 col-lg-8 m-auto">
-                <h4 class="mb-3">課堂記錄</h4>
+                <h3 class="mb-3">課堂記錄</h3>
             </div>
             <div class="container text-center">
                 <div class="row row-cols-3" id="lessonRecord"></div>
@@ -76,7 +75,6 @@ function buyPackages() {
                                 },
                                 buttonsStyling: false
                             })
-
                             swalWithBootstrapButtons.fire({
                                 title: `是否要購買[ ${packages["packageName"]} ]?`,
                                 text: `$${packages["packagePrice"]}, ${packages["packageDescription"]}`,
@@ -103,7 +101,6 @@ function buyPackages() {
 async function displayOrderRecord() {
     const resp = await fetch("/userInfo/displayOrderRecord", { method: "POST" });
     const result = await resp.json();
-    console.log(result)
     if (result.success === true) {
         const data = result.message;
         if (data.length === 0) {
@@ -114,7 +111,7 @@ async function displayOrderRecord() {
             `;
         } else {
             for (let order of data) {
-                document.querySelector("#lessonRecord").innerHTML = `
+                document.querySelector("#lessonRecord").innerHTML += `
                 <div class="text-center">
                     <div class="col">
                         <div class="card mb-4 rounded-3 shadow-sm">
@@ -128,10 +125,8 @@ async function displayOrderRecord() {
                     </div>
                 </div>
                 `;
-
-                //displayOrderData();
+                displayOrderData();
             }
-
         }
     }
 }
@@ -141,18 +136,24 @@ function displayOrderData() {
     document.querySelectorAll(".orderBtn").forEach((item) => {
         item.addEventListener("click", async () => {
             const orderId = item.getAttribute("value");
-            const resp = await fetch("/userInfo/displayOrderData", { method: "POST", body: { "id": orderId } });
-            const result = await resp.json();
-            if (result.success === true) {
-                const data = result.message;
-                const orderData = data["order"];
-                const lessonData = data["lessonList"];
-                
-
-                if (!lessonData) {
-
-                } else {
-
+            console.log(orderId)
+            if (orderId) {
+                let data = {};
+                data["id"] = orderId;
+                const resp = await fetch("/userInfo/displayOrderData", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data),
+                });
+                const result = await resp.json();
+                if (result.success === true) {
+                    const data = result.message;
+                    const orderData = data["order"];
+                    const lessonData = data["lessonList"];
+                    console.log(orderData, lessonData)
+                    document.querySelector("#userInfoDisplay").innerHTML += ``;
                 }
             }
         })

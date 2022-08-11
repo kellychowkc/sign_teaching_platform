@@ -19,17 +19,12 @@ export function teacherTeachingRecord() {
 async function displayTeachingRecord() {
     const resp = await fetch("/userInfo/displayTeachingRecord", { method: "POST" });
     const result = await resp.json();
-    console.log(result)
     if (result.success === true) {
         const teachingData = result.message;
         if (!teachingData) {
             document.querySelector("#teacherTeaching").innerHTML = `
-            <div class="col">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">沒有課堂記錄</h5>
-                    </div>
-                </div>
+            <div class="text-center">
+                <h3 class="display-4 fw-normal">沒有課堂記錄</h3>
             </div>
             `;
         } else {
@@ -39,7 +34,7 @@ async function displayTeachingRecord() {
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">開課日期 : ${student["teachingDate"]}</h5>
-                            <p class="card-text">學生 : ${student["studentName"]},課堂狀況 : <span class="btn btn-primary">${student["status"]}</span></p>
+                            <p class="card-text">學生 : ${student["studentName"]} , 課堂狀況 : ${student["status"]}</p>
                         </div>
                     </div>
                 </div>

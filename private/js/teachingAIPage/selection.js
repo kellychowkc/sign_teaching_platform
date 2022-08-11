@@ -14,8 +14,8 @@ export const initVideoSeleciton = async () => {
    * map available data to table
    */
 
-  const label_list = await $.getJSON("./assets/label_list.json");
-  const label_list_chin = await $.getJSON("./assets/label_list_chin.json");
+  const label_list = await $.getJSON("../assets/teachingAI/label_list.json");
+  const label_list_chin = await $.getJSON("../assets/teachingAI/label_list_chin.json");
 
   console.log(label_list_chin);
   const handleSelectSign = (group, input) => {
@@ -30,7 +30,7 @@ export const initVideoSeleciton = async () => {
     picker.classList.add("active");
 
     const signLanguage = input.split("_")[0];
-    const videoSrc = "./assets/videos/" + signLanguage + "/" + input + ".mp4";
+    const videoSrc = "../assets/teachingAI/videos/" + signLanguage + "/" + input + ".mp4";
 
     const outputVideo = document.getElementById("demo-video");
     outputVideo.src = videoSrc;

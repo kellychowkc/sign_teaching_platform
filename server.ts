@@ -42,6 +42,10 @@ import { UserController } from "./controller/userController";
 
 import { UserInfoController } from "./controller/userInfoController";
 import { UserInfoService } from "./service/userInfoService";
+import { StudentController } from "./controller/studentController";
+import { StudentService } from "./service/studentService";
+import { TeacherController } from "./controller/teacherController";
+import { TeacherService } from "./service/teacherService";
 
 //server & controller set up
 const userService = new UserService(knex);
@@ -49,6 +53,10 @@ export const userController = new UserController(userService);
 
 const userInfoService = new UserInfoService(knex);
 export const userInfoController = new UserInfoController(userInfoService);
+const studentService = new StudentService(knex);
+export const studentController = new StudentController(studentService);
+const teacherService = new TeacherService(knex);
+export const teacherController = new TeacherController(teacherService);
 
 import { logInRoutes } from "./routers/logInRoutes";
 import { signUpRoutes } from "./routers/signUpRoutes";

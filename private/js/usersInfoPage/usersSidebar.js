@@ -10,7 +10,7 @@ import { teacherTeachingRecord } from "./teacherTeachingRecord.js";
 export async function studentSidebar() {    
     document.querySelector("#userInfoList").innerHTML = `
     <div class="d-flex flex-column flex-shrink-0 p-3 bg-light" style="width: 280px;">
-    <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
+    <a href="./userInfo.html" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
         <svg class="bi pe-none me-2" width="40" height="32">
             <img src="../assets/usersImages/student_icon.png" rel="mages" id="usersImages" />
         </svg>
@@ -24,14 +24,6 @@ export async function studentSidebar() {
                     <i class="fa-solid fa-file-pen"></i>
                 </svg>
                 個人資料
-            </div>
-        </li>
-        <li class="nav-item">
-            <div class="nav-link link-dark" id="calendar">
-                <svg class="bi pe-none me-2" width="16" height="16">
-                    <i class="fa-solid fa-calendar-days"></i>
-                </svg>
-                時間表
             </div>
         </li>
         <li class="nav-item">
@@ -73,7 +65,7 @@ export async function studentSidebar() {
 export async function teacherSidebar() {
     document.querySelector("#userInfoList").innerHTML = `
     <div class="d-flex flex-column flex-shrink-0 p-3 bg-light" style="width: 280px;">
-    <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
+    <a href="./userInfo.html" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
         <svg class="bi pe-none me-2" width="40" height="32">
             <img src="../assets/usersImages/teacher_icon.png" rel="mages" id="usersImages" />
         </svg>
@@ -95,14 +87,6 @@ export async function teacherSidebar() {
                 <i class="fa-solid fa-user-pen"></i>
                 </svg>
                 個人形象
-            </div>
-        </li>
-        <li class="nav-item">
-            <div class="nav-link link-dark" id="calendar">
-                <svg class="bi pe-none me-2" width="16" height="16">
-                    <i class="fa-solid fa-calendar-days"></i>
-                </svg>
-                時間表
             </div>
         </li>
         <li class="nav-item">
