@@ -1,6 +1,7 @@
 
 @import "./usersNavbar.css";
-@import "./timeTable.css";
+@import "./userInfoPage/timeTable.css";
+@import "./userInfoPage/xdialog.3.4.0.css";
 
 article {
     display: flex;

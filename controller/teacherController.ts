@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-// import fs from "fs";
-// import path from "path";
+import fs from "fs";
+import path from "path";
 import { TeacherService } from "../service/teacherService";
 import { logger } from "../utility/logger";
 import { teacherImage } from "../utility/uploadTeacherImage";
@@ -12,7 +12,6 @@ export class TeacherController {
         try {
             const userId = parseInt(req.session["user"].id as string, 10);
             const timeList = await this.teacherService.getTeacherTimeList(userId);
-            console.log(timeList);
             let result = [];
             if (timeList) {
                 for (let data of timeList) {
@@ -45,10 +44,10 @@ export class TeacherController {
         }
     };
 
-    displayTeacherImage = async (req: Request, res: Response) => {
+    displayTeacherData = async (req: Request, res: Response) => {
         try {
             const userId = parseInt(req.session["user"].id as string, 10);
-            const teacherData = await this.teacherService.getTeacherImage(userId);
+            const teacherData = await this.teacherService.getTeacherData(userId);
             res.status(200).json({ success: true, message: teacherData });
         } catch (err) {
             logger.error(err.toString());
@@ -60,27 +59,26 @@ export class TeacherController {
     editTeacherData = (req: Request, res: Response) => {
         teacherImage.parse(req, async (err, fields, files) => {
             try {
-                // const userId = parseInt(req.session["user"].id as string, 10);
-                // const description = fields?.["description"] as string;
-                const imageTitle = files["image"];
-                console.log(imageTitle)
-                // if (description) {
-                //     await this.teacherService.editTeacherDescription(userId, description);
-                // }
-                // if (imageTitle) {
-                //     const oldImage = await this.teacherService.editTeacherImage(userId, imageTitle);
-                //     if (oldImage) {
-                //         if (oldImage !== "teacher_icon.png") {
-                //             fs.unlink(path.join(__dirname, `../assets/usersImages/${oldImage}`), (err) => {
-                //                 if (err) {
-                //                     logger.error(err.toString());
-                //                     throw err;
-                //                 }
-                //             });
-                //         }
-                //     }
-                // }
-                // res.status(200).json({ success: true, message: "Edit success" });
+                const userId = parseInt(req.session["user"].id as string, 10);
+                const description = fields?.["description"] as string;
+                const imageTitle = files?.["image"]["newFilename"] as string;
+                if (description) {
+                    await this.teacherService.editTeacherDescription(userId, description);
+                }
+                if (imageTitle) {
+                    const oldImage = await this.teacherService.editTeacherImage(userId, imageTitle);
+                    if (oldImage) {
+                        if (oldImage !== "teacher_icon.png") {
+                            fs.unlink(path.join(__dirname, `../assets/usersImages/${oldImage}`), (err) => {
+                                if (err) {
+                                    logger.error(err.toString());
+                                    throw err;
+                                }
+                            });
+                        }
+                    }
+                }
+                res.status(200).json({ success: true, message: "Edit success" });
             }
             catch (err) {
                 logger.error(err.toString());
@@ -93,6 +91,7 @@ export class TeacherController {
     displayTeachingRecord = async (req: Request, res: Response) => {
         try {
             const userId = parseInt(req.session["user"].id as string, 10);
+            console.log(userId)
             const teachingRecord = await this.teacherService.getTeachingRecord(userId);
             if (teachingRecord) {
                 res.status(200).json({ success: true, message: teachingRecord });
