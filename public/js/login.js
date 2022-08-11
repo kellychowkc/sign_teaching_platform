@@ -1,7 +1,7 @@
 import Swal from "https://cdn.jsdelivr.net/npm/sweetalert2@11/src/sweetalert2.js";
 
 window.onload = () => {
-  navbarCreate();
+  navbarCreate()
   loginForm();
 };
 
