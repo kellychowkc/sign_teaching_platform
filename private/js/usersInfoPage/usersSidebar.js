@@ -5,6 +5,7 @@ import { displayBookingTable } from "./studentLessonBooking.js";
 import { teacherImage } from "./teacherImage.js";
 import { displayLearningRecord } from "./studentLearnRecord.js";
 import { teacherTeachingRecord } from "./teacherTeachingRecord.js";
+import { startLesson } from "./startLesson.js";
 
 
 export async function studentSidebar() {    
@@ -57,6 +58,7 @@ export async function studentSidebar() {
     userInfoData();
     displayBookingTable();
     displayLearningRecord();
+    startLesson();
 }
 
 
@@ -121,4 +123,5 @@ export async function teacherSidebar() {
     teacherImage();
     teacherTimeTable();
     teacherTeachingRecord();
+    startLesson();
 }

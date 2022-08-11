@@ -63,7 +63,7 @@ export class TeacherService {
     }
 
 
-    async getTeacherImage(id: number) {
+    async getTeacherData(id: number) {
         const teacherData: Array<{ teacher_image: string, teacher_description: string }> = await this.knex("teachers").select("teacher_image", "teacher_description").where("user_id", id);
         const result = { "image": teacherData[0]["teacher_image"], "description": teacherData[0]["teacher_description"] }
         return result;

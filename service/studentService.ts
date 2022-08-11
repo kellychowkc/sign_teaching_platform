@@ -114,17 +114,20 @@ export class StudentService {
                 .select("packages.package_name", "orders.total_lesson_num", "orders.remaining_lesson_num", "orders.created_at")
                 .innerJoin("packages", "orders.package_id", "=", "packages.id")
                 .where("orders.id", id);
-            let thisOrder = [{ "packageName": orderList[0]["package_name"], "totalLessonNum": orderList[0]["total_lesson_num"], "remainingLessonNum": orderList[0]["remaining_lesson_num"], "createdDate": orderList[0]["created_at"] }]
+            const thisCreatedDate = orderList[0]["created_at"].toLocaleString("en-US");
+            let thisOrder = [{ "packageName": orderList[0]["package_name"], "totalLessonNum": orderList[0]["total_lesson_num"], "remainingLessonNum": orderList[0]["remaining_lesson_num"], "createdDate": thisCreatedDate }]
 
             const lessonInOrders: Array<{ first_name: string, date_time: Date, status: string }> = await txn("teachers")
                 .select("users.first_name", "lessons.date_time", "lessons.status")
                 .innerJoin("lessons", "teachers.id", "=", "lessons.teacher_id")
                 .innerJoin("users", "teachers.user_id", "=", "users.id")
-                .where("lessons.order_id", id);
+                .where("lessons.order_id", id)
+                .orderBy("lessons.date_time");
             let lessonList = [];
             if (lessonInOrders.length > 0) {
                 for (let lesson of lessonInOrders) {
-                    lessonList.push({ "teacherName": lesson["first_name"], "lessonDate": lesson["date_time"], "lessonStatus": lesson["status"] });
+                    const thisLessonDate = lesson["date_time"].toLocaleString("en-US");
+                    lessonList.push({ "teacherName": lesson["first_name"], "lessonDate": thisLessonDate, "lessonStatus": lesson["status"] });
                 }
             }
             const result = { thisOrder, lessonList };

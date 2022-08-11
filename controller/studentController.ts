@@ -123,9 +123,7 @@ export class StudentController {
 
     displayOrderData = async (req: Request, res: Response) => {
         try {
-            console.log(req.body)
             const orderId = parseInt(req.body["id"] as string, 10);
-            console.log(orderId)
             const orderData = await this.studentService.getOrderData(orderId);
             if (orderData) {
                 const thisOrderData = orderData.thisOrder;

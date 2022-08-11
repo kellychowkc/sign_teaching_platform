@@ -1,10 +1,10 @@
 
 import formidable from "formidable";
 import fs from "fs";
-import path from "path";
 
-const uploadDir = "usersImages";
-fs.mkdirSync(path.join( __dirname, "private", "assets", uploadDir ), { recursive: true });
+const uploadDir = "./private/assets/usersImages";
+
+fs.mkdirSync(uploadDir, { recursive: true });
 
 export const teacherImage = formidable({
     uploadDir,

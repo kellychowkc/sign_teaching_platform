@@ -102,7 +102,35 @@ export class UserInfoController {
                 }
                 res.status(200).json({ success: true, message: result });
             }
-            
+        }
+        catch (err) {
+            logger.error(err.toString());
+            res.status(400).json({ success: false, message: "Display Error" })
+            return;
+        }
+    }
+
+
+
+    displayLessonLink = async (req: Request, res: Response) => {
+        try {
+            const userId = parseInt(req.session["user"].id as string, 10);
+            const userIdentity = req.session["user"].identity as string;
+            if (userIdentity === "teacher") {
+                const lessonData = await this.userInfoService.getLessonLinkForTeacher(userId);
+                if (lessonData) {
+                    const result = { identity: userIdentity, lesson: lessonData };
+                    res.status(200).json({ success: true, message: result });
+                    return;
+                }
+            } else if (userIdentity === "student") {
+                const lessonData = await this.userInfoService.getLessonLinkForStudent(userId);
+                if (lessonData) {
+                    const result = { identity: userIdentity, lesson: lessonData };
+                    res.status(200).json({ success: true, message: result });
+                    return;
+                }
+            }
         }
         catch (err) {
             logger.error(err.toString());

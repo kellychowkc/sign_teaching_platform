@@ -3,7 +3,7 @@ import Swal from 'https://cdn.jsdelivr.net/npm/sweetalert2@11/src/sweetalert2.js
 
 export function teacherImage() {
     document.querySelector("#teacherImage").addEventListener("click", async () => {
-        const resp = await fetch("/userInfo/displayTeacherImage", { method: "POST" });
+        const resp = await fetch("/userInfo/displayTeacherData", { method: "POST" });
         const result = await resp.json();
         if (result.success === true) {
             const data = result.message;
@@ -25,9 +25,9 @@ export function teacherImage() {
                     </div>
                 </div>
                 <div class="p-4 border border-primary">
-                <div class="text-center">
-                <h4 class="mb-3 ">${description}</h4>
-            </div>
+                    <div class="text-center">
+                        <h4 class="mb-3 ">${description}</h4>
+                    </div>
                 </div>
             </div>
             `;
@@ -53,14 +53,14 @@ function editTeacherImage() {
                         <div class="row g-3" id="userInfoInput">
                             <div class="col-12">
                                 <label for="text" class="form-label">自我介紹</label>
-                                <input type="text" class="form-control" id="description" placeholder="description">
+                                <input type="text" class="form-control" name="description" id="description" placeholder="description">
                                 <div class="invalid-feedback">
                                     At least One Input.
                                 </div>
                             </div>
                             <div class="col-12">
                                 <label for="file" class="form-label">新形象</label>
-                                <input type="file" class="form-control" id="image" accept="image/*">
+                                <input type="file" class="form-control" name="image" id="image" accept="image/*">
                                 <div class="invalid-feedback">
                                     At least One Input.
                                 </div>
@@ -100,26 +100,25 @@ function uploadTeacherData() {
             body: formData,
         })
         const result = await resp.json();
-        console.log(result)
-        // if (result.success === true) {
-        //     Swal.fire({
-        //         icon: 'success',
-        //         title: "更改成功",
-        //         showConfirmButton: false,
-        //         timer: 1500
-        //     }).then(() => {
-        //         window.location.reload();
-        //     })
-        // } else {
-        //     Swal.fire({
-        //         icon: 'error',
-        //         title: "更改失敗",
-        //         showConfirmButton: false,
-        //         timer: 1500
-        //     }).then(() => {
-        //         window.location.reload();
-        //     })
-        // }
+        if (result.success === true) {
+            Swal.fire({
+                icon: 'success',
+                title: "更改成功",
+                showConfirmButton: false,
+                timer: 1500
+            }).then(() => {
+                window.location.reload();
+            })
+        } else {
+            Swal.fire({
+                icon: 'error',
+                title: "更改失敗",
+                showConfirmButton: false,
+                timer: 1500
+            }).then(() => {
+                window.location.reload();
+            })
+        }
     })
 }
 

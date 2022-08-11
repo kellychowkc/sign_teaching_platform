@@ -15,14 +15,14 @@ export function displayBookingTable() {
                 <table class="table table-bordered text-center readOnly">
                     <thead>
                         <tr class="bg-light-gray">
-                            <th class="text-uppercase">Time</th>
-                            <th class="text-uppercase">Monday</th>
-                            <th class="text-uppercase">Tuesday</th>
-                            <th class="text-uppercase">Wednesday</th>
-                            <th class="text-uppercase">Thursday</th>
-                            <th class="text-uppercase">Friday</th>
-                            <th class="text-uppercase">Saturday</th>
-                            <th class="text-uppercase">Sunday</th>
+                            <th class="text-uppercase">時間</th>
+                            <th class="text-uppercase">星期一</th>
+                            <th class="text-uppercase">星期二</th>
+                            <th class="text-uppercase">星期三</th>
+                            <th class="text-uppercase">星期四</th>
+                            <th class="text-uppercase">星期五</th>
+                            <th class="text-uppercase">星期六</th>
+                            <th class="text-uppercase">星期日</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -43,7 +43,7 @@ export function displayBookingTable() {
                             <td><div class="bookingTime" id="wednesday08"></div></td>
                             <td><div class="bookingTime" id="thursday08"></div></td>
                             <td><div class="bookingTime" id="friday08"></div></td>
-                            <td><div class="bookingTime" id="staurday08"></div></td>
+                            <td><div class="bookingTime" id="saturday08"></div></td>
                             <td><div class="bookingTime" id="sunday08"></div></td>
                         </tr>
                         <tr>
@@ -53,7 +53,7 @@ export function displayBookingTable() {
                             <td><div class="bookingTime" id="wednesday09"></div></td>
                             <td><div class="bookingTime" id="thursday09"></div></td>
                             <td><div class="bookingTime" id="friday09"></div></td>
-                            <td><div class="bookingTime" id="staurday09"></div></td>
+                            <td><div class="bookingTime" id="saturday09"></div></td>
                             <td><div class="bookingTime" id="sunday09"></div></td>
                         </tr>
                         <tr>
@@ -63,7 +63,7 @@ export function displayBookingTable() {
                             <td><div class="bookingTime" id="wednesday10"></div></td>
                             <td><div class="bookingTime" id="thursday10"></div></td>
                             <td><div class="bookingTime" id="friday10"></div></td>
-                            <td><div class="bookingTime" id="staurday10"></div></td>
+                            <td><div class="bookingTime" id="saturday10"></div></td>
                             <td><div class="bookingTime" id="sunday10"></div></td>
                         </tr>
                         <tr>
@@ -73,7 +73,7 @@ export function displayBookingTable() {
                             <td><div class="bookingTime" id="wednesday11"></div></td>
                             <td><div class="bookingTime" id="thursday11"></div></td>
                             <td><div class="bookingTime" id="friday11"></div></td>
-                            <td><div class="bookingTime" id="staurday11"></div></td>
+                            <td><div class="bookingTime" id="saturday11"></div></td>
                             <td><div class="bookingTime" id="sunday11"></div></td>
                         </tr>
                         <tr>
@@ -83,7 +83,7 @@ export function displayBookingTable() {
                             <td><div class="bookingTime" id="wednesday12"></div></td>
                             <td><div class="bookingTime" id="thursday12"></div></td>
                             <td><div class="bookingTime" id="friday12"></div></td>
-                            <td><div class="bookingTime" id="staurday12"></div></td>
+                            <td><div class="bookingTime" id="saturday12"></div></td>
                             <td><div class="bookingTime" id="sunday12"></div></td>
                         </tr>
                         <tr>
@@ -93,7 +93,7 @@ export function displayBookingTable() {
                             <td><div class="bookingTime" id="wednesday13"></div></td>
                             <td><div class="bookingTime" id="thursday13"></div></td>
                             <td><div class="bookingTime" id="friday13"></div></td>
-                            <td><div class="bookingTime" id="staurday13"></div></td>
+                            <td><div class="bookingTime" id="saturday13"></div></td>
                             <td><div class="bookingTime" id="sunday13"></div></td>
                         </tr>
                         <tr>
@@ -103,7 +103,7 @@ export function displayBookingTable() {
                             <td><div class="bookingTime" id="wednesday14"></div></td>
                             <td><div class="bookingTime" id="thursday14"></div></td>
                             <td><div class="bookingTime" id="friday14"></div></td>
-                            <td><div class="bookingTime" id="staurday14"></div></td>
+                            <td><div class="bookingTime" id="saturday14"></div></td>
                             <td><div class="bookingTime" id="sunday14"></div></td>
                         </tr>
                         <tr>
@@ -113,7 +113,7 @@ export function displayBookingTable() {
                             <td><div class="bookingTime" id="wednesday15"></div></td>
                             <td><div class="bookingTime" id="thursday15"></div></td>
                             <td><div class="bookingTime" id="friday15"></div></td>
-                            <td><div class="bookingTime" id="staurday15"></div></td>
+                            <td><div class="bookingTime" id="saturday15"></div></td>
                             <td><div class="bookingTime" id="sunday15"></div></td>
                         </tr>
                         <tr>
@@ -123,7 +123,7 @@ export function displayBookingTable() {
                             <td><div class="bookingTime" id="wednesday16"></div></td>
                             <td><div class="bookingTime" id="thursday16"></div></td>
                             <td><div class="bookingTime" id="friday16"></div></td>
-                            <td><div class="bookingTime" id="staurday16"></div></td>
+                            <td><div class="bookingTime" id="saturday16"></div></td>
                             <td><div class="bookingTime" id="sunday16"></div></td>
                         </tr>
                         <tr>
@@ -133,7 +133,7 @@ export function displayBookingTable() {
                             <td><div class="bookingTime" id="wednesday17"></div></td>
                             <td><div class="bookingTime" id="thursday17"></div></td>
                             <td><div class="bookingTime" id="friday17"></div></td>
-                            <td><div class="bookingTime" id="staurday17"></div></td>
+                            <td><div class="bookingTime" id="saturday17"></div></td>
                             <td><div class="bookingTime" id="sunday17"></div></td>
                         </tr>
                         <tr>
@@ -143,7 +143,7 @@ export function displayBookingTable() {
                             <td><div class="bookingTime" id="wednesday18"></div></td>
                             <td><div class="bookingTime" id="thursday18"></div></td>
                             <td><div class="bookingTime" id="friday18"></div></td>
-                            <td><div class="bookingTime" id="staurday18"></div></td>
+                            <td><div class="bookingTime" id="saturday18"></div></td>
                             <td><div class="bookingTime" id="sunday18"></div></td>
                         </tr>
                         <tr>
@@ -153,7 +153,7 @@ export function displayBookingTable() {
                             <td><div class="bookingTime" id="wednesday19"></div></td>
                             <td><div class="bookingTime" id="thursday19"></div></td>
                             <td><div class="bookingTime" id="friday19"></div></td>
-                            <td><div class="bookingTime" id="staurday19"></div></td>
+                            <td><div class="bookingTime" id="saturday19"></div></td>
                             <td><div class="bookingTime" id="sunday19"></div></td>
                         </tr>
                         <tr>
@@ -163,7 +163,7 @@ export function displayBookingTable() {
                             <td><div class="bookingTime" id="wednesday20"></div></td>
                             <td><div class="bookingTime" id="thursday20"></div></td>
                             <td><div class="bookingTime" id="friday20"></div></td>
-                            <td><div class="bookingTime" id="staurday20"></div></td>
+                            <td><div class="bookingTime" id="saturday20"></div></td>
                             <td><div class="bookingTime" id="sunday20"></div></td>
                         </tr>
                         <tr>
@@ -173,7 +173,7 @@ export function displayBookingTable() {
                             <td><div class="bookingTime" id="wednesday21"></div></td>
                             <td><div class="bookingTime" id="thursday21"></div></td>
                             <td><div class="bookingTime" id="friday21"></div></td>
-                            <td><div class="bookingTime" id="staurday21"></div></td>
+                            <td><div class="bookingTime" id="saturday21"></div></td>
                             <td><div class="bookingTime" id="sunday21"></div></td>
                         </tr>
                         <tr>
@@ -183,7 +183,7 @@ export function displayBookingTable() {
                             <td><div class="bookingTime" id="wednesday22"></div></td>
                             <td><div class="bookingTime" id="thursday22"></div></td>
                             <td><div class="bookingTime" id="friday22"></div></td>
-                            <td><div class="bookingTime" id="staurday22"></div></td>
+                            <td><div class="bookingTime" id="saturday22"></div></td>
                             <td><div class="bookingTime" id="sunday22"></div></td>
                         </tr>
                     </tbody>
