@@ -49,11 +49,25 @@ function editTeacherImage() {
                     </div>
                 </div>
                 <div class="p-4 border border-primary">
-                    <form id="updateTeacherData" method="post" enctype="multipart/form-data">
-                        <input type="text" name="description" id="description" class="form-control" placeholder="description" />
-                        <input type="file" name="image" id="image" class="form-control" accept="image/*">
-                        <div class="text-end">
-                            <button type="submit" class="btn btn-primary mt-3" form="updateTeacherData">Upload</button>
+                    <form class="needs-validation"  enctype="multipart/form-data" novalidate="">
+                        <div class="row g-3" id="userInfoInput">
+                            <div class="col-12">
+                                <label for="text" class="form-label">自我介紹</label>
+                                <input type="text" class="form-control" id="description" placeholder="description">
+                                <div class="invalid-feedback">
+                                    At least One Input.
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <label for="file" class="form-label">新形象</label>
+                                <input type="file" class="form-control" id="image" accept="image/*">
+                                <div class="invalid-feedback">
+                                    At least One Input.
+                                </div>
+                            </div>
+                            <div class="text-end">
+                            <button type="submit" class="btn btn-primary mt-3">提交</button>
+                            </div>
                         </div>
                     </form>
                 </div>
@@ -65,23 +79,24 @@ function editTeacherImage() {
             const [file] = newImage.files
             if (file) {
                 imagePreview.src = URL.createObjectURL(file)
-                uploadTeacherImage();
             }
         }
+        uploadTeacherData();
     })
 }
 
 
-function uploadTeacherImage() {
-    document.querySelector("#updateTeacherData").addEventListener("submit", async (event) => {
+
+function uploadTeacherData() {
+    const updateData = document.querySelector(".needs-validation");
+    updateData.addEventListener("submit", async (event) => {
         event.preventDefault();
         const form = event.target;
         const formData = new FormData();
-        formData.append("teacherDescription", form.description?.value);
-        formData.append("teacherImage", form.image?.files[0]);
-        console.log(form.image.files[0]);
+        formData.append("description", form.description.value);
+        formData.append("image", form.image.files[0]);
         const resp = await fetch("/userInfo/editTeacherData", {
-            method: 'POST',
+            method: "POST",
             body: formData,
         })
         const result = await resp.json();

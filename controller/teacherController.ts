@@ -4,7 +4,7 @@ import { Request, Response } from "express";
 // import path from "path";
 import { TeacherService } from "../service/teacherService";
 import { logger } from "../utility/logger";
-import { form } from "../utility/uploadTeacherImage";
+import { teacherImage } from "../utility/uploadTeacherImage";
 
 export class TeacherController {
     constructor(private teacherService: TeacherService) { }
@@ -65,11 +65,11 @@ export class TeacherController {
 
 
     editTeacherData = (req: Request, res: Response) => {
-        form.parse(req, async (err, fields, files) => {
+        teacherImage.parse(req, async (err, fields, files) => {
             try {
                 // const userId = parseInt(req.session["user"].id as string, 10);
-                // const description = fields?.["teacherDescription"] as string;
-                const imageTitle = files["teacherImage"];
+                // const description = fields?.["description"] as string;
+                const imageTitle = files["image"];
                 console.log(imageTitle)
                 // if (description) {
                 //     await this.teacherService.editTeacherDescription(userId, description);

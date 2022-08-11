@@ -125,10 +125,8 @@ async function displayOrderRecord() {
                     </div>
                 </div>
                 `;
-
-                //displayOrderData();
+                displayOrderData();
             }
-
         }
     }
 }
@@ -138,18 +136,24 @@ function displayOrderData() {
     document.querySelectorAll(".orderBtn").forEach((item) => {
         item.addEventListener("click", async () => {
             const orderId = item.getAttribute("value");
-            const resp = await fetch("/userInfo/displayOrderData", { method: "POST", body: { "id": orderId } });
-            const result = await resp.json();
-            if (result.success === true) {
-                const data = result.message;
-                const orderData = data["order"];
-                const lessonData = data["lessonList"];
-                
-
-                if (!lessonData) {
-
-                } else {
-
+            console.log(orderId)
+            if (orderId) {
+                let data = {};
+                data["id"] = orderId;
+                const resp = await fetch("/userInfo/displayOrderData", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data),
+                });
+                const result = await resp.json();
+                if (result.success === true) {
+                    const data = result.message;
+                    const orderData = data["order"];
+                    const lessonData = data["lessonList"];
+                    console.log(orderData, lessonData)
+                    document.querySelector("#userInfoDisplay").innerHTML += ``;
                 }
             }
         })

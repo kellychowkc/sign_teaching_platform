@@ -8,7 +8,7 @@ export const userInfoRoutes = express.Router();
 userInfoRoutes.post("/checkIdentity", isLoggedInAll, userInfoController.checkIdentity);
 userInfoRoutes.post("/displayUserInfo", isLoggedInAll, userInfoController.displayUserInfo);
 userInfoRoutes.post("/editUserInfo", isLoggedInAll, userInfoController.editUserInfo);
-userInfoRoutes.post("editUserPassword", isLoggedInAll, userInfoController.editUserPassword);
+userInfoRoutes.post("/editUserPassword", isLoggedInAll, userInfoController.editUserPassword);
 userInfoRoutes.post("/displayCalendar", isLoggedInAll, userInfoController.displayCalendarData);
 
 
