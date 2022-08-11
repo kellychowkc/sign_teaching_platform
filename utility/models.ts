@@ -14,3 +14,8 @@ export interface SessionUser {
   username: string;
   identity: string;
 }
+
+export interface Sign {
+  label: string;
+  sample_video: string;
+}

@@ -76,3 +76,11 @@
 .hksl-sign-button.active {
     background-color: #7ecbbd;
 }
+
+.scrollbar {
+    margin-left: 60px;
+    float: left;
+    height: 300px;
+    background: #fff;
+    overflow-y: scroll;
+}
