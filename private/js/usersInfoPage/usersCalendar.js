@@ -4,7 +4,6 @@ async function getBookedLessonData() {
     const result = await resp.json();
     if (result.success === true) {
         const events = result.message;
-        console.log(events)
         return events;
     }
 }
@@ -20,7 +19,7 @@ document.addEventListener('DOMContentLoaded', async function () {
             center: 'title',
             right: 'dayGridMonth,timeGridWeek,timeGridDay'
         },
-        events: getBookedLessonData(),
+        events: await getBookedLessonData(),
     });
 
     calendar.render();

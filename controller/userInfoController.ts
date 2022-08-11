@@ -2,7 +2,6 @@
 import { Request, Response } from "express";
 import { UserInfoService } from "../service/userInfoService";
 import { logger } from "../utility/logger";
-import { User } from "../utility/models";
 
 
 export class UserInfoController {
@@ -27,7 +26,7 @@ export class UserInfoController {
         try {
             console.log(req.session["user"])
             const userId = parseInt(req.session["user"].id as string, 10);
-            const userData: User[] = await this.userInfoService.getUserData(userId);
+            const userData: Array<{}> = await this.userInfoService.getUserData(userId);
             if (userData.length === 0) {
                 res.status(401).json({ success: false, message: "Not This User" });
                 return;
@@ -47,7 +46,8 @@ export class UserInfoController {
         try {
             const userId = parseInt(req.session["user"].id as string, 10);
             const username = req.session["user"].username as string;
-            const newData = req.body as User;
+            const newData: { username: string, firstName: string, lastName: string, email: string, phoneNum: number } = req.body;
+            console.log(newData)
             const result = await this.userInfoService.editUserInfo(userId, username, newData);
             if (result === false) {
                 res.status(400).json({ success: false, message: "Edit Error" });
@@ -66,10 +66,10 @@ export class UserInfoController {
 
     editUserPassword = async (req: Request, res: Response) => {
         try {
+            console.log(req.body)
             const userId = parseInt(req.session["user"].id as string, 10);
-            const oldPassword = req.body.oldPassword as string;
-            const newPassword = req.body.newPassword as string;
-            const result = await this.userInfoService.editUserPassword(userId, oldPassword, newPassword);
+            const password: { oldPassword: string, newPassword: string } = req.body;
+            const result = await this.userInfoService.editUserPassword(userId, password);
             if (result === false) {
                 res.status(400).json({ success: false, message: "Edit Error" });
                 return;
@@ -91,9 +91,46 @@ export class UserInfoController {
             const userIdentity = req.session["user"].identity as string;
             const calendarData = await this.userInfoService.getCalendarData(userId, userIdentity);
             if (calendarData) {
-                res.status(200).json({ success: true, message: calendarData });
+                let result = [];
+                for (let calender of calendarData) {
+                    const lessonYear = calender["start"].substring(6, 10);
+                    const lessonMonth = calender["start"].substring(3, 5);
+                    const lessonDay = calender["start"].substring(0, 2);
+                    const lessonTime = calender["start"].substring(12, );
+                    const lessonDate = lessonYear + "-" + lessonMonth + "-" + lessonDay + "T" + lessonTime;
+                    result.push({ title: calender["title"], start: lessonDate });
+                }
+                res.status(200).json({ success: true, message: result });
             }
-            
+        }
+        catch (err) {
+            logger.error(err.toString());
+            res.status(400).json({ success: false, message: "Display Error" })
+            return;
+        }
+    }
+
+
+
+    displayLessonLink = async (req: Request, res: Response) => {
+        try {
+            const userId = parseInt(req.session["user"].id as string, 10);
+            const userIdentity = req.session["user"].identity as string;
+            if (userIdentity === "teacher") {
+                const lessonData = await this.userInfoService.getLessonLinkForTeacher(userId);
+                if (lessonData) {
+                    const result = { identity: userIdentity, lesson: lessonData };
+                    res.status(200).json({ success: true, message: result });
+                    return;
+                }
+            } else if (userIdentity === "student") {
+                const lessonData = await this.userInfoService.getLessonLinkForStudent(userId);
+                if (lessonData) {
+                    const result = { identity: userIdentity, lesson: lessonData };
+                    res.status(200).json({ success: true, message: result });
+                    return;
+                }
+            }
         }
         catch (err) {
             logger.error(err.toString());

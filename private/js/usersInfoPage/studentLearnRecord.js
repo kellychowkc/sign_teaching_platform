@@ -125,10 +125,8 @@ async function displayOrderRecord() {
                     </div>
                 </div>
                 `;
-
-                //displayOrderData();
+                displayOrderData();
             }
-
         }
     }
 }
@@ -138,18 +136,86 @@ function displayOrderData() {
     document.querySelectorAll(".orderBtn").forEach((item) => {
         item.addEventListener("click", async () => {
             const orderId = item.getAttribute("value");
-            const resp = await fetch("/userInfo/displayOrderData", { method: "POST", body: { "id": orderId } });
-            const result = await resp.json();
-            if (result.success === true) {
-                const data = result.message;
-                const orderData = data["order"];
-                const lessonData = data["lessonList"];
-                
-
-                if (!lessonData) {
-
-                } else {
-
+            if (orderId) {
+                let data = {};
+                data["id"] = orderId;
+                const resp = await fetch("/userInfo/displayOrderData", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data),
+                });
+                const result = await resp.json();
+                if (result.success === true) {
+                    const data = result.message;
+                    const orderData = data["order"];
+                    const lessonData = data["lessonList"];
+                    let lessonHtmlStr = ``;
+                    let statusHtmlStr = ``;
+                    let bookingNum = 0;
+                    let attendNum = 0;
+                    let absentNum = 0;
+                    if (lessonData) {
+                        let i = 0;
+                        while (i < lessonData.length) {
+                            let status = "";
+                            switch (lessonData[i]["lessonStatus"]) {
+                                case "booking" :
+                                    status = "已預約";
+                                    bookingNum++;
+                                    break;
+                                case "attend" :
+                                    status = "出席";
+                                    attendNum++;
+                                    break;
+                                case "absent" :
+                                    status = "缺席";
+                                    absentNum++;
+                                    break;
+                                    
+                            }
+                            lessonHtmlStr += `
+                            <tr>
+                                <td>${i + 1}</td>
+                                <td>${lessonData[i]["teacherName"]}</td>
+                                <td>${lessonData[i]["lessonDate"]}</td>
+                                <td>${status}</td>
+                            </tr>
+                            `;
+                            i++
+                        }
+                        statusHtmlStr = `
+                        <h6 class="mb-3">已預約 : ${bookingNum} 堂 | 出席 : ${attendNum} 堂 | 缺席 : ${absentNum} 堂</h6>
+                        `;
+                    } else {
+                        statusHtmlStr = `
+                        <h6 class="mb-3">已預約 : ${bookingNum} 堂 | 出席 : ${attendNum} 堂 | 缺席 : ${absentNum} 堂</h6>
+                        `;
+                    }
+                    xdialog.open({
+                        title: `${orderData[0]["packageName"]}`,
+                        body: `\
+                        <div class="container text-center">\
+                            <h4 class="mb-3">購買日期 : ${orderData[0]["createdDate"]}</h4>\
+                            <h5 class="mb-3">可使用堂數 : ${orderData[0]["totalLessonNum"]} 堂 | 已使用 : ${orderData[0]["remainingLessonNum"]} 堂</h5>`
+                            + statusHtmlStr + `
+                            <table class="table table-bordered text-center">\
+                                <thead>\
+                                    <tr class="bg-light-gray">\
+                                        <th class="text-uppercase">堂數</th>\
+                                        <th class="text-uppercase">導師</th>\
+                                        <th class="text-uppercase">上課日期</th>\
+                                        <th class="text-uppercase">課堂狀況</th>\
+                                    </tr>\
+                                </thead>\
+                                <tbody>`
+                                + lessonHtmlStr + `
+                                </tbody>\
+                            </table>\
+                        </div>`,
+                        style: 'width: 60%;'
+                    })
                 }
             }
         })

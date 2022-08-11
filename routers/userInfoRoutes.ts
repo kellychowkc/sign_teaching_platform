@@ -8,13 +8,14 @@ export const userInfoRoutes = express.Router();
 userInfoRoutes.post("/checkIdentity", isLoggedInAll, userInfoController.checkIdentity);
 userInfoRoutes.post("/displayUserInfo", isLoggedInAll, userInfoController.displayUserInfo);
 userInfoRoutes.post("/editUserInfo", isLoggedInAll, userInfoController.editUserInfo);
-userInfoRoutes.post("editUserPassword", isLoggedInAll, userInfoController.editUserPassword);
+userInfoRoutes.post("/editUserPassword", isLoggedInAll, userInfoController.editUserPassword);
 userInfoRoutes.post("/displayCalendar", isLoggedInAll, userInfoController.displayCalendarData);
+userInfoRoutes.post("/displayLessonLink", isLoggedInAll, userInfoController.displayLessonLink);
 
 
 userInfoRoutes.post("/displayTeacherTime", isLoggedInTeacher, teacherController.displayTeacherTime);
 userInfoRoutes.post("/editTeacherTime", isLoggedInTeacher, teacherController.editTeacherTime);
-userInfoRoutes.post("/displayTeacherImage", isLoggedInTeacher, teacherController.displayTeacherImage);
+userInfoRoutes.post("/displayTeacherData", isLoggedInTeacher, teacherController.displayTeacherData);
 userInfoRoutes.post("/editTeacherData", isLoggedInTeacher, teacherController.editTeacherData);
 userInfoRoutes.post("/displayTeachingRecord", isLoggedInTeacher, teacherController.displayTeachingRecord);
 

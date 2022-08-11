@@ -63,7 +63,7 @@ export class TeacherService {
     }
 
 
-    async getTeacherImage(id: number) {
+    async getTeacherData(id: number) {
         const teacherData: Array<{ teacher_image: string, teacher_description: string }> = await this.knex("teachers").select("teacher_image", "teacher_description").where("user_id", id);
         const result = { "image": teacherData[0]["teacher_image"], "description": teacherData[0]["teacher_description"] }
         return result;
@@ -97,7 +97,7 @@ export class TeacherService {
             const lessonOfTeaching: Array<{ order_id: number, date_time: Date, status: string }> = await txn("lessons").select("order_id", "date_time", "status").where("teacher_id", teacherData[0]["id"]);
             let eachLesson = [];
             for (let lesson of lessonOfTeaching) {
-                const lessonDateTime = lesson["date_time"].toLocaleDateString("en-US") + " " + lesson["date_time"].toLocaleTimeString("en-US");
+                const lessonDateTime = lesson["date_time"].toLocaleString("en-US");
                 const studentData: Array<{ user_id: number }> = await txn("orders").select("user_id").where("id", lesson["order_id"]);
                 const student: Array<{ username: string }> = await txn("users").select("username").where("id", studentData[0]["user_id"]);
                 const studentOfTeaching = { "studentName": student[0]["username"], "teachingDate": lessonDateTime, "status": lesson["status"] };

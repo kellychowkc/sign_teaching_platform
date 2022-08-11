@@ -3,7 +3,7 @@ import Swal from 'https://cdn.jsdelivr.net/npm/sweetalert2@11/src/sweetalert2.js
 
 export function userInfoData() {
     document.querySelector("#userInfo").addEventListener("click", async () => {
-        const resp = await fetch("/userInfo/displayUserInfo", {method: "POST"});
+        const resp = await fetch("/userInfo/displayUserInfo", { method: "POST" });
         const result = await resp.json();
         if (result.success === false) {
             Swal.fire({
@@ -11,7 +11,7 @@ export function userInfoData() {
                 title: "資料失敗",
                 showConfirmButton: false,
                 timer: 1500
-            }).then(function(){
+            }).then(function () {
                 window.location.href = "/user.html";
             })
         } else {
@@ -147,54 +147,53 @@ export function editUserInfo(username, firstName, lastName, email, phoneNum) {
         editUserPassword(username, firstName, lastName, email, phoneNum);
         submitNewUserInfo();
     })
+}
 
+function submitNewUserInfo() {
+    const submitForm = document.querySelector(".needs-validation");
 
-    function submitNewUserInfo() {
-        const submitForm = document.querySelector(".needs-validation");
-
-        submitForm.addEventListener('submit', async (event) => {
-            event.preventDefault();
-            if (!submitForm.checkValidity()) {
-                event.stopPropagation();
-                submitForm.classList.add('was-validated');
-                return;
-            }
-            const form = event.target;
-            const formData = {};
-            formData["username"] = form.username.value;
-            formData["firstName"] = form.firstName.value;
-            formData["lastName"] = form.lastName.value;
-            formData["email"] = form.email.value;
-            formData["phoneNum"] = form.phoneNum.value;
-            const resp = await fetch("/userInfo/editUserInfo", {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(formData),
-            });
-            const result = await resp.json();
-            if (result.success === true) {
-                Swal.fire({
-                    icon: 'success',
-                    title: "更改成功",
-                    showConfirmButton: false,
-                    timer: 1500
-                }).then(function(){
-                    window.location.reload();
-                })
-            } else {
-                Swal.fire({
-                    icon: 'error',
-                    title: "更改失敗",
-                    showConfirmButton: false,
-                    timer: 1500
-                }).then(function(){
-                    window.location.reload();
-                })
-            }
-        })
-    }
+    submitForm.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        if (!submitForm.checkValidity()) {
+            event.stopPropagation();
+            submitForm.classList.add('was-validated');
+            return;
+        }
+        const form = event.target;
+        const formData = {};
+        formData["username"] = form.username.value;
+        formData["firstName"] = form.firstName.value;
+        formData["lastName"] = form.lastName.value;
+        formData["email"] = form.email.value;
+        formData["phoneNum"] = form.phoneNum.value;
+        const resp = await fetch("/userInfo/editUserInfo", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formData),
+        });
+        const result = await resp.json();
+        if (result.success === true) {
+            Swal.fire({
+                icon: 'success',
+                title: "更改成功",
+                showConfirmButton: false,
+                timer: 1500
+            }).then(function () {
+                window.location.reload();
+            })
+        } else {
+            Swal.fire({
+                icon: 'error',
+                title: "更改失敗",
+                showConfirmButton: false,
+                timer: 1500
+            }).then(function () {
+                window.location.reload();
+            })
+        }
+    })
 }
 
 
@@ -248,49 +247,55 @@ export function editUserPassword(username, firstName, lastName, email, phoneNum)
         confirmPassword();
         submitNewUserPassword();
     });
+}
+
+function confirmPassword() {
+    const oldPass = document.querySelector("#oldPassword");
+    const newPass = document.querySelector("#newPassword");
+    const confirmPass = document.querySelector("#confirmPassword");
+
+    newPass.addEventListener("keyup", () => {
+        if (oldPass.value === newPass.value) {
+            newPass.classList.remove("is-valid");
+            newPass.classList.add("is-invalid");
+        } else {
+            newPass.classList.remove("is-invalid");
+            newPass.classList.add("is-valid");
+        }
+    })
+    confirmPass.addEventListener("keyup", () => {
+        if (newPass.value !== confirmPass.value) {
+            confirmPass.classList.remove("is-valid");
+            confirmPass.classList.add("is-invalid");
+        } else {
+            confirmPass.classList.remove("is-invalid");
+            confirmPass.classList.add("is-valid");
+        }
+    })
+}
 
 
-    function confirmPassword() {
-        const oldPass = document.querySelector("#oldPassword");
-        const newPass = document.querySelector("#newPassword");
-        const confirmPass = document.querySelector("#confirmPassword");
+function submitNewUserPassword() {
+    const submitForm = document.querySelector(".needs-validation");
 
-        newPass.addEventListener("keyup", () => {
-            if (oldPass.value === newPass.value) {
-                newPass.classList.remove("is-valid");
-                newPass.classList.add("is-invalid");
-            } else {
-                newPass.classList.remove("is-invalid");
-                newPass.classList.add("is-valid");
-            }
-        })
-        confirmPass.addEventListener("keyup", () => {
-            if (newPass.value !== confirmPass.value) {
-                confirmPass.classList.remove("is-valid");
-                confirmPass.classList.add("is-invalid");
-            } else {
-                confirmPass.classList.remove("is-invalid");
-                confirmPass.classList.add("is-valid");
-            }
-        })
-    }
-
-
-    function submitNewUserPassword() {
-        const submitForm = document.querySelector(".needs-validation");
-
-        submitForm.addEventListener('submit', async (event) => {
-            event.preventDefault();
-            if (!submitForm.checkValidity()) {
-                event.stopPropagation();
-                submitForm.classList.add('was-validated');
-                return;
-            }
+    submitForm.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        if (!submitForm.checkValidity()) {
+            event.stopPropagation();
+            submitForm.classList.add('was-validated');
+            return;
+        } else {
             const form = event.target;
             const formData = {};
             formData["oldPassword"] = form.oldPassword.value;
             formData["newPassword"] = form.newPassword.value;
-            const resp = await fetch("/userInfo/editUserPassword");
+            const resp = await fetch("/userInfo/editUserPassword", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),
+            });
             const result = await resp.json();
             if (result.success === true) {
                 Swal.fire({
@@ -298,7 +303,7 @@ export function editUserPassword(username, firstName, lastName, email, phoneNum)
                     title: "更改成功",
                     showConfirmButton: false,
                     timer: 1500
-                }).then(function(){
+                }).then(function () {
                     window.location.reload();
                 })
             } else {
@@ -307,11 +312,10 @@ export function editUserPassword(username, firstName, lastName, email, phoneNum)
                     title: "更改失敗",
                     showConfirmButton: false,
                     timer: 1500
-                }).then(function(){
+                }).then(function () {
                     window.location.reload();
                 })
             }
-        })
-    }
+        }
+    })
 }
-
