@@ -382,6 +382,7 @@ $(document).ready(() => {
       Swal.fire({
         icon: "error",
         text: "你未揀一個字啊><",
+        input: "checkbox",
         showConfirmButton: false,
         timer: 1500,
       });
@@ -407,29 +408,6 @@ $(document).ready(() => {
       }, 1000);
     }
   });
-
-  // $("#language-hksl-btn").on("click", (e) => {
-  //   const jsl_table = document.querySelector(".jsl-sign-table");
-  //   const hksl_table = document.querySelector(".hksl-sign-table");
-  //   jsl_table.style.display = "none";
-  //   hksl_table.style.display = "block";
-
-  //   document.getElementsByClassName("language-btn").forEach((item) => {
-  //     item.classList.remove("active");
-  //   });
-  //   e.target.classList.add("active");
-  // });
-  // $("#language-jsl-btn").on("click", (e) => {
-  //   const jsl_table = document.querySelector(".jsl-sign-table");
-  //   const hksl_table = document.querySelector(".hksl-sign-table");
-  //   jsl_table.style.display = "block";
-  //   hksl_table.style.display = "none";
-
-  //   document.getElementsByClassName("language-btn").forEach((item) => {
-  //     item.classList.remove("active");
-  //   });
-  //   e.target.classList.add("active");
-  // });
 
   // click tryagain
   const clearStack = () => {
