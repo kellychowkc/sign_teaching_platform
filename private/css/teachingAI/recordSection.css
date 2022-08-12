@@ -133,3 +133,7 @@
 .record-btn:focus {
     outline: 0;
 }
+
+.Swal {
+    position: absolute !important;
+}

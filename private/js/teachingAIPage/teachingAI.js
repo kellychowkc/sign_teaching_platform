@@ -245,7 +245,7 @@ $(document).ready(() => {
 
       // sorted the rank of sign result
       const sortedArray = classifyResult.resultArray.sort(cmp);
-
+      console.log("sorted", sortedArray);
       // get all stack keypoints and image stack send to draw key points
       const canvasWrapperEl = document.getElementById("frame-canvas-wrapper-id");
       for (const i in PREDICTION_IMAGE_STACK) {
@@ -312,8 +312,8 @@ $(document).ready(() => {
         const hksl_selected = document.querySelector(".hksl-sign-button.active").id;
         const hksl_selectedSign = document.querySelector(".hksl-sign-button.active").innerHTML;
         for (let i = 0; i < sortedArray.length; i++) {
-          if (sortedArray[i][0] == hksl_selected) {
-            let acc = (sortedArray[i][1] * 100).toFixed(2);
+          if (sortedArray[i][0].split("-")[0] == hksl_selected) {
+            let acc = (sortedArray[i][1] * 100 * 100).toFixed(2);
             const signLanguage = document.createElement("sign");
             const score = document.createElement("score");
             const caption = document.createElement("caption");
@@ -381,10 +381,11 @@ $(document).ready(() => {
     if (!document.querySelector(".hksl-sign-button.active")) {
       Swal.fire({
         icon: "error",
-        text: "你未揀一個字啊><",
-        input: "checkbox",
+        text: "你未揀一個字啊 >< ",
         showConfirmButton: false,
         timer: 1500,
+        heightAuto: false,
+        position: "center",
       });
       return;
     }
