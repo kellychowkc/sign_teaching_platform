@@ -260,6 +260,7 @@ export class StudentService {
         return lessonData;
     }
 
+    
     async getLessonData(link: string) {
         const lessonData: Array<{ date_time: Date, teacher_id: number }> = 
             await this.knex("lessons")

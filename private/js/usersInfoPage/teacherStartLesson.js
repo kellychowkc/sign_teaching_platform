@@ -5,7 +5,7 @@ export function startLessonForTeacher() {
     document.querySelector("#startLesson").addEventListener("click", async () => {
         const resp = await fetch("/userInfo/displayTeacherLessonLink", { method: "POST" });
         const result = await resp.json();
-        if (result) {
+        if (result.success === true) {
             const data = result.message;
             document.querySelector("#userInfoDisplay").innerHTML = `
             <div class="container" id="teacherLessonLink">
@@ -29,38 +29,40 @@ export function startLessonForTeacher() {
                 </div>
             </div>
             `;
-
-            for (let lesson of data) {
-                if (lesson["lessonLink"] == null) {
-                    document.querySelector("tbody").innerHTML += `
-                    <tr>
-                        <td>${lesson["student"]}</td>
-                        <td>${lesson["learningDate"]}</td>
-                        <td><button type="button" class="btn btn-primary createBtn" value="${lesson["id"]}">開課</button></td>
-                    </tr>
-                    `;
-                } else if (lesson["lessonLink"] === "finish") {
-                    document.querySelector("tbody").innerHTML += `
-                    <tr>
-                        <td>${lesson["student"]}</td>
-                        <td>${lesson["learningDate"]}</td>
-                        <td>已下課</td>
-                    </tr>
-                    `;
-                } else {
-                    document.querySelector("tbody").innerHTML += `
-                    <tr>
-                        <td>${lesson["student"]}</td>
-                        <td>${lesson["learningDate"]}</td>
-                        <td>
-                            <div>
-                                <button type="button" class="btn btn-primary enterBtn" value="${lesson["id"]}">入課室</button>
-                                <button type="button" class="btn btn-primary closeBtn" value="${lesson["id"]}">下課</button>
-                            </div>
-                        </td>
-                    </tr>
-                    `;
+            if (data.length > 0) {
+                for (let lesson of data) {
+                    if (lesson["lessonLink"] == null) {
+                        document.querySelector("tbody").innerHTML += `
+                        <tr>
+                            <td>${lesson["student"]}</td>
+                            <td>${lesson["learningDate"]}</td>
+                            <td><button type="button" class="btn btn-primary createBtn" value="${lesson["id"]}">開課</button></td>
+                        </tr>
+                        `;
+                    } else if (lesson["lessonLink"] === "finish") {
+                        document.querySelector("tbody").innerHTML += `
+                        <tr>
+                            <td>${lesson["student"]}</td>
+                            <td>${lesson["learningDate"]}</td>
+                            <td>已下課</td>
+                        </tr>
+                        `;
+                    } else {
+                        document.querySelector("tbody").innerHTML += `
+                        <tr>
+                            <td>${lesson["student"]}</td>
+                            <td>${lesson["learningDate"]}</td>
+                            <td>
+                                <div>
+                                    <button type="button" class="btn btn-primary enterBtn" value="${lesson["id"]}">入課室</button>
+                                    <button type="button" class="btn btn-primary closeBtn" value="${lesson["id"]}">下課</button>
+                                </div>
+                            </td>
+                        </tr>
+                        `;
+                    }
                 }
+
                 createLesson();
                 enterLesson();
                 closeLesson();

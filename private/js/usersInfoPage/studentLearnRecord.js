@@ -65,7 +65,7 @@ function buyPackages() {
             const result = await resp.json();
             if (result.success === true) {
                 const data = result.message;
-                if (data) {
+                if (data.length > 0) {
                     for (let packages of data) {
                         if (packages["packageId"] === packageId) {
                             const swalWithBootstrapButtons = Swal.mixin({

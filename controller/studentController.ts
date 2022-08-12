@@ -88,11 +88,7 @@ export class StudentController {
         try {
             const userId = parseInt(req.session["user"].id as string, 10);
             const shoppingRecord = await this.studentService.getShoppingRecord(userId);
-            if (shoppingRecord.length > 0) {
-                res.status(200).json({ success: true, message: shoppingRecord });
-            } else {
-                res.status(200).json({ success: false, message: "Not Packages List" })
-            }
+            res.status(200).json({ success: true, message: shoppingRecord });
         }
         catch (err) {
             logger.error(err.toString());
@@ -106,11 +102,7 @@ export class StudentController {
         try {
             const userId = parseInt(req.session["user"].id as string, 10);
             const orderRecord = await this.studentService.getOrderRecord(userId);
-            if (orderRecord) {
-                res.status(200).json({ success: true, message: orderRecord });
-            } else {
-                res.status(200).json({ success: false, message: "Not Order Record" })
-            }
+            res.status(200).json({ success: true, message: orderRecord });
         }
         catch (err) {
             logger.error(err.toString());
@@ -167,8 +159,6 @@ export class StudentController {
             const addOrder = await this.studentService.insertNewOrder(userId, packageId);
             if (addOrder) {
                 res.status(200).json({ success: true, message: "Add New Order" });
-            } else {
-                res.status(400).json({ success: false, message: "Add Order Error" });
             }
         }
         catch (err) {
@@ -179,13 +169,11 @@ export class StudentController {
     }
 
 
-    displayLessonLinkForStudent = async (req: Request, res: Response) => {
+    displayLessonForStudent = async (req: Request, res: Response) => {
         try {
             const userId = parseInt(req.session["user"].id as string, 10);
             const lessonData = await this.studentService.getLessonLinkForStudent(userId);
-            if (lessonData.length > 0) {
-                res.status(200).json({ success: true, message: lessonData });
-            }
+            res.status(200).json({ success: true, message: lessonData });
         }
         catch (err) {
             logger.error(err.toString());
@@ -199,9 +187,7 @@ export class StudentController {
         try {
             const lessonLink = req.body["link"] as string;
             const lessonData = await this.studentService.getLessonData(lessonLink);
-            if (lessonData) {
-                res.status(200).json({ success: true, message: lessonData});
-            }
+            res.status(200).json({ success: true, message: lessonData});
         }
         catch (err) {
             logger.error(err.toString());

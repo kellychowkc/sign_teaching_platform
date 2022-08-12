@@ -29,36 +29,37 @@ export function startLessonForStudent() {
                 </div>
             </div>
             `;
-
-            for (let lesson of data) {
-                if (lesson["lessonLink"] === null) {
-                    document.querySelector("tbody").innerHTML += `
-                    <tr>
-                        <td>${lesson["teacher"]}</td>
-                        <td>${lesson["learningDate"]}</td>
-                        <td>準備中</td>
-                    </tr>
-                    `;
-                } else if (lesson["lessonLink"] === "finish") {
-                    document.querySelector("tbody").innerHTML += `
-                    <tr>
-                        <td>${lesson["teacher"]}</td>
-                        <td>${lesson["learningDate"]}</td>
-                        <td>已下課</td>
-                    </tr>
-                    `;
-                } else {
-                    document.querySelector("tbody").innerHTML += `
-                    <tr>
-                        <td>${lesson["teacher"]}</td>
-                        <td>${lesson["learningDate"]}</td>
-                        <td>
-                            <button type="button" class="btn btn-primary enterBtn" value="${lesson["lessonLink"]}">入課室</button>
-                        </td>
-                    </tr>
-                    `;
+            if (data.length > 0) {
+                for (let lesson of data) {
+                    if (lesson["lessonLink"] === null) {
+                        document.querySelector("tbody").innerHTML += `
+                        <tr>
+                            <td>${lesson["teacher"]}</td>
+                            <td>${lesson["learningDate"]}</td>
+                            <td>準備中</td>
+                        </tr>
+                        `;
+                    } else if (lesson["lessonLink"] === "finish") {
+                        document.querySelector("tbody").innerHTML += `
+                        <tr>
+                            <td>${lesson["teacher"]}</td>
+                            <td>${lesson["learningDate"]}</td>
+                            <td>已下課</td>
+                        </tr>
+                        `;
+                    } else {
+                        document.querySelector("tbody").innerHTML += `
+                        <tr>
+                            <td>${lesson["teacher"]}</td>
+                            <td>${lesson["learningDate"]}</td>
+                            <td>
+                                <button type="button" class="btn btn-primary enterBtn" value="${lesson["lessonLink"]}">入課室</button>
+                            </td>
+                        </tr>
+                        `;
+                    }
                 }
-                enterLesson();
+            enterLesson();
             }
         }
     })

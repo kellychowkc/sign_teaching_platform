@@ -154,7 +154,7 @@ export class TeacherService {
     }
 
 
-    async getLessonLinkForTeacher(id: number) {
+    async getLessonForTeacher(id: number) {
         const teacherData: Array<{ id: number }> = 
             await this.knex("teachers")
                 .select("id")
