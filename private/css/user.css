@@ -1,0 +1,7 @@
+#caption {
+    height: 80vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: rgb(90, 144, 125);
+}

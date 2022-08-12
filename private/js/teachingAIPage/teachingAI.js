@@ -8,6 +8,9 @@ import SignLanguageClassifyModel from "./ML/signClassify.js";
 import { drawResult } from "./drawkeypoints.js";
 import { removeChild, checkArrayMatch, isMobile } from "./utils.js";
 import initHelpmodal from "./helpmodal.js";
+import { userNavbar } from "../userNavbar.js";
+
+userNavbar();
 
 window.recoil = {
   selectSign: "",
@@ -70,7 +73,6 @@ $(document).ready(() => {
         console.log("processing model");
         break;
       case "upload":
-        // backgrounddiv.style.backgroundColor = "unset";
         backgrounddiv.style.zIndex = -1;
 
         processingModal.style.display = "flex";
@@ -78,19 +80,12 @@ $(document).ready(() => {
         console.log("uploading data model");
         break;
       case "result":
-        // backgrounddiv.style.backgroundColor = "unset";
-        backgrounddiv.style.zIndex = -1;
-
-        // recordIdle.style.opacity = "0";
-        // recordIdle.style.zIndex = "1";
-
         mainSection.style.transform = "translateX(calc(-2/3 * 100% - 3px))";
         introSection.style.opacity = 0;
         demoSection.style.opacity = 0;
         recordSection.style.opacity = 0;
         recordResult.style.opacity = 1;
-        // recordResult.style.opacity = "1";
-        // recordResult.style.zIndex = "2";
+
         processingModal.style.display = "none";
         console.log("result");
         break;
@@ -246,6 +241,7 @@ $(document).ready(() => {
       // sorted the rank of sign result
       const sortedArray = classifyResult.resultArray.sort(cmp);
       console.log("sorted", sortedArray);
+
       // get all stack keypoints and image stack send to draw key points
       const canvasWrapperEl = document.getElementById("frame-canvas-wrapper-id");
       for (const i in PREDICTION_IMAGE_STACK) {
@@ -304,8 +300,7 @@ $(document).ready(() => {
       );
 
       // update to result state
-      // update top 5 result
-      // remove exits table
+      // show the score and caption
 
       const parentContainer = document.querySelector(".result-container");
       try {
@@ -313,27 +308,31 @@ $(document).ready(() => {
         const hksl_selectedSign = document.querySelector(".hksl-sign-button.active").innerHTML;
         for (let i = 0; i < sortedArray.length; i++) {
           if (sortedArray[i][0].split("-")[0] == hksl_selected) {
-            let acc = (sortedArray[i][1] * 100 * 100).toFixed(2);
+            let acc = (sortedArray[i][1] * 100).toFixed(2);
+            let score;
+            if (acc < 1) {
+              score = acc * 100 + 20;
+            } else {
+              score = acc;
+            }
             const signLanguage = document.createElement("sign");
-            const score = document.createElement("score");
+            const scoreCaption = document.createElement("score");
             const caption = document.createElement("caption");
             signLanguage.innerHTML = `手語：${hksl_selectedSign}`;
-            score.innerHTML = `分數：${acc}`;
+            scoreCaption.innerHTML = `分數：${score}`;
             parentContainer.appendChild(signLanguage);
-            parentContainer.appendChild(score);
-            if (acc >= 80) {
-              let performance = "好勁啊手語大王！😍";
-              caption.innerHTML = performance;
-            } else if (acc >= 60) {
-              let performance = "好叻呀你！🥳";
-              caption.innerHTML = performance;
-            } else if (acc >= 40) {
-              let performance = "繼續努力！再試多次！💪";
-              caption.innerHTML = performance;
+            parentContainer.appendChild(scoreCaption);
+            let performance;
+            if (score >= 80) {
+              performance = "好勁啊手語大王！😍";
+            } else if (score >= 60) {
+              performance = "好叻呀你！🥳";
+            } else if (score >= 40) {
+              performance = "繼續努力！再試多次！💪";
             } else {
-              let performance = "睇嚟你需要一對一真人教學了～🥺 ";
-              caption.innerHTML = performance;
+              performance = "睇嚟你需要一對一真人教學了～🥺 ";
             }
+            caption.innerHTML = performance;
             parentContainer.appendChild(caption);
             console.log(parentContainer.innerHTML);
           } else {

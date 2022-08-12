@@ -1,8 +1,7 @@
-
-import Swal from 'https://cdn.jsdelivr.net/npm/sweetalert2@11/src/sweetalert2.js'
+import Swal from "https://cdn.jsdelivr.net/npm/sweetalert2@11/src/sweetalert2.js";
 
 export function userNavbar() {
-    document.querySelector("#header").innerHTML = `
+  document.querySelector("#header").innerHTML = `
     <nav class="navbar navbar-expand-lg navbar-light bg-light py-3">
     <div class="container">
         <a href="../index.html"><img src="../assets/手語學堂logo.png" alt="logo" id="logo"></a>
@@ -20,6 +19,9 @@ export function userNavbar() {
                     <a class="nav-link" href="./signTeaching.html">手語入門</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" href="/html/teachingAI.html">手語教學</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="/html/userInfo.html">用戶資訊</a>
                 </li>
                 <li class="nav-item" id="logout">
@@ -35,55 +37,55 @@ export function userNavbar() {
     </nav>
     `;
 
-    logout();
+  logout();
 }
 
-
-
 function logout() {
-    document.querySelector("#logout").addEventListener("click", () => {
-        const swalWithBootstrapButtons = Swal.mixin({
-            customClass: {
-                confirmButton: 'btn btn-success',
-                cancelButton: 'btn btn-danger'
-            },
-            buttonsStyling: false
-        })
+  document.querySelector("#logout").addEventListener("click", () => {
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        confirmButton: "btn btn-success",
+        cancelButton: "btn btn-danger",
+      },
+      buttonsStyling: false,
+    });
 
-        swalWithBootstrapButtons.fire({
-            title: '是否登出?',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonText: '是',
-            cancelButtonText: '否',
-            reverseButtons: true
-        }).then(async (result) => {
-            if (result.isConfirmed) {
-                const resp = await fetch("/logout");
-                const result = await resp.json();
+    swalWithBootstrapButtons
+      .fire({
+        title: "是否登出?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "是",
+        cancelButtonText: "否",
+        reverseButtons: true,
+      })
+      .then(async (result) => {
+        if (result.isConfirmed) {
+          const resp = await fetch("/logout");
+          const result = await resp.json();
 
-                if (result.success === false) {
-                    Swal.fire({
-                        icon: 'error',
-                        title: '登出失敗',
-                        title: result.message,
-                        showConfirmButton: false,
-                        timer: 1500
-                    }).then(function(){
-                        window.location.reload();
-                    })
-                    return;
-                } else {
-                    Swal.fire({
-                        icon: 'success',
-                        title: '登出成功',
-                        showConfirmButton: false,
-                        timer: 1500
-                    }).then(function() {
-                        window.location.href = `http://localhost:8080/`;
-                    })
-                }
-            }
-        })
-    })
-};
+          if (result.success === false) {
+            Swal.fire({
+              icon: "error",
+              title: "登出失敗",
+              title: result.message,
+              showConfirmButton: false,
+              timer: 1500,
+            }).then(function () {
+              window.location.reload();
+            });
+            return;
+          } else {
+            Swal.fire({
+              icon: "success",
+              title: "登出成功",
+              showConfirmButton: false,
+              timer: 1500,
+            }).then(function () {
+              window.location.href = `http://localhost:8080/`;
+            });
+          }
+        }
+      });
+  });
+}
