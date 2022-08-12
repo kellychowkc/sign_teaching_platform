@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import fs from "fs";
 import path from "path";
 import { TeacherService } from "../service/teacherService";
+import { hashPassword } from "../utility/hash";
 import { logger } from "../utility/logger";
 import { teacherImage } from "../utility/uploadTeacherImage";
 
@@ -91,7 +92,6 @@ export class TeacherController {
     displayTeachingRecord = async (req: Request, res: Response) => {
         try {
             const userId = parseInt(req.session["user"].id as string, 10);
-            console.log(userId)
             const teachingRecord = await this.teacherService.getTeachingRecord(userId);
             if (teachingRecord) {
                 res.status(200).json({ success: true, message: teachingRecord });
@@ -118,6 +118,58 @@ export class TeacherController {
         catch (err) {
             logger.error(err.toString());
             res.status(400).json({ success: false, message: "Display Error" })
+            return;
+        }
+    }
+
+
+    displayLessonData = async (req: Request, res: Response) => {
+        try {
+            const lessonId = parseInt(req.body["id"] as string, 10);
+            const result = await this.teacherService.getLessonData(lessonId);
+            if (result) {
+                res.status(200).json({ success: true, message: result });
+            }
+        }
+        catch (err) {
+            logger.error(err.toString());
+            res.status(400).json({ success: false, message: "Display Error" })
+            return;
+        }
+    }
+
+    createLessonLink = async (req: Request, res: Response) => {
+        try {
+            const lessonId = parseInt(req.body["id"] as string, 10);
+            const lessonLink = await hashPassword(req.body["link"] as string);
+            const result = await this.teacherService.insertLessonLink(lessonId, lessonLink);
+            if (result) {
+                res.status(200).json({ success: true, message: "Edit Success" });
+            }
+        }
+        catch (err) {
+            logger.error(err.toString());
+            res.status(400).json({ success: false, message: "Create Error" })
+            return;
+        }
+    }
+
+
+    editLessonData = async (req: Request, res: Response) => {
+        try {
+            const lessonId = parseInt(req.body["id"] as string, 10);
+            const lessonLink = req.body["link"] as string;
+            const lessonStatus = req.body["status"] as string;
+            if (lessonLink) {
+                const result = await this.teacherService.editLessonData(lessonId, lessonLink, lessonStatus);
+                if (result) {
+                    res.status(200).json({ success: true, message: "Edit Success" });
+                }
+            }
+        }
+        catch (err) {
+            logger.error(err.toString());
+            res.status(400).json({ success: false, message: "Edit Error" })
             return;
         }
     }

@@ -193,5 +193,20 @@ export class StudentController {
             return;
         }
     }
+
+    displayLessonData = async (req: Request, res: Response) => {
+        try {
+            const lessonLink = req.body["link"] as string;
+            const lessonData = await this.studentService.getLessonData(lessonLink);
+            if (lessonData) {
+                res.status(200).json({ success: true, message: lessonData});
+            }
+        }
+        catch (err) {
+            logger.error(err.toString());
+            res.status(400).json({ success: false, message: "Display Error" })
+            return;
+        }
+    }
 }
 

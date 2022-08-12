@@ -165,20 +165,16 @@ export class StudentService {
 
 
     async insertNewOrder(userId: number, packageId: number) {
-        const txn = await this.knex.transaction();
-        try {
-            const packageData: Array<{ total_lesson_num: number }> = await txn("packages").select("total_lesson_num").where("id", packageId);
-            await txn("orders").insert({ package_id: packageId, total_lesson_num: packageData[0]["total_lesson_num"], remaining_lesson_num: packageData[0]["total_lesson_num"], user_id: userId });
-            await txn.commit();
+        const packageData: Array<{ total_lesson_num: number }> = await this.knex("packages").select("total_lesson_num").where("id", packageId);
+        const result = await this.knex("orders").insert({ package_id: packageId, total_lesson_num: packageData[0]["total_lesson_num"], remaining_lesson_num: packageData[0]["total_lesson_num"], user_id: userId });
+        if (result) {
             return true;
-        }
-        catch (err) {
-            await txn.rollback();
+        } else {
             return false;
         }
     }
 
-    
+
     async getLessonLinkForStudent(id: number) {
         const txn = await this.knex.transaction();
         try {
@@ -187,14 +183,29 @@ export class StudentService {
             for (let order of orderData) {
                 const allLessonData: Array<{ lesson_link: string, date_time: Date, teacher_id: number }> = await txn("lessons").select("lesson_link", "date_time", "teacher_id").where("order_id", order["id"]).andWhere("date_time", ">", txn.fn.now()).orderBy("date_time");
                 for (let lesson of allLessonData) {
-                    const lessonDate = lesson["date_time"].toLocaleString("en-US");
                     const teacherData: Array<{ user_id: number }> = await txn("teachers").select("user_id").where("id", lesson["teacher_id"]);
                     const userData: Array<{ first_name: string }> = await txn("users").select("first_name").where("id", teacherData[0]["user_id"]);
-                    lessonData.push({ teacher: userData[0]["first_name"], learningDate: lessonDate, lessonLink: lesson["lesson_link"] });
+                    lessonData.push({ teacher: userData[0]["first_name"], learningDate: lesson["date_time"].toLocaleString("en-US"), lessonLink: lesson["lesson_link"] });
                 }
             }
             await txn.commit();
             return lessonData;
+        }
+        catch (err) {
+            await txn.rollback();
+            return;
+        }
+    }
+
+    async getLessonData(link: string) {
+        const txn = await this.knex.transaction();
+        try {
+            const lessonData: Array<{ date_time: Date, teacher_id: number }> = await txn("lessons").select("date_time", "teacher_id").where("lesson_link", link);
+            const teacherData: Array<{ user_id: number }> = await txn("teachers").select("user_id").where("id", lessonData[0]["teacher_id"]);
+            const userData: Array<{ first_name: string }> = await txn("users").select("first_name").where("id", teacherData[0]["user_id"]);
+            const data = { teacher: userData[0]["first_name"], time: lessonData[0]["date_time"].toLocaleString("en-US") };
+            await txn.commit();
+            return data;
         }
         catch (err) {
             await txn.rollback();

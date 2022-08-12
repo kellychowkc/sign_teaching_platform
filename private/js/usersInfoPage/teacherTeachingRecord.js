@@ -29,12 +29,24 @@ async function displayTeachingRecord() {
             `;
         } else {
             for (let student of teachingData) {
+                let status = "";
+                switch (student["status"]) {
+                    case "booking" :
+                        status = "已預約";
+                        break;
+                    case "attend" :
+                        status = "出席";
+                        break;
+                    case "absent" :
+                        status = "缺席";
+                        break;
+                }
                 document.querySelector("#teacherTeaching").innerHTML += `
                 <div class="col">
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">開課日期 : ${student["teachingDate"]}</h5>
-                            <p class="card-text">學生 : ${student["studentName"]} , 課堂狀況 : ${student["status"]}</p>
+                            <p class="card-text">學生 : ${student["studentName"]} , 課堂狀況 : ${status}</p>
                         </div>
                     </div>
                 </div>
