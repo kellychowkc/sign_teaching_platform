@@ -12,8 +12,7 @@ export class TeacherService {
             let timeList = [];
             for (let timeId of timeData) {
                 const data: Array<{ weekday: string, booking_time: string }> = await txn("time_table").select("weekday", "booking_time").where("id", timeId["time_table_id"]);
-                const weekday: string = (data[0]["weekday"]).substring(0, 1).toLowerCase() + (data[0]["weekday"]).substring(1,);
-                timeList.push({ "weekday": weekday, "time": data[0]["booking_time"] });
+                timeList.push({ "weekday": data[0]["weekday"], "time": data[0]["booking_time"] });
             }
             await txn.commit();
             return timeList;
@@ -28,29 +27,24 @@ export class TeacherService {
     async editTeacherTimeList(id: number, weekdayData: string, timeData: string) {
         const txn = await this.knex.transaction();
         try {
-            console.log("1", weekdayData, timeData)
             const teacherData: Array<{ id: number }> = await txn("teachers").select("id").where("user_id", id);
-            const teacherId = teacherData[0]["id"];
 
             // check have already data in "time_table"
-            const matchTime = await txn("time_table").select("*").where("weekday", weekdayData).andWhere("booking_time", timeData);
+            const matchTime: Array<{ id: number }> = await txn("time_table").select("id").where("weekday", weekdayData).andWhere("booking_time", timeData);
 
             if (matchTime.length === 0) {
                 // if not data, create new one in "time_table", and create new one in "can_booking_table"
                 const newTimeData: Array<{ id: number }> = await txn("time_table").insert({ weekday: weekdayData, booking_time: timeData }).returning("id");
-                const timeId = newTimeData[0]["id"];
-                await txn("can_booking_table").insert({ teacher_id: teacherId, time_table_id: timeId });
+                await txn("can_booking_table").insert({ teacher_id: teacherData[0]["id"], time_table_id: newTimeData[0]["id"] });
             } else {
                 // if already have data in "time_table", check this teacher have booked this time or not in "can_booking_table"
-                const timeId = parseInt(matchTime[0].id as string, 10);
-                const hasData: Array<{ id: number }> = await txn("can_booking_table").select("id").where("teacher_id", teacherId).andWhere("time_table_id", timeId);
+                const hasData: Array<{ id: number }> = await txn("can_booking_table").select("id").where("teacher_id", teacherData[0]["id"]).andWhere("time_table_id", matchTime[0]["id"]);
                 if (hasData.length === 0) {
                     // if not data, create new one
-                    await txn("can_booking_table").insert({ teacher_id: teacherId, time_table_id: timeId });
+                    await txn("can_booking_table").insert({ teacher_id: teacherData[0]["id"], time_table_id: matchTime[0]["id"] });
                 } else {
                     // if already have, delete that one
-                    const hasDataId = hasData[0]["id"];
-                    await txn("can_booking_table").where("id", hasDataId).del();
+                    await txn("can_booking_table").where("id", hasData[0]["id"]).del();
                 }
             }
             await txn.commit();
@@ -79,10 +73,9 @@ export class TeacherService {
         const txn = await this.knex.transaction();
         try {
             const teacherOldData: Array<{ teacher_image: string }> = await this.knex.select("teacher_image").from("teachers").where("user_id", id);
-            const image = teacherOldData[0]["teacher_image"];
             await txn("teachers").update({ teacher_image: title }).where("user_id", id);
             await txn.commit();
-            return image;
+            return teacherOldData[0]["teacher_image"];
         }
         catch(err) {
             await txn.rollback();
@@ -100,11 +93,32 @@ export class TeacherService {
                 const lessonDateTime = lesson["date_time"].toLocaleString("en-US");
                 const studentData: Array<{ user_id: number }> = await txn("orders").select("user_id").where("id", lesson["order_id"]);
                 const student: Array<{ username: string }> = await txn("users").select("username").where("id", studentData[0]["user_id"]);
-                const studentOfTeaching = { "studentName": student[0]["username"], "teachingDate": lessonDateTime, "status": lesson["status"] };
-                eachLesson.push(studentOfTeaching);
+                eachLesson.push({ "studentName": student[0]["username"], "teachingDate": lessonDateTime, "status": lesson["status"] });
             }
             await txn.commit();
             return eachLesson;
+        }
+        catch (err) {
+            await txn.rollback();
+            return;
+        }
+    }
+
+
+    async getLessonLinkForTeacher(id: number) {
+        const txn = await this.knex.transaction();
+        try {
+            const teacherData: Array<{ id: number }> = await txn("teachers").select("id").where("user_id", id);
+            const allLessonData: Array<{ order_id: number, lesson_link: string, date_time: Date }> = await txn("lessons").select("order_id", "lesson_link", "date_time").where("teacher_id", teacherData[0]["id"]).andWhere("date_time", ">", txn.fn.now()).orderBy("date_time");
+            const lessonData = [];
+            for (let lesson of allLessonData) {
+                const lessonDate = lesson["date_time"].toLocaleString("en-US");
+                const orderData: Array<{ user_id: number }> = await txn("orders").select("user_id").where("id", lesson["order_id"]);
+                const userData: Array<{ username: string }> = await txn("users").select("username").where("id", orderData[0]["user_id"]);
+                lessonData.push({ student: userData[0]["username"], learningDate: lessonDate, lessonLink: lesson["lesson_link"] });
+            }
+            await txn.commit();
+            return lessonData;
         }
         catch (err) {
             await txn.rollback();

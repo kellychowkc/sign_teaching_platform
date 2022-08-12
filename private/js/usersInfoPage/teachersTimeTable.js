@@ -3,6 +3,29 @@ import Swal from 'https://cdn.jsdelivr.net/npm/sweetalert2@11/src/sweetalert2.js
 
 export function teacherTimeTable() {
     document.querySelector("#timeTable").addEventListener("click", () => {
+        let tbodyHtmlStr = ``;
+        for (let i = 7; i < 23; i++) {
+            let idStr = i.toString().padStart(2, "0");
+            let amPmStr = "";
+            if (i / 12 < 1) {
+                amPmStr = "am";
+            } else {
+                amPmStr ="pm";
+            }
+            let numOfTimeStr = (i % 12).toString().padStart(2, "0");
+            tbodyHtmlStr += `
+            <tr>
+                <td class="align-middle">${numOfTimeStr}:00${amPmStr}</td>
+                <td><div class="bookingArea"><div class="bookingTime" id="Monday${idStr}"></div></div></td>
+                <td><div class="bookingArea"><div class="bookingTime" id="Tuesday${idStr}"></div></div></td>
+                <td><div class="bookingArea"><div class="bookingTime" id="Wednesday${idStr}"></div></div></td>
+                <td><div class="bookingArea"><div class="bookingTime" id="Thursday${idStr}"></div></div></td>
+                <td><div class="bookingArea"><div class="bookingTime" id="Friday${idStr}"></div></div></td>
+                <td><div class="bookingArea"><div class="bookingTime" id="Saturday${idStr}"></div></div></td>
+                <td><div class="bookingArea"><div class="bookingTime" id="Sunday${idStr}"></div></div></td>
+            </tr>
+            `;
+        } 
         document.querySelector("#userInfoDisplay").innerHTML = `
         <div class="container" id="teacherTimeTable">
             <div id="userInfoTitle">
@@ -28,166 +51,7 @@ export function teacherTimeTable() {
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td class="align-middle">07:00am</td>
-                                <td><div class="bookingArea"><div class="bookingTime" id="monday07"></div></div></td>
-                                <td><div class="bookingArea"><div class="bookingTime" id="wednesday07"></div></div></td>
-                                <td><div class="bookingArea"><div class="bookingTime" id="tuesday07"></div></div></td>
-                                <td><div class="bookingArea"><div class="bookingTime" id="thursday07"></div></div></td>
-                                <td><div class="bookingArea"><div class="bookingTime" id="friday07"></div></div></td>
-                                <td><div class="bookingArea"><div class="bookingTime" id="saturday07"></div></div></td>
-                                <td><div class="bookingArea"><div class="bookingTime" id="sunday07"></div></div></td>
-                            </tr>
-                            <tr>
-                                <td <div class="align-middle">08:00am</td>
-                                <td><div class="bookingArea"><div class="bookingTime" id="monday08"></div></div></td>
-                                <td><div class="bookingArea"><div class="bookingTime" id="tuesday08"></div></div></td>
-                                <td><div class="bookingArea"><div class="bookingTime" id="wednesday08"></div></div></td>
-                                <td><div class="bookingArea"><div class="bookingTime" id="thursday08"></div></div></td>
-                                <td><div class="bookingArea"><div class="bookingTime" id="friday08"></div></div></td>
-                                <td><div class="bookingArea"><div class="bookingTime" id="saturday08"></div></div></td>
-                                <td><div class="bookingArea"><div class="bookingTime" id="sunday08"></div></div></td>
-                            </tr>
-                            <tr>
-                                <td <div class="align-middle">09:00am</td>
-                                <td><div class="bookingArea"><div class="bookingTime" id="monday09"></div></div></td>
-                                <td><div class="bookingArea"><div class="bookingTime" id="tuesday09"></div></div></td>
-                                <td><div class="bookingArea"><div class="bookingTime" id="wednesday09"></div></div></td>
-                                <td><div class="bookingArea"><div class="bookingTime" id="thursday09"></div></div></td>
-                                <td><div class="bookingArea"><div class="bookingTime" id="friday09"></div></div></td>
-                                <td><div class="bookingArea"><div class="bookingTime" id="saturday09"></div></div></td>
-                                <td><div class="bookingArea"><div class="bookingTime" id="sunday09"></div></div></td>
-                            </tr>
-                            <tr>
-                                <td <div class="align-middle">10:00am</td>
-                                <td><div class="bookingArea"><div class="bookingTime" id="monday10"></div></div></td>
-                                <td><div class="bookingArea"><div class="bookingTime" id="tuesday10"></div></div></td>
-                                <td><div class="bookingArea"><div class="bookingTime" id="wednesday10"></div></div></td>
-                                <td><div class="bookingArea"><div class="bookingTime" id="thursday10"></div></div></td>
-                                <td><div class="bookingArea"><div class="bookingTime" id="friday10"></div></div></td>
-                                <td><div class="bookingArea"><div class="bookingTime" id="saturday10"></div></div></td>
-                                <td><div class="bookingArea"><div class="bookingTime" id="sunday10"></div></div></td>
-                            </tr>
-                            <tr>
-                                <td <div class="align-middle">11:00am</td>
-                                <td><div class="bookingArea"><div class="bookingTime" id="monday11"></div></div></td>
-                                <td><div class="bookingArea"><div class="bookingTime" id="tuesday11"></div></div></td>
-                                <td><div class="bookingArea"><div class="bookingTime" id="wednesday11"></div></div></td>
-                                <td><div class="bookingArea"><div class="bookingTime" id="thursday11"></div></div></td>
-                                <td><div class="bookingArea"><div class="bookingTime" id="friday11"></div></div></td>
-                                <td><div class="bookingArea"><div class="bookingTime" id="saturday11"></div></div></td>
-                                <td><div class="bookingArea"><div class="bookingTime" id="sunday11"></div></div></td>
-                            </tr>
-                            <tr>
-                                <td <div class="align-middle">12:00pm</td>
-                                <td><div class="bookingArea"><div class="bookingTime" id="monday12"></div></div></td>
-                                <td><div class="bookingArea"><div class="bookingTime" id="tuesday12"></div></div></td>
-                                <td><div class="bookingArea"><div class="bookingTime" id="wednesday12"></div></div></td>
-                                <td><div class="bookingArea"><div class="bookingTime" id="thursday12"></div></div></td>
-                                <td><div class="bookingArea"><div class="bookingTime" id="friday12"></div></div></td>
-                                <td><div class="bookingArea"><div class="bookingTime" id="saturday12"></div></div></td>
-                                <td><div class="bookingArea"><div class="bookingTime" id="sunday12"></div></div></td>
-                            </tr>
-                            <tr>
-                                <td <div class="align-middle">01:00pm</td>
-                                <td><div class="bookingArea"><div class="bookingTime" id="monday13"></div></div></td>
-                                <td><div class="bookingArea"><div class="bookingTime" id="tuesday13"></div></div></td>
-                                <td><div class="bookingArea"><div class="bookingTime" id="wednesday13"></div></div></td>
-                                <td><div class="bookingArea"><div class="bookingTime" id="thursday13"></div></div></td>
-                                <td><div class="bookingArea"><div class="bookingTime" id="friday13"></div></div></td>
-                                <td><div class="bookingArea"><div class="bookingTime" id="saturday13"></div></div></td>
-                                <td><div class="bookingArea"><div class="bookingTime" id="sunday13"></div></div></td>
-                            </tr>
-                            <tr>
-                                <td class="align-middle">02:00pm</td>
-                                <td><div class="bookingArea"><div class="bookingTime" id="monday14"></div></div></td>
-                                <td><div class="bookingArea"><div class="bookingTime" id="tuesday14"></div></div></td>
-                                <td><div class="bookingArea"><div class="bookingTime" id="wednesday14"></div></div></td>
-                                <td><div class="bookingArea"><div class="bookingTime" id="thursday14"></div></div></td>
-                                <td><div class="bookingArea"><div class="bookingTime" id="friday14"></div></div></td>
-                                <td><div class="bookingArea"><div class="bookingTime" id="saturday14"></div></div></td>
-                                <td><div class="bookingArea"><div class="bookingTime" id="sunday14"></div></div></td>
-                            </tr>
-                            <tr>
-                                <td class="align-middle">03:00pm</td>
-                                <td><div class="bookingArea"><div class="bookingTime" id="monday15"></div></div></td>
-                                <td><div class="bookingArea"><div class="bookingTime" id="tuesday15"></div></div></td>
-                                <td><div class="bookingArea"><div class="bookingTime" id="wednesday15"></div></div></td>
-                                <td><div class="bookingArea"><div class="bookingTime" id="thursday15"></div></div></td>
-                                <td><div class="bookingArea"><div class="bookingTime" id="friday15"></div></div></td>
-                                <td><div class="bookingArea"><div class="bookingTime" id="saturday15"></div></div></td>
-                                <td><div class="bookingArea"><div class="bookingTime" id="sunday15"></div></div></td>
-                            </tr>
-                            <tr>
-                                <td class="align-middle">04:00pm</td>
-                                <td><div class="bookingArea"><div class="bookingTime" id="monday16"></div></div></td>
-                                <td><div class="bookingArea"><div class="bookingTime" id="tuesday16"></div></div></td>
-                                <td><div class="bookingArea"><div class="bookingTime" id="wednesday16"></div></div></td>
-                                <td><div class="bookingArea"><div class="bookingTime" id="thursday16"></div></div></td>
-                                <td><div class="bookingArea"><div class="bookingTime" id="friday16"></div></div></td>
-                                <td><div class="bookingArea"><div class="bookingTime" id="saturday16"></div></div></td>
-                                <td><div class="bookingArea"><div class="bookingTime" id="sunday16"></div></div></td>
-                            </tr>
-                            <tr>
-                                <td class="align-middle">05:00pm</td>
-                                <td><div class="bookingArea"><div class="bookingTime" id="monday17"></div></div></td>
-                                <td><div class="bookingArea"><div class="bookingTime" id="tuesday17"></div></div></td>
-                                <td><div class="bookingArea"><div class="bookingTime" id="wednesday17"></div></div></td>
-                                <td><div class="bookingArea"><div class="bookingTime" id="thursday17"></div></div></td>
-                                <td><div class="bookingArea"><div class="bookingTime" id="friday17"></div></div></td>
-                                <td><div class="bookingArea"><div class="bookingTime" id="saturday17"></div></div></td>
-                                <td><div class="bookingArea"><div class="bookingTime" id="sunday17"></div></div></td>
-                            </tr>
-                            <tr>
-                                <td class="align-middle">06:00pm</td>
-                                <td><div class="bookingArea"><div class="bookingTime" id="monday18"></div></div></td>
-                                <td><div class="bookingArea"><div class="bookingTime" id="tuesday18"></div></div></td>
-                                <td><div class="bookingArea"><div class="bookingTime" id="wednesday18"></div></div></td>
-                                <td><div class="bookingArea"><div class="bookingTime" id="thursday18"></div></div></td>
-                                <td><div class="bookingArea"><div class="bookingTime" id="friday18"></div></div></td>
-                                <td><div class="bookingArea"><div class="bookingTime" id="saturday18"></div></div></td>
-                                <td><div class="bookingArea"><div class="bookingTime" id="sunday18"></div></div></td>
-                            </tr>
-                            <tr>
-                                <td class="align-middle">07:00pm</td>
-                                <td><div class="bookingArea"><div class="bookingTime" id="monday19"></div></div></td>
-                                <td><div class="bookingArea"><div class="bookingTime" id="tuesday19"></div></div></td>
-                                <td><div class="bookingArea"><div class="bookingTime" id="wednesday19"></div></div></td>
-                                <td><div class="bookingArea"><div class="bookingTime" id="thursday19"></div></div></td>
-                                <td><div class="bookingArea"><div class="bookingTime" id="friday19"></div></div></td>
-                                <td><div class="bookingArea"><div class="bookingTime" id="saturday19"></div></div></td>
-                                <td><div class="bookingArea"><div class="bookingTime" id="sunday19"></div></div></td>
-                            </tr>
-                            <tr>
-                                <td class="align-middle">08:00pm</td>
-                                <td><div class="bookingArea"><div class="bookingTime" id="monday20"></div></div></td>
-                                <td><div class="bookingArea"><div class="bookingTime" id="tuesday20"></div></div></td>
-                                <td><div class="bookingArea"><div class="bookingTime" id="wednesday20"></div></div></td>
-                                <td><div class="bookingArea"><div class="bookingTime" id="thursday20"></div></div></td>
-                                <td><div class="bookingArea"><div class="bookingTime" id="friday20"></div></div></td>
-                                <td><div class="bookingArea"><div class="bookingTime" id="saturday20"></div></div></td>
-                                <td><div class="bookingArea"><div class="bookingTime" id="sunday20"></div></div></td>
-                            </tr>
-                            <tr>
-                                <td class="align-middle">09:00pm</td>
-                                <td><div class="bookingArea"><div class="bookingTime" id="monday21"></div></div></td>
-                                <td><div class="bookingArea"><div class="bookingTime" id="tuesday21"></div></div></td>
-                                <td><div class="bookingArea"><div class="bookingTime" id="wednesday21"></div></div></td>
-                                <td><div class="bookingArea"><div class="bookingTime" id="thursday21"></div></div></td>
-                                <td><div class="bookingArea"><div class="bookingTime" id="friday21"></div></div></td>
-                                <td><div class="bookingArea"><div class="bookingTime" id="saturday21"></div></div></td>
-                                <td><div class="bookingArea"><div class="bookingTime" id="sunday21"></div></div></td>
-                            </tr>
-                            <tr>
-                                <td class="align-middle">10:00pm</td>
-                                <td><div class="bookingArea"><div class="bookingTime" id="monday22"></div></div></td>
-                                <td><div class="bookingArea"><div class="bookingTime" id="tuesday22"></div></div></td>
-                                <td><div class="bookingArea"><div class="bookingTime" id="wednesday22"></div></div></td>
-                                <td><div class="bookingArea"><div class="bookingTime" id="thursday22"></div></div></td>
-                                <td><div class="bookingArea"><div class="bookingTime" id="friday22"></div></div></td>
-                                <td><div class="bookingArea"><div class="bookingTime" id="saturday22"></div></div></td>
-                                <td><div class="bookingArea"><div class="bookingTime" id="sunday22"></div></div></td>
-                            </tr>
+                        ` + tbodyHtmlStr + `
                         </tbody>
                     </table>
                 </div>

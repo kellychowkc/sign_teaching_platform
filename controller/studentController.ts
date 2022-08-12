@@ -27,7 +27,6 @@ export class StudentController {
         try {
             const teacherId = parseInt(req.body["id"] as string, 10);
             const weekday = req.body["weekday"] as string;
-            const thisWeekday = weekday.substring(0, 1).toUpperCase() + weekday.substring(1,);
             const bookingTime = req.body["time"] as string;
             const bookedDate = await this.studentService.selectBookedDate(teacherId);
             const dateListOfThisWeekday = [];
@@ -36,7 +35,7 @@ export class StudentController {
             while (i <= 90) {
                 date.setDate(date.getDate() + 1);
                 const thatWeekday = date.toLocaleDateString('en-US', { weekday: 'long' });
-                if (thatWeekday === thisWeekday) {
+                if (thatWeekday === weekday) {
                     dateListOfThisWeekday.push(date.toLocaleDateString('en-US'));
                 }
                 i++
@@ -47,7 +46,7 @@ export class StudentController {
                 const bookedDate = selectDate.toLocaleDateString('en-US');
                 const bookedWeekday = selectDate.toLocaleDateString('en-US', { weekday: 'long' });
                 const bookedHour = selectDate.getHours().toString().padStart(2, "0");
-                if ((bookedWeekday === thisWeekday) && (bookedHour === bookingTime)) {
+                if ((bookedWeekday === weekday) && (bookedHour === bookingTime)) {
                     canBookingDate = canBookingDate.filter(date => date !== bookedDate);
                 }
             }
@@ -73,7 +72,7 @@ export class StudentController {
                 res.status(200).json({ success: true, message: "Already Booked" });
                 return;
             } else {
-                res.status(400).json({ success: false, message: "Booking Fail" });
+                res.status(200).json({ success: false, message: "Booking Fail" });
                 return;
             }
         }
@@ -179,5 +178,20 @@ export class StudentController {
         }
     }
 
+
+    displayLessonLinkForStudent = async (req: Request, res: Response) => {
+        try {
+            const userId = parseInt(req.session["user"].id as string, 10);
+            const lessonData = await this.studentService.getLessonLinkForStudent(userId);
+            if (lessonData) {
+                res.status(200).json({ success: true, message: lessonData });
+            }
+        }
+        catch (err) {
+            logger.error(err.toString());
+            res.status(400).json({ success: false, message: "Display Error" })
+            return;
+        }
+    }
 }
 

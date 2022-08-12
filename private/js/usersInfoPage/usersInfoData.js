@@ -15,67 +15,71 @@ export function userInfoData() {
                 window.location.href = "/user.html";
             })
         } else {
-            document.querySelector("#userInfoDisplay").innerHTML = `
-            <div class="col-md-7 col-lg-8 m-auto" id="userInfoData">
-                <div id="userInfoTitle">
-                    <div>
-                        <h4 class="mb-3">個人資料</h4>
+            const data = result.message;
+            if (data) {
+                document.querySelector("#userInfoDisplay").innerHTML = `
+                <div class="col-md-7 col-lg-8 m-auto" id="userInfoData">
+                    <div id="userInfoTitle">
+                        <div>
+                            <h4 class="mb-3">個人資料</h4>
+                        </div>
+                        <div>
+                            <button type="button" class="btn btn-primary" id="editUserInfo">更改資料</button>
+                            <button type="button" class="btn btn-primary" id="editUserPassword">更改密碼</button>
+                        </div>
                     </div>
-                    <div>
-                        <button type="button" class="btn btn-primary" id="editUserInfo">更改資料</button>
-                        <button type="button" class="btn btn-primary" id="editUserPassword">更改密碼</button>
-                    </div>
-                </div>
-                <form class="needs-validation" novalidate="">
-                    <div class="row g-3" id="userInfoInput">
-                        <div class="col-12">
-                            <label for="username" class="form-label">用戶名稱</label>
-                            <div class="input-group has-validation">
-                                <input type="text" class="form-control" id="username" value="${result.username}" readonly>
+                    <form class="needs-validation" novalidate="">
+                        <div class="row g-3" id="userInfoInput">
+                            <div class="col-12">
+                                <label for="username" class="form-label">用戶名稱</label>
+                                <div class="input-group has-validation">
+                                    <input type="text" class="form-control" id="username" value="${data.username}" readonly>
+                                    <div class="invalid-feedback">
+                                        Your username is required.
+                                    </div>
+                                </div>
+                            </div>
+        
+                            <div class="col-sm-6">
+                                <label for="firstName" class="form-label">名字 ( First name )</label>
+                                <input type="text" class="form-control" id="firstName" value="${data.first_name}" readonly>
                                 <div class="invalid-feedback">
-                                    Your username is required.
+                                    Valid first name is required.
+                                </div>
+                            </div>
+        
+                            <div class="col-sm-6">
+                                <label for="lastName" class="form-label">姓氏 ( Last name )</label>
+                                <input type="text" class="form-control" id="lastName" value="${data.last_name}" readonly>
+                                <div class="invalid-feedback">
+                                    Valid last name is required.
+                                </div>
+                            </div>
+        
+                            <div class="col-12">
+                                <label for="email" class="form-label">E-mail</label>
+                                <input type="email" class="form-control" id="email" value="${data.email}" readonly>
+                                <div class="invalid-feedback">
+                                    Valid email address is required.
+                                </div>
+                            </div>
+        
+                            <div class="col-12">
+                                <label for="phoneNum" class="form-label">電話號碼</label>
+                                <input type="tel" class="form-control" id="phoneNum" pattern="[0-9]{8}" value="${data.phone_num}" readonly>
+                                <div class="invalid-feedback">
+                                    Valid phone number is required.
                                 </div>
                             </div>
                         </div>
-    
-                        <div class="col-sm-6">
-                            <label for="firstName" class="form-label">名字 ( First name )</label>
-                            <input type="text" class="form-control" id="firstName" value="${result.firstName}" readonly>
-                            <div class="invalid-feedback">
-                                Valid first name is required.
-                            </div>
-                        </div>
-    
-                        <div class="col-sm-6">
-                            <label for="lastName" class="form-label">姓氏 ( Last name )</label>
-                            <input type="text" class="form-control" id="lastName" value="${result.lastName}" readonly>
-                            <div class="invalid-feedback">
-                                Valid last name is required.
-                            </div>
-                        </div>
-    
-                        <div class="col-12">
-                            <label for="email" class="form-label">E-mail</label>
-                            <input type="email" class="form-control" id="email" value="${result.email}" readonly>
-                            <div class="invalid-feedback">
-                                Valid email address is required.
-                            </div>
-                        </div>
-    
-                        <div class="col-12">
-                            <label for="phoneNum" class="form-label">電話號碼</label>
-                            <input type="tel" class="form-control" id="phoneNum" pattern="[0-9]{8}" value="${result.phoneNum}" readonly>
-                            <div class="invalid-feedback">
-                                Valid phone number is required.
-                            </div>
-                        </div>
-                    </div>
-                </form>
-            </div>
-            `;
+                    </form>
+                </div>
+                `;
+            }
 
-            editUserInfo(result.username, result.firstName, result.lastName, result.email, result.phoneNum);
-            editUserPassword(result.username, result.firstName, result.lastName, result.email, result.phoneNum);
+
+            editUserInfo(data.username, data.first_name, data.last_name, data.email, data.phone_num);
+            editUserPassword(data.username, data.first_name, data.last_name, data.email, data.phone_num);
         };
     })
 }
