@@ -31,7 +31,7 @@ export class UserInfoController {
                 res.status(401).json({ success: false, message: "Not This User" });
                 return;
             } else {
-                res.status(200).json({ success: true, message: userData});
+                res.status(200).json({ success: true, message: userData });
             }
         }
         catch (err) {

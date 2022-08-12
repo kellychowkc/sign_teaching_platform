@@ -21,7 +21,7 @@ async function displayTeachingRecord() {
     const result = await resp.json();
     if (result.success === true) {
         const teachingData = result.message;
-        if (!teachingData) {
+        if (teachingData.length === 0) {
             document.querySelector("#teacherTeaching").innerHTML = `
             <div class="text-center">
                 <h3 class="display-4 fw-normal">沒有課堂記錄</h3>

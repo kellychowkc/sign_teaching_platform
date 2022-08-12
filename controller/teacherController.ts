@@ -14,7 +14,7 @@ export class TeacherController {
             const userId = parseInt(req.session["user"].id as string, 10);
             const timeList = await this.teacherService.getTeacherTimeList(userId);
             let result = [];
-            if (timeList) {
+            if (timeList.length > 0) {
                 for (let data of timeList) {
                     const timeHour = data["time"].substring(0, 2);
                     const bookClass = data["weekday"] + timeHour;
@@ -93,11 +93,7 @@ export class TeacherController {
         try {
             const userId = parseInt(req.session["user"].id as string, 10);
             const teachingRecord = await this.teacherService.getTeachingRecord(userId);
-            if (teachingRecord) {
-                res.status(200).json({ success: true, message: teachingRecord });
-            } else {
-                res.status(400).json({ success: true, message: "No Teaching Record" });
-            }
+            res.status(200).json({ success: true, message: teachingRecord });
         } catch (err) {
             logger.error(err.toString());
             res.status(400).json({ success: false, message: "Display Error" });
@@ -111,7 +107,7 @@ export class TeacherController {
         try {
             const userId = parseInt(req.session["user"].id as string, 10);
             const lessonData = await this.teacherService.getLessonLinkForTeacher(userId);
-            if (lessonData) {
+            if (lessonData.length > 0) {
                 res.status(200).json({ success: true, message: lessonData });
             }
         }

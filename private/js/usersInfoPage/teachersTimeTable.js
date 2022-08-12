@@ -10,7 +10,7 @@ export function teacherTimeTable() {
             if (i / 12 < 1) {
                 amPmStr = "am";
             } else {
-                amPmStr ="pm";
+                amPmStr = "pm";
             }
             let numOfTimeStr = (i % 12).toString().padStart(2, "0");
             tbodyHtmlStr += `
@@ -25,7 +25,7 @@ export function teacherTimeTable() {
                 <td><div class="bookingArea"><div class="bookingTime" id="Sunday${idStr}"></div></div></td>
             </tr>
             `;
-        } 
+        }
         document.querySelector("#userInfoDisplay").innerHTML = `
         <div class="container" id="teacherTimeTable">
             <div id="userInfoTitle">
@@ -69,12 +69,14 @@ async function displayTime() {
     const result = await resp.json();
     if (result.success === true) {
         const timeList = result.message;
-        for (let times of timeList) {
-            const timeId = document.querySelector(`#${times}`);
-            if (timeId !== null) {
-                timeId.innerHTML = `
-                    <span class="bg-green padding-5px border-radius-5 border-wh"></span>
-                `;
+        if (timeList.length > 0) {
+            for (let times of timeList) {
+                const timeId = document.querySelector(`#${times}`);
+                if (timeId !== null) {
+                    timeId.innerHTML = `
+                        <span class="bg-green padding-5px border-radius-5 border-wh"></span>
+                    `;
+                }
             }
         }
     }
@@ -113,7 +115,7 @@ async function editTeacherTime() {
                             if (timeId) {
                                 const data = {};
                                 data["weekdayData"] = timeId.substring(0, timeId.length - 2);
-                                data["timeData"] = timeId.substring(timeId.length -2);
+                                data["timeData"] = timeId.substring(timeId.length - 2);
                                 const resp = await fetch("/userInfo/editTeacherTime", {
                                     method: 'POST',
                                     headers: {
@@ -128,7 +130,7 @@ async function editTeacherTime() {
                                         title: "更改成功",
                                         showConfirmButton: false,
                                         timer: 1500
-                                    }).then(function(){
+                                    }).then(function () {
                                         window.location.reload()
                                     })
                                 }
@@ -138,7 +140,7 @@ async function editTeacherTime() {
                                     title: "更改失敗",
                                     showConfirmButton: false,
                                     timer: 1500
-                                }).then(function(){
+                                }).then(function () {
                                     window.location.reload()
                                 })
                             }

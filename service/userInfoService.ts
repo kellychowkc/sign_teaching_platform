@@ -10,6 +10,7 @@ export class UserInfoService {
         return userData[0];
     }
 
+    
     async editUserInfo(id: number, data: { username: string, firstName: string, lastName: string, email: string, phoneNum: number }) {
         return await this.knex("users").update({ username: data.username, first_name: data.firstName, last_name: data.lastName, email: data.email, phone_num: data.phoneNum}).where("id", id);
     }
