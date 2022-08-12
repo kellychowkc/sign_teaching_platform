@@ -46,6 +46,11 @@ import { StudentController } from "./controller/studentController";
 import { StudentService } from "./service/studentService";
 import { TeacherController } from "./controller/teacherController";
 import { TeacherService } from "./service/teacherService";
+import { AdminController } from "./controller/adminController";
+import { AdminService } from "./service/adminService";
+
+import { SignController } from "./controller/signController";
+import { SignService } from "./service/signService";
 
 //server & controller set up
 const userService = new UserService(knex);
@@ -57,12 +62,20 @@ const studentService = new StudentService(knex);
 export const studentController = new StudentController(studentService);
 const teacherService = new TeacherService(knex);
 export const teacherController = new TeacherController(teacherService);
+const adminService = new AdminService(knex);
+export const adminController = new AdminController(adminService);
+
+const signService = new SignService(knex);
+export const signController = new SignController(signService);
 
 import { logInRoutes } from "./routers/logInRoutes";
 import { signUpRoutes } from "./routers/signUpRoutes";
 import { logOutRoutes } from "./routers/logOutRoutes";
 
 import { userInfoRoutes } from "./routers/userInfoRoutes";
+import { signRoutes } from "./routers/signRoutes";
+
+import { adminRoutes } from "./routers/adminRoutes";
 
 //route handling
 app.use("/signUp", signUpRoutes);
@@ -70,6 +83,9 @@ app.use("/logIn", logInRoutes);
 app.use("/logOut", logOutRoutes);
 
 app.use("/userInfo", userInfoRoutes);
+
+app.use("/sign", signRoutes);
+app.use("/admin", adminRoutes);
 
 //folder path
 app.use(express.static(path.join(__dirname, "public")));

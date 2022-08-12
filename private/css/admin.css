@@ -136,6 +136,7 @@ body {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
+    width: fit-content;
 }
 
 .word {
@@ -324,7 +325,8 @@ td{
 
 .setting_form>input,
 .modal-body>input,
-.form_button>input
+.form_button>input,
+.modal-content>input
  {
     margin-top: 3px;
     border-radius: 10px;
@@ -332,7 +334,8 @@ td{
 }
 
 .setting_form>label,
-.modal-body>label
+.modal-body>label,
+.modal-content>input
  {
     margin-top: 8px;
 }

@@ -75,7 +75,7 @@
 ## 10/8
 1. web demo
 - [x] feature
-- [ ] combine
+- [x] combine
 2. isLoggedInAPI
 - [ ] adding...
 3. testCase
@@ -85,7 +85,7 @@
 - [ ] logger -> (put in) ts
 5. logOut trigger
 6. user page
-- [ ] timeTable
+- [x] timeTable
 - [ ] realTime
 7. admin page
 - [x] ui
@@ -93,6 +93,8 @@
 - [ ] router
 - [ ] server
 8. style
+- [ ] admin.html
+- [ ] freeVideo.html
 
 
 
@@ -105,13 +107,26 @@
 
 
 # plan 
-1. 新增 form /
-2. wireFrame 修改 /
-3. try bonus until lunch
-- [x] get content_box
-- [x] delete its child
-- [x] add element in content_box(with the className left / right box )
-- [ ] isStaySamePage -> true: reload()
-4. write server side
+1. checkbox 更改 /
+2. js UI logic
+- [x] module import -> navbar
+- [x] linking all the pages
+3. try get value
+- [x] checkbox
+- [ ] search
+- [ ] text
+4. req
+5. database
+- [ ] Word -- create/, show/, delete, edit
+- [ ] User -- show(user & admin), delete, change identity
+
+    function:getXInfo(users[id, name, identity],teachers[lessons: id, teacher_id(name), timeStamp, status, link],admin[email, password]),([teaching table]sample_sign_language(top 10), [openLecture table]orders' user_id -> lessons' teacher_id)
+
+6. UI
+- [ ] fancy effect: design, animation
+- [ ] sweetAlert
+- [ ] css: lecture form
+- [ ] show logic: img / openClass, pageNum...
+
 
 

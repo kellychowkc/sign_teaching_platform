@@ -36,102 +36,9 @@
         </div>
     </div>
     <div id="content_box">
-        <div class="content_box left_box">
-
-            <div class="system_buttons">
-                <div class="system_button adding_word">
-                    <div class="button_img"><img src="/assets/admin/add.gif" alt="adding_word"></div>
-                    <div class="button_title">新增詞語</div>
-                </div>
-            </div>
-            <div class="display_words">
-                <div class="title">已有詞語</div>
-                <div class="display_word words_box">
-                    <div class="words_form">
-                        <form action="/action_page.php">
-                            <input type="text" placeholder="Search.." name="search">
-                            <button type="submit" class="searching"><img src="/assets/admin/searching.png" /></button>
-                            <input type="submit" class="deleting" value="刪除"><br>
-                            <div class="table-section">
-                                <table id="table">
-                                    <tr class="table-rows">
-                                        <td class="items">麵包<input type="checkbox" id="麵包" name="words" value="麵包"></td>
-
-                                    </tr>
-                                    <tr class="table-rows">
-                                        <td class="items">麵包<input type="checkbox" id="麵包" name="words" value="麵包"></td>
-                                    </tr>
-                                    <tr class="table-rows">
-                                        <td class="items">麵包<input type="checkbox" id="麵包" name="words" value="麵包"></td>
-                                    </tr>
-                                </table>
-
-                                <!-- <div class="word">
-                                <label for="麵包">麵包</label>
-                                <input type="radio" id="麵包" name="words" value="麵包">
-                            </div>
-                            <div class="word">
-                                <label for="麵包">麵包</label>
-                                <input type="radio" id="麵包" name="words" value="麵包">
-                            </div> -->
-                        </form>
-                    </div>
-                </div>
-                <nav aria-label="Page navigation example" class="page_box">
-                    <ul class="pagination">
-                        <li class="page-item">
-                            <a class="page-link" href="#" aria-label="Previous">
-                                <span aria-hidden="true">&laquo;</span>
-                            </a>
-                        </li>
-                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item">
-                            <a class="page-link" href="#" aria-label="Next">
-                                <span aria-hidden="true">&raquo;</span>
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
-
-
-        </div>
+        
     </div>
-    <div class="content_box right_box"
-        style="padding: 30px;display: flex;justify-content: center;align-items: center; flex-wrap: wrap;">
 
-        <form action="/action_page.php" class="content_form">
-            <div class="container">
-                <h1>上載影片</h1>
-                <hr /><br>
-
-
-                <label for="fn" class="uploading"><b>詞語： </b></label>
-                <input type="text" placeholder="輸入新詞語" name=“title” id=“title” required />
-                <br><br>
-
-                <label for="file"><b>選擇上載文件 : </b></label>
-                <br>
-                <input type="file" name="myFile" id="myFile">
-                <br>
-                <br>
-
-                <hr />
-                <button class='registerbtn' type='submit'>上載</button>
-
-            </div>
-
-        </form>
-
-        <!-- <label for="word">詞語：</label><br>
-                <input type="text" id="title" name="title" placeholder="輸入詞語"><br>
-                <input type="file" id="myFile" name="filename">
-                <div class="submit_button_box">
-                    <input type="submit" id="submit" value="確定"> -->
-    </div>
-    </div>
     <div id="footer" class="mt-5 py-5"></div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
@@ -139,8 +46,7 @@
         crossorigin="anonymous"></script>
     <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
     <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
-    <script src="/js/navbar.js"></script>
-    <script src="/js/admin.js"></script>
+    <script src="/js/admin.js" type="module"></script>
 </body>
 
 </html>
