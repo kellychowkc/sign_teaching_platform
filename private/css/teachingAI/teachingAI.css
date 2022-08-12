@@ -64,7 +64,6 @@ body {
     display: flex;
     flex-direction: row;
     justify-content: center;
-    align-items: center;
     text-align: center;
 }
 .main-page-sidebar {
@@ -77,6 +76,7 @@ body {
     width: 10%;
 }
 .main-page-container {
+    margin-top: 5rem;
     height: 100%;
     max-height: 525px;
     width: 75%;
@@ -87,7 +87,7 @@ body {
 }
 @media (max-height: 655px) {
     .main-page-container {
-        height: calc(100% - 130px);
+        height: 500px;
     }
 }
 .main-page-container * {
@@ -171,4 +171,7 @@ body {
     background-color: #48857a;
 
     color: #fff;
+}
+.intro-text-header {
+    margin-bottom: 5rem;
 }

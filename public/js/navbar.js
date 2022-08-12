@@ -1,4 +1,3 @@
-
 export function navbarCreate() {
   document.querySelector("#header").innerHTML = `
   <nav class="navbar navbar-expand-lg navbar-light bg-light py-3">
@@ -16,13 +15,13 @@ export function navbarCreate() {
           <ul class="navbar-nav">
 
               <li class="nav-item">
-                  <a class="nav-link" href="../index.html">手語簡介</a>
+                  <a class="nav-link" href="/index.html">手語簡介</a>
               </li>
               <li class="nav-item">
-                  <a class="nav-link" href="./teacherIntro.html">導師簡介</a>
+                  <a class="nav-link" href="/html/teacherIntro.html">導師簡介</a>
               </li>
               <li class="nav-item">
-                  <a class="nav-link" href="./signTeaching.html">手語入門</a>
+                  <a class="nav-link" href="/html/signTeaching.html">手語入門</a>
               </li>
               <li class="nav-item" id="signIn-box">
                   <a class="nav-link" href="./login.html">登入
@@ -36,7 +35,7 @@ export function navbarCreate() {
   </div>
 </nav>
     `;
-    document.querySelector("#footer").innerHTML = `
+  document.querySelector("#footer").innerHTML = `
     <div class="row container mx-auto pt-5">
                 <div class="footer-one col-lg-4 col-md-6 col-12 mb-3">
                     <img src="/assets/手語學堂logo.png" alt="logo" width="100" height="90">
@@ -76,5 +75,4 @@ export function navbarCreate() {
                 </div>
             </div>
       `;
-};
-
+}
