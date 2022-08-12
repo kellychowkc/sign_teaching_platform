@@ -9,7 +9,43 @@ export class AdminController {
     loadTeachingData = async (req: Request, res: Response) => {
         try {
             // console.log("loadTeachingData")
+            const NUM_PER_PAGE = 5;
+            let page = parseInt(req.query.page as string, 10);
+            if(isNaN(page)){
+                page = 1;
+            }
+
             const result = await this.adminService.loadTeachingData();
+            const totalPageNum = Math.ceil(result!.length / NUM_PER_PAGE);
+            if(page > totalPageNum){
+                res.status(400).json({ success: false, message: "invalid page number" });
+                return;
+            }
+            const startingIndex = (page - 1) * NUM_PER_PAGE;
+            const filterData = result?.slice(startingIndex, startingIndex + NUM_PER_PAGE);
+            if (result!.length === 0) {
+                // Empty data
+                console.log("empty")
+                res.status(200).json({ success: true, message: "Empty Data" });
+                return;
+            }else{
+                // has data
+                console.log("has data")
+                res.status(200).json({ success: true, current_page: page, total_page: totalPageNum, data: filterData });
+            }
+
+        }
+        catch (err) {
+            logger.error(err.toString());
+            res.status(500).json({ success: false, message: "Internal Server Error" })
+            return;
+        }
+    }
+
+    loadLectureData = async (req: Request, res: Response) => {
+        try {
+            // console.log("loadTeachingData")
+            const result = await this.adminService.loadLectureData();
             if (result?.length === 0) {
                 // Empty data
                 console.log("empty")
@@ -28,12 +64,36 @@ export class AdminController {
             return;
         }
     }
-
-    uploadVideo = async(req:Request, res:Response)=>{
+    getAllUser = async (req: Request, res: Response) => {
         try {
-            const form = req.form;
-            console.log("this is form:", typeof(form!.files.files["newFilename"]))
-            await this.adminService.uploadVideo(form!.fields,form!.files.files["newFilename"])
+            const userId = parseInt(req.session["user"].id as string, 10);
+            console.log("this is userId", userId);
+            const NUM_PER_PAGE = 5;
+            let page = parseInt(req.query.page as string, 10);
+            if(isNaN(page)){
+                page = 1;
+            }
+
+            const result = await this.adminService.getAllUser(userId);
+            const totalPageNum = Math.ceil(result!.length / NUM_PER_PAGE);
+            if(page > totalPageNum){
+                res.status(400).json({ success: false, message: "invalid page number" });
+                return;
+            }
+            const startingIndex = (page - 1) * NUM_PER_PAGE;
+            const filterData = result?.slice(startingIndex, startingIndex + NUM_PER_PAGE);
+
+            if (result?.length === 0) {
+                // Empty data
+                console.log("empty")
+                res.status(200).json({ success: true, message: "Empty Data" });
+                return;
+            }else{
+                // has data
+                console.log("has data:", result)
+                res.status(200).json({ success: true, current_page: page, total_page: totalPageNum, data: filterData  });
+            }
+
         }
         catch (err) {
             logger.error(err.toString());
@@ -41,6 +101,31 @@ export class AdminController {
             return;
         }
     }
+    createLecture =async (req:Request, res:Response) => {
+        try {
+            const form = req.form;
+            console.log("this is form:", form)
+            await this.adminService.createLecture(form!.fields)
+        }
+        catch (err) {
+            logger.error(err.toString());
+            res.status(500).json({ success: false, message: "Internal Server Error" })
+            return;
+        }
+    }
+    uploadVideo = async(req:Request, res:Response)=>{
+        try {
+            const form = req.form;
+            console.log("this is form:", typeof(form!.files.files["newFilename"]))
+            await this.adminService.uploadVideo(form!.fields["title"],form!.files.files["newFilename"])
+        }
+        catch (err) {
+            logger.error(err.toString());
+            res.status(500).json({ success: false, message: "Internal Server Error" })
+            return;
+        }
+    }
+    
 
     // displayUserInfo = async (req: Request, res: Response) => {
     //     try {

@@ -51,7 +51,7 @@ function loginForm() {
         timer: 1500,
       }).then(function(){
         console.log("this is admin!")
-        window.location.href = `/html/admin.html`;
+        window.location.href = `/html/admin.html?status=teaching`;
       });
     } else {
       Swal.fire({

@@ -136,7 +136,7 @@ body {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
-    width: 45vw;
+    width: fit-content;
 }
 
 .word {
