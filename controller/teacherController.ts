@@ -104,4 +104,21 @@ export class TeacherController {
             return;
         }
     };
+
+
+
+    displayLessonLinkForTeacher = async (req: Request, res: Response) => {
+        try {
+            const userId = parseInt(req.session["user"].id as string, 10);
+            const lessonData = await this.teacherService.getLessonLinkForTeacher(userId);
+            if (lessonData) {
+                res.status(200).json({ success: true, message: lessonData });
+            }
+        }
+        catch (err) {
+            logger.error(err.toString());
+            res.status(400).json({ success: false, message: "Display Error" })
+            return;
+        }
+    }
 }

@@ -22,8 +22,8 @@ export async function up(knex: Knex): Promise<void> {
     if (!hasTableTeachers) {
         await knex.schema.createTable("teachers", (table) => {
             table.increments();
-            table.string("teacher_image").notNullable();
-            table.string("teacher_description").notNullable();
+            table.string("teacher_image");
+            table.string("teacher_description");
             table.integer("user_id").unsigned;
             table.foreign("user_id").references("users.id");
         })

@@ -10,7 +10,6 @@ userInfoRoutes.post("/displayUserInfo", isLoggedInAll, userInfoController.displa
 userInfoRoutes.post("/editUserInfo", isLoggedInAll, userInfoController.editUserInfo);
 userInfoRoutes.post("/editUserPassword", isLoggedInAll, userInfoController.editUserPassword);
 userInfoRoutes.post("/displayCalendar", isLoggedInAll, userInfoController.displayCalendarData);
-userInfoRoutes.post("/displayLessonLink", isLoggedInAll, userInfoController.displayLessonLink);
 
 
 userInfoRoutes.post("/displayTeacherTime", isLoggedInTeacher, teacherController.displayTeacherTime);
@@ -18,7 +17,7 @@ userInfoRoutes.post("/editTeacherTime", isLoggedInTeacher, teacherController.edi
 userInfoRoutes.post("/displayTeacherData", isLoggedInTeacher, teacherController.displayTeacherData);
 userInfoRoutes.post("/editTeacherData", isLoggedInTeacher, teacherController.editTeacherData);
 userInfoRoutes.post("/displayTeachingRecord", isLoggedInTeacher, teacherController.displayTeachingRecord);
-
+userInfoRoutes.post("/displayTeacherLessonLink", isLoggedInTeacher, teacherController.displayLessonLinkForTeacher);
 
 userInfoRoutes.post("/displayTeacher", isLoggedInStudent, studentController.displayTeacher);
 userInfoRoutes.post("/getCanBookDate", isLoggedInStudent, studentController.getCanBookDate);
@@ -27,4 +26,5 @@ userInfoRoutes.post("/displayShoppingRecord", isLoggedInStudent, studentControll
 userInfoRoutes.post("/displayOrderRecord", isLoggedInStudent, studentController.displayOrderRecord);
 userInfoRoutes.post("/displayOrderData", isLoggedInStudent, studentController.displayOrderData);
 userInfoRoutes.post("/toPayPal", isLoggedInStudent, studentController.toPayPal);
-userInfoRoutes.post("/insertNewOrder", isLoggedInStudent, studentController.addNewOrder)
+userInfoRoutes.post("/insertNewOrder", isLoggedInStudent, studentController.addNewOrder);
+userInfoRoutes.post("/displayStudentLessonLink", isLoggedInStudent, studentController.displayLessonLinkForStudent);

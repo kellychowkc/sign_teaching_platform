@@ -26,13 +26,13 @@ export class UserInfoController {
         try {
             console.log(req.session["user"])
             const userId = parseInt(req.session["user"].id as string, 10);
-            const userData: Array<{}> = await this.userInfoService.getUserData(userId);
-            if (userData.length === 0) {
+            const userData = await this.userInfoService.getUserData(userId);
+            if (!userData) {
                 res.status(401).json({ success: false, message: "Not This User" });
                 return;
+            } else {
+                res.status(200).json({ success: true, message: userData});
             }
-            const userInfo = { "username": userData[0]["username"], "firstName": userData[0]["first_name"], "lastName": userData[0]["last_name"], "email": userData[0]["email"], "phoneNum": userData[0]["phone_num"] };
-            res.status(200).json(userInfo);
         }
         catch (err) {
             logger.error(err.toString());
@@ -45,11 +45,9 @@ export class UserInfoController {
     editUserInfo = async (req: Request, res: Response) => {
         try {
             const userId = parseInt(req.session["user"].id as string, 10);
-            const username = req.session["user"].username as string;
             const newData: { username: string, firstName: string, lastName: string, email: string, phoneNum: number } = req.body;
-            console.log(newData)
-            const result = await this.userInfoService.editUserInfo(userId, username, newData);
-            if (result === false) {
+            const result = await this.userInfoService.editUserInfo(userId, newData);
+            if (result) {
                 res.status(400).json({ success: false, message: "Edit Error" });
                 return;
             } else {
@@ -66,7 +64,6 @@ export class UserInfoController {
 
     editUserPassword = async (req: Request, res: Response) => {
         try {
-            console.log(req.body)
             const userId = parseInt(req.session["user"].id as string, 10);
             const password: { oldPassword: string, newPassword: string } = req.body;
             const result = await this.userInfoService.editUserPassword(userId, password);
@@ -110,33 +107,5 @@ export class UserInfoController {
         }
     }
 
-
-
-    displayLessonLink = async (req: Request, res: Response) => {
-        try {
-            const userId = parseInt(req.session["user"].id as string, 10);
-            const userIdentity = req.session["user"].identity as string;
-            if (userIdentity === "teacher") {
-                const lessonData = await this.userInfoService.getLessonLinkForTeacher(userId);
-                if (lessonData) {
-                    const result = { identity: userIdentity, lesson: lessonData };
-                    res.status(200).json({ success: true, message: result });
-                    return;
-                }
-            } else if (userIdentity === "student") {
-                const lessonData = await this.userInfoService.getLessonLinkForStudent(userId);
-                if (lessonData) {
-                    const result = { identity: userIdentity, lesson: lessonData };
-                    res.status(200).json({ success: true, message: result });
-                    return;
-                }
-            }
-        }
-        catch (err) {
-            logger.error(err.toString());
-            res.status(400).json({ success: false, message: "Display Error" })
-            return;
-        }
-    }
 }
 
