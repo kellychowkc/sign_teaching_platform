@@ -21,7 +21,8 @@ export class AdminService {
     async loadLectureData() {
         try {
 
-            const loadLectureData = await this.knex("lessons").select("*")
+            const loadLectureData = await this.knex("lessons").select("*");
+            
             // console.log("this is teachingData:", teachingData)
             return loadLectureData;
 
@@ -52,22 +53,6 @@ export class AdminService {
             console.log("this is files:", files)
             await this.knex.insert({label: fields, sample_video: files}).into("sample_sign_language")
 
-
-        }
-        catch (err) {
-            logger.error(err.toString());
-            return;
-        }
-    }
-    async createLecture(form:{}) {
-        try {
-            console.log("this is fields:", form["teacher_name"])
-            const teacher_name = form["teacher_name"];
-            const date = form["dates"];
-            const time = form["time"];
-            console.log(teacher_name,date,time)
-
-            // await this.knex.insert({date_time: fields, status:"create",teacher_id: files}).into("lessons")
 
         }
         catch (err) {

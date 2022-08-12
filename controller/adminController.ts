@@ -101,18 +101,6 @@ export class AdminController {
             return;
         }
     }
-    createLecture =async (req:Request, res:Response) => {
-        try {
-            const form = req.form;
-            console.log("this is form:", form)
-            await this.adminService.createLecture(form!.fields)
-        }
-        catch (err) {
-            logger.error(err.toString());
-            res.status(500).json({ success: false, message: "Internal Server Error" })
-            return;
-        }
-    }
     uploadVideo = async(req:Request, res:Response)=>{
         try {
             const form = req.form;
