@@ -9,10 +9,10 @@ export class StudentController {
     displayTeacher = async (req: Request, res: Response) => {
         try {
             const teacherData = await this.studentService.getTeacherData();
-            if (teacherData) {
+            if (teacherData.length > 0) {
                 res.status(200).json({ success: true, message: teacherData })
             } else {
-                res.status(400).json({ success: false, message: "Cannot Find Teacher Data" })
+                res.status(200).json({ success: false, message: "Not Teacher Data" })
             }
         }
         catch (err) {
@@ -88,11 +88,7 @@ export class StudentController {
         try {
             const userId = parseInt(req.session["user"].id as string, 10);
             const shoppingRecord = await this.studentService.getShoppingRecord(userId);
-            if (shoppingRecord) {
-                res.status(200).json({ success: true, message: shoppingRecord });
-            } else {
-                res.status(400).json({ success: false, message: "Cannot Find Shopping List" })
-            }
+            res.status(200).json({ success: true, message: shoppingRecord });
         }
         catch (err) {
             logger.error(err.toString());
@@ -106,11 +102,7 @@ export class StudentController {
         try {
             const userId = parseInt(req.session["user"].id as string, 10);
             const orderRecord = await this.studentService.getOrderRecord(userId);
-            if (orderRecord) {
-                res.status(200).json({ success: true, message: orderRecord });
-            } else {
-                res.status(400).json({ success: false, message: "Not Order Record" })
-            }
+            res.status(200).json({ success: true, message: orderRecord });
         }
         catch (err) {
             logger.error(err.toString());
@@ -146,10 +138,10 @@ export class StudentController {
         try {
             const packageId = parseInt(req.query["id"] as string, 10);
             const packagePrice = await this.studentService.getPackagePrice(packageId);
-            if (packagePrice) {
+            if (packagePrice !== null) {
                 res.status(200).json({ success: true, message: { "price": packagePrice } });
             } else {
-                res.status(400).json({ success: false, message: "PayPal Error" })
+                res.status(400).json({ success: false, message: "Cannot Found Price" })
             }
         }
         catch (err) {
@@ -165,10 +157,8 @@ export class StudentController {
             const userId = parseInt(req.session["user"].id as string, 10);
             const packageId = parseInt(req.query["id"] as string, 10);
             const addOrder = await this.studentService.insertNewOrder(userId, packageId);
-            if (addOrder === true) {
+            if (addOrder) {
                 res.status(200).json({ success: true, message: "Add New Order" });
-            } else {
-                res.status(400).json({ success: false, message: "Add Order Error" });
             }
         }
         catch (err) {
@@ -179,13 +169,25 @@ export class StudentController {
     }
 
 
-    displayLessonLinkForStudent = async (req: Request, res: Response) => {
+    displayLessonForStudent = async (req: Request, res: Response) => {
         try {
             const userId = parseInt(req.session["user"].id as string, 10);
             const lessonData = await this.studentService.getLessonLinkForStudent(userId);
-            if (lessonData) {
-                res.status(200).json({ success: true, message: lessonData });
-            }
+            res.status(200).json({ success: true, message: lessonData });
+        }
+        catch (err) {
+            logger.error(err.toString());
+            res.status(400).json({ success: false, message: "Display Error" })
+            return;
+        }
+    }
+
+
+    displayLessonData = async (req: Request, res: Response) => {
+        try {
+            const lessonLink = req.body["link"] as string;
+            const lessonData = await this.studentService.getLessonData(lessonLink);
+            res.status(200).json({ success: true, message: lessonData});
         }
         catch (err) {
             logger.error(err.toString());

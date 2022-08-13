@@ -93,8 +93,8 @@ function uploadTeacherData() {
         event.preventDefault();
         const form = event.target;
         const formData = new FormData();
-        formData.append("description", form.description.value);
-        formData.append("image", form.image.files[0]);
+        formData.append("description", form.description?.value);
+        formData.append("image", form.image?.files[0]);
         const resp = await fetch("/userInfo/editTeacherData", {
             method: "POST",
             body: formData,

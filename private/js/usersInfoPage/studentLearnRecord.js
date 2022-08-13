@@ -65,7 +65,7 @@ function buyPackages() {
             const result = await resp.json();
             if (result.success === true) {
                 const data = result.message;
-                if (data) {
+                if (data.length > 0) {
                     for (let packages of data) {
                         if (packages["packageId"] === packageId) {
                             const swalWithBootstrapButtons = Swal.mixin({
@@ -150,6 +150,7 @@ function displayOrderData() {
                 if (result.success === true) {
                     const data = result.message;
                     const orderData = data["order"];
+                    let usedLessonNum = Number(orderData[0]["totalLessonNum"]) - Number(orderData[0]["remainingLessonNum"]);
                     const lessonData = data["lessonList"];
                     let lessonHtmlStr = ``;
                     let statusHtmlStr = ``;
@@ -198,7 +199,7 @@ function displayOrderData() {
                         body: `\
                         <div class="container text-center">\
                             <h4 class="mb-3">購買日期 : ${orderData[0]["createdDate"]}</h4>\
-                            <h5 class="mb-3">可使用堂數 : ${orderData[0]["totalLessonNum"]} 堂 | 已使用 : ${orderData[0]["remainingLessonNum"]} 堂</h5>`
+                            <h5 class="mb-3">可使用堂數 : ${orderData[0]["totalLessonNum"]} 堂 | 已使用 : ${usedLessonNum} 堂</h5>`
                             + statusHtmlStr + `
                             <table class="table table-bordered text-center">\
                                 <thead>\

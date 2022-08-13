@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import fs from "fs";
 import path from "path";
 import { TeacherService } from "../service/teacherService";
+import { hashPassword } from "../utility/hash";
 import { logger } from "../utility/logger";
 import { teacherImage } from "../utility/uploadTeacherImage";
 
@@ -13,7 +14,7 @@ export class TeacherController {
             const userId = parseInt(req.session["user"].id as string, 10);
             const timeList = await this.teacherService.getTeacherTimeList(userId);
             let result = [];
-            if (timeList) {
+            if (timeList.length > 0) {
                 for (let data of timeList) {
                     const timeHour = data["time"].substring(0, 2);
                     const bookClass = data["weekday"] + timeHour;
@@ -36,6 +37,8 @@ export class TeacherController {
             const result = await this.teacherService.editTeacherTimeList(userId, weekdayData, timeData);
             if (result === true) {
                 res.status(200).json({ success: true, message: "Edit Success" });
+            } else {
+                res.status(400).json({ success: false, message: "Edit Unsuccess" });
             }
         } catch (err) {
             logger.error(err.toString());
@@ -60,29 +63,36 @@ export class TeacherController {
         teacherImage.parse(req, async (err, fields, files) => {
             try {
                 const userId = parseInt(req.session["user"].id as string, 10);
-                const description = fields?.["description"] as string;
-                const imageTitle = files?.["image"]["newFilename"] as string;
-                if (description) {
-                    await this.teacherService.editTeacherDescription(userId, description);
-                }
-                if (imageTitle) {
-                    const oldImage = await this.teacherService.editTeacherImage(userId, imageTitle);
-                    if (oldImage) {
-                        if (oldImage !== "teacher_icon.png") {
-                            fs.unlink(path.join(__dirname, `../assets/usersImages/${oldImage}`), (err) => {
-                                if (err) {
-                                    logger.error(err.toString());
-                                    throw err;
-                                }
-                            });
+                if (fields) {
+                    const description = fields["description"] as string;
+                    if (description.length !== 0) {
+                        const result = await this.teacherService.editTeacherDescription(userId, description);
+                        if (!result) {
+                            res.status(400).json({ success: false, message: "Edit Error" });
+                            return;
                         }
+                    } else {
+                        res.status(400).json({ success: false, message: "Edit Error" });
+                        return;
+                    }
+                }
+                if (files["image"]) {
+                    const imageTitle = files["image"]["newFilename"] as string;
+                    const oldImage = await this.teacherService.editTeacherImage(userId, imageTitle);
+                    if (oldImage !== "teacher_icon.png") {
+                        fs.unlink(path.join(__dirname, `../assets/usersImages/${oldImage}`), (err) => {
+                            if (err) {
+                                logger.error(err.toString());
+                                throw err;
+                            }
+                        });
                     }
                 }
                 res.status(200).json({ success: true, message: "Edit success" });
             }
             catch (err) {
                 logger.error(err.toString());
-                res.status(400).json({ success: false, message: "Edit Error" })
+                res.status(400).json({ success: false, message: "Edit Error" });
                 return;
             }
         })
@@ -91,13 +101,8 @@ export class TeacherController {
     displayTeachingRecord = async (req: Request, res: Response) => {
         try {
             const userId = parseInt(req.session["user"].id as string, 10);
-            console.log(userId)
             const teachingRecord = await this.teacherService.getTeachingRecord(userId);
-            if (teachingRecord) {
-                res.status(200).json({ success: true, message: teachingRecord });
-            } else {
-                res.status(400).json({ success: true, message: "No Teaching Record" });
-            }
+            res.status(200).json({ success: true, message: teachingRecord });
         } catch (err) {
             logger.error(err.toString());
             res.status(400).json({ success: false, message: "Display Error" });
@@ -107,17 +112,65 @@ export class TeacherController {
 
 
 
-    displayLessonLinkForTeacher = async (req: Request, res: Response) => {
+    displayLessonForTeacher = async (req: Request, res: Response) => {
         try {
             const userId = parseInt(req.session["user"].id as string, 10);
-            const lessonData = await this.teacherService.getLessonLinkForTeacher(userId);
-            if (lessonData) {
-                res.status(200).json({ success: true, message: lessonData });
+            const lessonData = await this.teacherService.getLessonForTeacher(userId);
+            res.status(200).json({ success: true, message: lessonData });
+        }
+        catch (err) {
+            logger.error(err.toString());
+            res.status(400).json({ success: false, message: "Display Error" });
+            return;
+        }
+    }
+
+
+    displayLessonData = async (req: Request, res: Response) => {
+        try {
+            const lessonId = parseInt(req.body["id"] as string, 10);
+            const result = await this.teacherService.getLessonData(lessonId);
+            res.status(200).json({ success: true, message: result });
+        }
+        catch (err) {
+            logger.error(err.toString());
+            res.status(400).json({ success: false, message: "Display Error" });
+            return;
+        }
+    }
+
+    createLessonLink = async (req: Request, res: Response) => {
+        try {
+            const lessonId = parseInt(req.body["id"] as string, 10);
+            const lessonLink = await hashPassword(req.body["link"] as string);
+            const result = await this.teacherService.insertLessonLink(lessonId, lessonLink);
+            if (result) {
+                res.status(200).json({ success: true, message: "Edit Success" });
             }
         }
         catch (err) {
             logger.error(err.toString());
-            res.status(400).json({ success: false, message: "Display Error" })
+            res.status(400).json({ success: false, message: "Create Error" });
+            return;
+        }
+    }
+
+
+    editLessonData = async (req: Request, res: Response) => {
+        try {
+            const lessonId = parseInt(req.body["id"] as string, 10);
+            const lessonLink = req.body["link"] as string;
+            const lessonStatus = req.body["status"] as string;
+            if (lessonLink) {
+                const result = await this.teacherService.editLessonData(lessonId, lessonLink, lessonStatus);
+                if (result) {
+                    res.status(200).json({ success: true, message: "Edit Success" });
+                }
+            }
+        }
+        catch (err) {
+            logger.error(err.toString());
+            res.status(400).json({ success: false, message: "Edit Error" })
             return;
         }
     }

@@ -1,4 +1,6 @@
 
+import Swal from 'https://cdn.jsdelivr.net/npm/sweetalert2@11/src/sweetalert2.js'
+
 export function startLessonForStudent() {
     document.querySelector("#startLesson").addEventListener("click", async () => {
         const resp = await fetch("/userInfo/displayStudentLessonLink", { method: "POST" });
@@ -27,34 +29,82 @@ export function startLessonForStudent() {
                 </div>
             </div>
             `;
-
-            for (let lesson of data) {
-                if (lesson["lessonLink"] === null) {
-                    document.querySelector("tbody").innerHTML += `
-                    <tr>
-                        <td>${lesson["teacher"]}</td>
-                        <td>${lesson["learningDate"]}</td>
-                        <td>準備中</td>
-                    </tr>
-                    `;
-                } else if (lesson["lessonLink"] === "finish") {
-                    document.querySelector("tbody").innerHTML += `
-                    <tr>
-                        <td>${lesson["teacher"]}</td>
-                        <td>${lesson["learningDate"]}</td>
-                        <td>已下課</td>
-                    </tr>
-                    `;
-                } else {
-                    document.querySelector("tbody").innerHTML += `
-                    <tr>
-                        <td>${lesson["teacher"]}</td>
-                        <td>${lesson["learningDate"]}</td>
-                        <td><a href="${lesson["lessonLink"]}">${lesson["lessonLink"]}</a></td>
-                    </tr>
-                    `;
+            if (data.length > 0) {
+                for (let lesson of data) {
+                    if (lesson["lessonLink"] === null) {
+                        document.querySelector("tbody").innerHTML += `
+                        <tr>
+                            <td>${lesson["teacher"]}</td>
+                            <td>${lesson["learningDate"]}</td>
+                            <td>準備中</td>
+                        </tr>
+                        `;
+                    } else if (lesson["lessonLink"] === "finish") {
+                        document.querySelector("tbody").innerHTML += `
+                        <tr>
+                            <td>${lesson["teacher"]}</td>
+                            <td>${lesson["learningDate"]}</td>
+                            <td>已下課</td>
+                        </tr>
+                        `;
+                    } else {
+                        document.querySelector("tbody").innerHTML += `
+                        <tr>
+                            <td>${lesson["teacher"]}</td>
+                            <td>${lesson["learningDate"]}</td>
+                            <td>
+                                <button type="button" class="btn btn-primary enterBtn" value="${lesson["lessonLink"]}">入課室</button>
+                            </td>
+                        </tr>
+                        `;
+                    }
                 }
+            enterLesson();
             }
         }
     })
+}
+
+
+function enterLesson() {
+    document.querySelectorAll(".enterBtn").forEach((lesson) => {
+        lesson.addEventListener("click", async () => {
+            const lessonLink = lesson.getAttribute("value");
+            const data = { link: lessonLink };
+            const resp = await fetch("/userInfo/displayLessonDataForStudent", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            });
+            const result = await resp.json();
+            if (result.success === true) {
+                const lessonData = result.message;
+                const swalWithBootstrapButtons = Swal.mixin({
+                    customClass: {
+                        confirmButton: 'btn btn-success',
+                        cancelButton: 'btn btn-danger'
+                    },
+                    buttonsStyling: false
+                })
+
+                swalWithBootstrapButtons.fire({
+                    title: '是否要進入課室？',
+                    text: `導師 : ${lessonData["teacher"]}, 時間 : ${lessonData["time"]}`,
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: '是',
+                    cancelButtonText: '否',
+                    reverseButtons: true
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = `./lesson.html?room=${lessonLink}`;
+                    }
+                })
+            }
+        })
+    })
+
+
 }

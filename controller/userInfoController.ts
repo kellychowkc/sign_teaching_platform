@@ -31,7 +31,7 @@ export class UserInfoController {
                 res.status(401).json({ success: false, message: "Not This User" });
                 return;
             } else {
-                res.status(200).json({ success: true, message: userData});
+                res.status(200).json({ success: true, message: userData });
             }
         }
         catch (err) {
@@ -48,9 +48,6 @@ export class UserInfoController {
             const newData: { username: string, firstName: string, lastName: string, email: string, phoneNum: number } = req.body;
             const result = await this.userInfoService.editUserInfo(userId, newData);
             if (result) {
-                res.status(400).json({ success: false, message: "Edit Error" });
-                return;
-            } else {
                 res.status(200).json({ success: true, message: "Edit Success" });
             }
         }
