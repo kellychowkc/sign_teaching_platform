@@ -180,18 +180,29 @@ export class TeacherService {
     }
 
     async insertLessonLink(id: number, link: string) {
-        return this.knex("lessons")
+        const matchLink: Array<{ id: number}> = 
+            await this.knex("lessons")
+                .select("id")
+                .where("lesson_link", link);
+        if (matchLink.length > 0) {
+            return false;
+        } else {
+            await this.knex("lessons")
             .update({
                 lesson_link: link
             })
             .where("id", id);
+            return true;
+        }
+        
     }
 
 
     async editLessonData(id: number, link: string, status: string) {
         return this.knex("lessons")
             .update({
-                lesson_link: link, status: status
+                lesson_link: link, 
+                status: status
             })
             .where("id", id);
     }

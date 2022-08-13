@@ -146,8 +146,10 @@ export class TeacherController {
             const lessonId = parseInt(req.body["id"] as string, 10);
             const lessonLink = await req.body["link"] as string;
             const result = await this.teacherService.insertLessonLink(lessonId, lessonLink);
-            if (result) {
+            if (result === true) {
                 res.status(200).json({ success: true, message: "Edit Success" });
+            } else {
+                res.status(200).json({ success: false, message: "Edit Unsuccess" });
             }
         }
         catch (err) {
