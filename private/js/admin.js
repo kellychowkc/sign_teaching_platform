@@ -1,15 +1,11 @@
 import { navbarCreate } from "/js/navbar.js";
 
+console.log("running admin.js")
+
 window.onload = () => {
     navbarCreate();
-    // loadTeachingData();
     loadDifferentPage();
 };
-
-// only one page:
-// const leftBox = document.querySelector(".left_box")
-// console.log("this is leftBox:", leftBox)
-// removeChildElement(contentElement, leftBox);
 
 function loadDifferentPage() {
     const queryParams = new URLSearchParams(window.location.search);
@@ -18,13 +14,48 @@ function loadDifferentPage() {
         loadTeachingData();
     } else if (status === "usersControl") {
         getAllUser()
-    } else if(status === "lectureDetail"){
+    } else if (status === "lectureDetail") {
         loadingLectureDetail()
-    } else if(status === "lecture"){
+    } else if (status === "lecture") {
         loadingLecture();
     }
 }
-console.log("running admin.js")
+
+async function deleting() {
+    // different situation
+    let params = new URLSearchParams(window.location.search);
+    let status = params.get("status");
+    const allChecked = document.querySelectorAll("input[name=checkbox]:checked")
+    console.log("this is allChecked:", allChecked)
+    const checkArr = Array.from(allChecked).map(checkbox => checkbox.value)
+    console.log("this is checkArr:", checkArr)
+    let resp;
+    // const checkArrJson = checkArr.
+    if (status === "teaching") {
+        resp = await fetch(`/admin/teachingData`, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json; charset=utf-8"
+            },
+            body: JSON.stringify({ checkedArr: checkArr }),
+        });
+    }else if(status === "usersControl"){
+        resp = await fetch(`/admin/userData`, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json; charset=utf-8"
+            },
+            body: JSON.stringify({ checkedArr: checkArr }),
+        });
+
+    }
+    let result = await resp.json();
+        if (result.success === true) {
+            //sweet alert!!
+            location.reload();
+        }
+}
+
 
 const styles = /**css */`padding: 30px;`;
 const stylesTeaching = /**css */`padding: 30px;display: flex;justify-content: center;align-items: center; flex-wrap: wrap;`;
@@ -47,8 +78,6 @@ function removeChildElement(parent, target = 1) {
     console.log("removing...")
     if (Number(target)) {
         for (let i = 0; i = parent.childElementCount; i++) {
-            console.log("this is childCount:", parent.childElementCount)
-            console.log("removing...", parent.firstElementChild)
             parent.removeChild(parent.firstElementChild)
         }
         return
@@ -60,20 +89,10 @@ function removeChildElement(parent, target = 1) {
 
 
 
-
 // 教學
-document.querySelector("#teaching").addEventListener("click", async() => {
+document.querySelector("#teaching").addEventListener("click", async () => {
     window.location.href = "admin.html?status=teaching"
     await loadTeachingData();
-    document.querySelector(".deleting").addEventListener("click"), (event) => {
-        event.preventDefault()
-        const listTable = document.querySelectorAll(".items");
-        let listArr = [];
-        for (let items of listTable) {
-            listArr.push(items["value"])
-        }
-        console.log("this is listTable:", listTable)
-    }
 })
 
 async function loadTeachingData() {
@@ -81,64 +100,62 @@ async function loadTeachingData() {
     const page = queryParams.get("page") || 1;
     const resp = await fetch(`/admin/teachingData?page=${page}`, { method: "GET" });
     const result = await resp.json();
-    teaching(result["current_page"],result["total_page"], result["data"]);
-    document.querySelector(".submitVideo").addEventListener("click", (event) => {
-        deleteWord(event)
-    })
-}
+    // 
+    // teaching(result["current_page"], result["total_page"], result["data"]);
+    showSearchWord(result["current_page"], result["total_page"], result["data"]);
 
-function deleteWord(event){
-    event.preventDefault();
+    document.querySelector(".deleting").addEventListener("click", () => {
+        const deleteButton = document.querySelector(".deleting")
+        deleting()
+    })
+
+    document.querySelector(".submitVideo").addEventListener("click", (event) => {
+        event.preventDefault();
         const form = document.querySelector(".content_form")
         uploadFile(form)
-}
-async function uploadFile(form) {
-    const files = document.getElementById("myFile").files
-    const formData = new FormData();
+    })
 
-    if (files.length > 1 || files.length === 0) {
-        alert("Please upload One video");
-        return;
-    }
+    const textInputElement = document.querySelector('input[name=search]');
+    textInputElement.addEventListener('keyup', async function () {
+        let text = textInputElement.value;
 
-    formData.append("title", form.title.value)
-    formData.append("files", files[0]);
-    console.log("this is files:", files[0])
+        console.log("this is text:", text)
+        let resp = await fetch(`/admin/teachingData?page=${page}&text=${text}`, { method: "GET" });
+        let result = await resp.json();
+        // console.log("this is search result:", result["data"])
+        showSearchWord(result["current_page"], result["total_page"], result["data"])
+    })
 
-    const resp = await fetch("/admin/video", {
-        method: "POST",
-        body: formData
-    });
 }
 
-function teaching(current_page,total_page, data) {
-    console.log("this is result", typeof (data))
+function showSearchWord(current_page, total_page, data) {
     let items = ``;
     let pages = ``;
+    let up = ``;
+    let down = ``;
     if (data) {
-        for (let i = 0; i < data.length; i++) {
-            console.log("this is item", data[i]["label"])
-            const title = data[i]["label"]
-            items += `
-            <tr class="table-rows">
-                <td class="items">${title}<input type="checkbox" id="${title}" name="${title}" value="${title}"></td>
-            </tr>`;
-        }
-        for (let i = 0; i < total_page; i++) {
-            pages += `
-            <li class="page-item"><a class="page-link" href="?status=teaching&page=${i + 1}">${i + 1}</a></li>`;
-        }
-    }
-    let up =``;
-    let down =``;
-    if(current_page - 1 !== 0 && !(current_page + 1 > total_page) ){
-        up += `<a class="page-link" href="?status=teaching&page=${current_page-1}" aria-label="Previous">`
-        down += ` <a class="page-link" href="?status=teaching&page=${current_page+1}" aria-label="Next">`
-    }else{
-        up += `<a class="page-link" href="?status=teaching&page=${current_page}" aria-label="Previous">`
-        down += ` <a class="page-link" href="?status=teaching&page=${current_page}" aria-label="Next">`
-    }
-    newContentLeft = `
+
+        if (typeof (data[0]) === "object") {
+            // console.log("this is data:", data)
+            if (current_page - 1 !== 0 && !(current_page + 1 > total_page)) {
+                up += `<a class="page-link" href="?status=teaching&page=${current_page - 1}" aria-label="Previous">`
+                down += ` <a class="page-link" href="?status=teaching&page=${current_page + 1}" aria-label="Next">`
+            } else {
+                up += `<a class="page-link" href="?status=teaching&page=${current_page}" aria-label="Previous">`
+                down += ` <a class="page-link" href="?status=teaching&page=${current_page}" aria-label="Next">`
+            }
+            for (let i = 0; i < data.length; i++) {
+                const title = data[i]["label"]
+                items += `
+                <tr class="table-rows">
+                    <td class="items">${title}<input type="checkbox" name="checkbox"id="${title}" name="${title}" value="${title}"></td>
+                </tr>`;
+            }
+            for (let i = 0; i < total_page; i++) {
+                pages += `
+                <li class="page-items"><a class="page-link" href="?status=teaching&page=${i + 1}">${i + 1}</a></li>`;
+            }
+            newContentLeft = `
 <div class="system_buttons">
     <div class="system_button adding_word">
         <div class="button_img"><img src="/assets/admin/add.gif" alt="adding_word"></div>
@@ -149,7 +166,7 @@ function teaching(current_page,total_page, data) {
     <div class="title">已有詞語</div>
     <div class="display_word words_box">
         <div class="words_form">
-            <form action="/action_page.php">
+            <div>
                 <input type="text" placeholder="Search.." name="search">
                 <button type="submit" class="searching"><img src="/assets/admin/searching.png" /></button>
                 <input type="submit" class="deleting" value="刪除"><br>
@@ -157,7 +174,7 @@ function teaching(current_page,total_page, data) {
                     <table id="table">
                     ${items}
                     </table>
-            </form>
+            </div>
         </div>
     </div>
     <nav aria-label="Page navigation example" class="page_box">
@@ -177,13 +194,11 @@ function teaching(current_page,total_page, data) {
     </nav>
 </div>
 `;
-    createLeftBox.innerHTML = newContentLeft;
-    contentElement.appendChild(createLeftBox);
-    //changing right_box
-    //getting info
-    //table list
-    //pageNumb
-    const newContentRight = `
+
+            createLeftBox.innerHTML = newContentLeft;
+            contentElement.appendChild(createLeftBox);
+
+            const newContentRight = `
 <form action="/action_page.php" class="content_form">
     <div class="container uploadVideo">
         <h1>上載影片</h1>
@@ -206,28 +221,107 @@ function teaching(current_page,total_page, data) {
     </div>
 
 </form>`;
-    createRightBox.innerHTML = newContentRight;
-    contentElement.appendChild(createRightBox);
-    const rightBox = document.querySelector(".right_box");
-    rightBox.setAttribute("style", `${stylesTeaching}`)
+            createRightBox.innerHTML = newContentRight;
+            contentElement.appendChild(createRightBox);
+            const rightBox = document.querySelector(".right_box");
+            rightBox.setAttribute("style", `${stylesTeaching}`)
+
+        } else if (Array.isArray(data) && data[0].length !== 0) {
+
+            console.log("this is searching data:", data)
+            const tableParent = document.querySelector("tbody");
+            let createTr = document.createElement("tr");
+            createTr.className = "table-rows";
+            removeChildElement(tableParent);
+            let newTable;
+
+
+            const pageParent = document.querySelector("nav.page_box");
+            let createPageParent = document.createElement("ul");
+            createPageParent.className = "pagination";
+            removeChildElement(pageParent);
+
+            for (let i = 0; i < data.length; i++) {
+                const title = data[i]
+                items += `
+                    <td class="items">${title}<input type="checkbox" name="checkbox" id="${title}" name="${title}" value="${title}"></td>
+                `;
+            }
+
+            console.log("this is pages2:", pages)
+            console.log("this is pageNum:", total_page)
+
+            for (let i = 0; i < total_page; i++) {
+                pages += `
+                <li class="page-items"><a class="page-link" href="?status=teaching&page=${i + 1}">${i + 1}</a></li>`;
+            }
+
+            if (current_page - 1 !== 0 && !(current_page + 1 > total_page)) {
+                up += `<li class="page-item"><a class="page-link" href="?status=teaching&page=${current_page - 1}" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>`
+                down += `<li class="page-item"><a class="page-link" href="?status=teaching&page=${current_page + 1}" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>`
+            } else {
+                up += `<li class="page-item"><a class="page-link" href="?status=teaching&page=${current_page}" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>`
+                down += ` <li class="page-item"><a class="page-link" href="?status=teaching&page=${current_page}" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>`
+            }
+
+            newTable = items;
+            let pagination = `${up}${pages}${down}`
+            // console.log("this is pagination:", pagination)
+            console.log("this is pageParent:", pageParent)
+            console.log("this is up:", up)
+            console.log("this is pages:", pages)
+            console.log("this is down:", down)
+            createPageParent.innerHTML = pagination;
+            pageParent.appendChild(createPageParent)
+
+            createTr.innerHTML = newTable;
+            tableParent.appendChild(createTr);
+        }
+    }
 }
+
+
+async function uploadFile(form) {
+    const files = document.getElementById("myFile").files
+    const formData = new FormData();
+
+    if (files.length > 1 || files.length === 0) {
+        alert("Please upload One video");
+        return;
+    }
+
+    formData.append("title", form.title.value)
+    formData.append("files", files[0]);
+    console.log("this is files:", files[0])
+
+    const resp = await fetch("/admin/video", {
+        method: "POST",
+        body: formData
+    });
+    const result = await resp.json();
+    if (result.success === true) {
+        //sweet alert!!
+        location.reload();
+    }
+}
+
 
 
 
 
 // 課程（更新）
 
-async function loadingLecture(){
+async function loadingLecture() {
     const queryParams = new URLSearchParams(window.location.search);
     const page = queryParams.get("page") || 1;
     const resp = await fetch(`/admin/lectureData?page=${page}`, { method: "GET" })
     const result = await resp.json()
     console.log("this is getAllUser", result)
-    if (result.success === true && result.data) {
-        lecture(result["current_page"],result["total_page"], result["data"])
-    }
+    // if (result.success === true && result.data) {
+    //     lecture(result["current_page"],result["total_page"], result["data"])
+    // }
 }
-function lecture(current_page,total_page,data) {
+function lecture(current_page, total_page, data) {
     removeChildElement(contentElement);
     let items = ``;
     let pages = ``;
@@ -251,12 +345,12 @@ function lecture(current_page,total_page,data) {
             <li class="page-item"><a class="page-link" href="?status=teaching&page=${i + 1}">${i + 1}</a></li>`;
         }
     }
-    let up =``;
-    let down =``;
-    if(current_page - 1 !== 0 && !(current_page + 1 > total_page) ){
-        up += `<a class="page-link" href="?status=teaching&page=${current_page-1}" aria-label="Previous">`
-        down += ` <a class="page-link" href="?status=teaching&page=${current_page+1}" aria-label="Next">`
-    }else{
+    let up = ``;
+    let down = ``;
+    if (current_page - 1 !== 0 && !(current_page + 1 > total_page)) {
+        up += `<a class="page-link" href="?status=teaching&page=${current_page - 1}" aria-label="Previous">`
+        down += ` <a class="page-link" href="?status=teaching&page=${current_page + 1}" aria-label="Next">`
+    } else {
         up += `<a class="page-link" href="?status=teaching&page=${current_page}" aria-label="Previous">`
         down += ` <a class="page-link" href="?status=teaching&page=${current_page}" aria-label="Next">`
     }
@@ -302,7 +396,7 @@ function lecture(current_page,total_page,data) {
                     <td>Jason</td>
                     <td>星期五</td>
                     <td>7:00p.m
-                        <input type="checkbox" id="麵包" name="words" value="麵包">
+                        <input type="checkbox" name="checkbox" id="麵包" name="words" value="麵包">
                     </td>
                 </tr>
             </tbody>
@@ -349,14 +443,14 @@ document.querySelector("#lecture").addEventListener("click", () => {
 
 
 // 課程（詳情）
-async function loadingLectureDetail(){
+async function loadingLectureDetail() {
     const queryParams = new URLSearchParams(window.location.search);
     const page = queryParams.get("page") || 1;
     const resp = await fetch(`/admin/allUser?page=${page}`, { method: "GET" })
     const result = await resp.json()
     console.log("this is getAllUser", result)
     if (result.success === true && result.data) {
-        usersControl(result["current_page"],result["total_page"], result["data"])
+        usersControl(result["current_page"], result["total_page"], result["data"])
     }
 }
 function lectureDetail() {
@@ -452,7 +546,7 @@ function lectureDetail() {
 
 
 // 用戶管理
-function usersControl(current_page,total_page, userData) {
+function usersControl(current_page, total_page, userData) {
 
     let items = ``;
     let pages = ``;
@@ -465,7 +559,7 @@ function usersControl(current_page,total_page, userData) {
         <tr class="table-rows">
             <th scope="row">${userId}</th>
             <td>${userName}</td>
-            <td>${userIdentity} <input type="checkbox" id="${userName}" name="${userName}" value="${userName}">
+            <td>${userIdentity} <input type="checkbox" name="checkbox" id="${userName}" name="${userName}" value="${userName}">
             </td>
         </tr>`
         }
@@ -490,16 +584,16 @@ function usersControl(current_page,total_page, userData) {
     //pageNumb
     let up = ``;
     let down = ``;
-    if(current_page - 1 !== 0 && !(current_page + 1 > total_page) ){
-        up += `<a class="page-link" href="?status=usersControl&page=${current_page-1}" aria-label="Previous">`
-        down += ` <a class="page-link" href="?status=usersControl&page=${current_page+1}" aria-label="Next">`
-    }else{
+    if (current_page - 1 !== 0 && !(current_page + 1 > total_page)) {
+        up += `<a class="page-link" href="?status=usersControl&page=${current_page - 1}" aria-label="Previous">`
+        down += ` <a class="page-link" href="?status=usersControl&page=${current_page + 1}" aria-label="Next">`
+    } else {
         up += `<a class="page-link" href="?status=usersControl&page=${current_page}" aria-label="Previous">`
         down += ` <a class="page-link" href="?status=usersControl&page=${current_page}" aria-label="Next">`
     }
     const newContentRight = `
     <h3 class="title">所有用家</h3><br>
-    <form action="/action_page.php" class="lecture_form">
+    <div class="lecture_form">
         <div class="changing_identity_box">
             <input type="text" placeholder="Search.." name="search">
             <button type="submit" class="searching"><img src="/assets/admin/searching.png" /></button>
@@ -519,7 +613,7 @@ function usersControl(current_page,total_page, userData) {
                     </tbody>
                 </table>
             </div>
-    </form>
+    </div>
     <nav aria-label="Page navigation example" class="page_box">
         <ul class="pagination">
             <li class="page-item">
@@ -542,6 +636,10 @@ function usersControl(current_page,total_page, userData) {
     const rightBox = document.querySelector(".right_box");
 
     rightBox.setAttribute("style", `${styles}`)
+    document.querySelector(".deleting").addEventListener("click", () => {
+        const deleteButton = document.querySelector(".deleting")
+        deleting()
+    })
 }
 document.querySelector("#users_control").addEventListener("click", () => {
     window.location.href = "admin.html?status=usersControl"
@@ -554,7 +652,7 @@ async function getAllUser() {
     const result = await resp.json()
     console.log("this is getAllUser", result)
     if (result.success === true && result.data) {
-        usersControl(result["current_page"],result["total_page"], result["data"])
+        usersControl(result["current_page"], result["total_page"], result["data"])
     }
 }
 
