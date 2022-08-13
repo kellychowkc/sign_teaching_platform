@@ -99,7 +99,7 @@ function enterLesson() {
                     reverseButtons: true
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        window.location.href = `./lesson.html?room=${lessonLink}`;
+                        window.location.href = `./onlineLesson.html?room=${lessonLink}`;
                     }
                 })
             }

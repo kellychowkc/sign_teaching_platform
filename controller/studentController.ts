@@ -172,7 +172,10 @@ export class StudentController {
     displayLessonForStudent = async (req: Request, res: Response) => {
         try {
             const userId = parseInt(req.session["user"].id as string, 10);
-            const lessonData = await this.studentService.getLessonLinkForStudent(userId);
+            const today = new Date(Date.now());
+            const upLimitDay = new Date(today.setDate(today.getDate() + 90));
+            const downLimitDay = new Date(today.setDate(today.getDate() - 90));
+            const lessonData = await this.studentService.getLessonForStudent(userId, upLimitDay, downLimitDay);
             res.status(200).json({ success: true, message: lessonData });
         }
         catch (err) {
