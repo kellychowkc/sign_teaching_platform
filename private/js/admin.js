@@ -7,7 +7,7 @@ window.onload = () => {
     footer();
 };
 
-function userNavbar(){
+function userNavbar() {
     document.querySelector("#header").innerHTML = `
     <nav class="navbar navbar-expand-lg navbar-light bg-light py-3">
     <div class="container">
@@ -119,13 +119,13 @@ async function deleting() {
     if (result.success === true) {
         Swal.fire({
             icon: "success",
-            title: result.message,
+            title: "success",
             showConfirmButton: false,
             timer: 1500,
-        }).then(()=>{location.reload();})
+        }).then(() => { location.reload(); })
         // location.reload();
     }
-    
+
 }
 
 
@@ -200,7 +200,7 @@ async function showVideo(label) {
     </div>
 </div>
 `
-    console.log("this is video_box:",video_box)
+    console.log("this is video_box:", video_box)
     document.querySelector(".video_container").innerHTML = video_box;
     document.querySelector(".close").addEventListener("click", () => {
         const video_box = document.querySelector(".video_box")
@@ -224,7 +224,7 @@ function showWord(current_page, total_page, data) {
     let pages = ``;
     let up = ``;
     let down = ``;
-    console.log("this is data:",data)
+    console.log("this is data:", data)
     if (data) {
         // init data
         if (typeof (data[0]) === "object") {
@@ -321,6 +321,24 @@ function showWord(current_page, total_page, data) {
             const rightBox = document.querySelector(".right_box");
             rightBox.setAttribute("style", `${stylesTeaching}`)
 
+            const showVideoButton = document.querySelectorAll(".itemsIndex")
+            showVideoButton.forEach(item => item.addEventListener("click", () => {
+                console.log("this is value:", item.id)
+                if (item.id) {
+                    showVideo(item.id)
+                }
+            }))
+
+            const textInputElement = document.querySelector('input[name=search]');
+        textInputElement.addEventListener('keyup', async function () {
+            let text = textInputElement.value;
+            console.log("this is text:", text)
+            let resp = await fetch(`/admin/teachingData?page=${page}&text=${text}`, { method: "GET" });
+            let result = await resp.json();
+            // console.log("this is search result:", result["data"])
+            showWord(result["current_page"], result["total_page"], result["data"])
+        })
+
         } else if (Array.isArray(data) && data[0].length !== 0) {
 
             console.log("this is searching data:", data)
@@ -369,6 +387,23 @@ function showWord(current_page, total_page, data) {
 
             tableParent.innerHTML = items;
             // tableParent.appendChild(createTable);
+            const showVideoButton = document.querySelectorAll(".itemsIndex")
+            showVideoButton.forEach(item => item.addEventListener("click", () => {
+                console.log("this is value:", item.id)
+                if (item.id) {
+                    showVideo(item.id)
+                }
+            }))
+
+            const textInputElement = document.querySelector('input[name=search]');
+        textInputElement.addEventListener('keyup', async function () {
+            let text = textInputElement.value;
+            console.log("this is text:", text)
+            let resp = await fetch(`/admin/teachingData?page=${page}&text=${text}`, { method: "GET" });
+            let result = await resp.json();
+            // console.log("this is search result:", result["data"])
+            showWord(result["current_page"], result["total_page"], result["data"])
+        })
         }
     } else {
         items = /**html */`<tr class="table-rows">
@@ -432,7 +467,7 @@ function showWord(current_page, total_page, data) {
 
 
     <label for="fn" class="uploading"><b>詞語： </b></label>
-    <input type="text" placeholder="輸入格式為HKsl_(english).mp4" name="title" id="title" required />
+    <input type="text" placeholder="輸入格式為Hksl_(english).mp4" name="title" id="title" required />
     <br><br>
 
     <label for="file"><b>選擇上載文件 : </b></label>
@@ -451,6 +486,7 @@ function showWord(current_page, total_page, data) {
         contentElement.appendChild(createRightBox);
         const rightBox = document.querySelector(".right_box");
         rightBox.setAttribute("style", `${stylesTeaching}`)
+        
 
     }
 }
@@ -460,9 +496,10 @@ async function uploadFile() {
     let form = document.querySelector(".content_form")
     const files = document.getElementById("myFile").files
     const formData = new FormData();
-    // console.log("this is form title:",form.title.value.length)
+    const field = form.title.value
+    console.log("this is field:", field.substring(0, 4))
 
-    if (files.length > 1 || files.length === 0 || form.title.value.length === 0) {
+    if (files.length > 1 || files.length === 0 || field.length === 0) {
         Swal.fire({
             icon: "error",
             title: "Please input all the fields",
@@ -470,6 +507,14 @@ async function uploadFile() {
             timer: 1500,
         })
         return;
+    } else if (field.substring(0, 5) !== "Hksl_") {
+        Swal.fire({
+            icon: "error",
+            title: "Title should be 'Hksl_'",
+            showConfirmButton: false,
+            timer: 1500,
+        })
+        return
     }
 
     formData.append("title", form.title.value)
@@ -484,17 +529,17 @@ async function uploadFile() {
     if (result.success === true) {
         Swal.fire({
             icon: "success",
-            title: result.message,
+            title: "success",
             showConfirmButton: false,
             timer: 1500,
-        }).then(()=>{location.reload();})
+        }).then(() => { location.reload(); })
     } else {
         Swal.fire({
             icon: "error",
             title: result.message,
             showConfirmButton: false,
             timer: 1500,
-        }).then(()=>{location.reload();})
+        }).then(() => { location.reload(); })
     }
 }
 
@@ -637,7 +682,6 @@ async function loadingLectureDetail() {
     const result = await resp.json()
 
     if (result.success === true && result.message === "Get users") {
-        console.log("??")
         usersControl(result["current_page"], result["total_page"], result["data"])
     }
 }
@@ -772,56 +816,56 @@ async function getAllUser() {
         usersControl()
     }
 }
-function showSearchUser(current_page, total_page, userData){
+function showSearchUser(current_page, total_page, userData) {
 
-        console.log("this is searching data:", userData)
-        let items = ``;
-        let pages = ``;
-        let up = ``;
-        let down = ``;
-        // table 1. delete children of parentElement; 2.create its first children
-        const tableParent = document.querySelector("tbody");
-        removeChildElement(tableParent);
+    console.log("this is searching data:", userData)
+    let items = ``;
+    let pages = ``;
+    let up = ``;
+    let down = ``;
+    // table 1. delete children of parentElement; 2.create its first children
+    const tableParent = document.querySelector("tbody");
+    removeChildElement(tableParent);
 
-        // pagination
-        const pageParent = document.querySelector("nav.page_box");
-        let createPageParent = document.createElement("ul");
-        createPageParent.className = "pagination";
-        removeChildElement(pageParent);
-    
-        for (let i = 0; i < userData.length; i++) {
-            const userName = userData[i]["username"];
+    // pagination
+    const pageParent = document.querySelector("nav.page_box");
+    let createPageParent = document.createElement("ul");
+    createPageParent.className = "pagination";
+    removeChildElement(pageParent);
+
+    for (let i = 0; i < userData.length; i++) {
+        const userName = userData[i]["username"];
         const userIdentity = userData[i]["identity"];
-            items += `
+        items += `
                 <tr class="table-rows"> <th scope="row">${i + 1}</th><td>${userName}</td> <td>${userIdentity} <input type="checkbox" name="checkbox" id="${userName}" name="${userName}" value="${userName}">
                 </td></tr>
             `;
-        }
+    }
 
-        console.log("this is pages2:", pages)
-        console.log("this is pageNum:", total_page)
+    console.log("this is pages2:", pages)
+    console.log("this is pageNum:", total_page)
 
-        for (let i = 0; i < total_page; i++) {
-            pages += `
+    for (let i = 0; i < total_page; i++) {
+        pages += `
             <li class="page-items"><a class="page-link" href="?status=teaching&page=${i + 1}">${i + 1}</a></li>`;
-        }
+    }
 
-        if (current_page - 1 !== 0 && !(current_page + 1 > total_page)) {
-            up += `<li class="page-item"><a class="page-link" href="?status=teaching&page=${current_page - 1}" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>`
-            down += `<li class="page-item"><a class="page-link" href="?status=teaching&page=${current_page + 1}" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>`
-        } else {
-            up += `<li class="page-item"><a class="page-link" href="?status=teaching&page=${current_page}" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>`
-            down += ` <li class="page-item"><a class="page-link" href="?status=teaching&page=${current_page}" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>`
-        }
+    if (current_page - 1 !== 0 && !(current_page + 1 > total_page)) {
+        up += `<li class="page-item"><a class="page-link" href="?status=teaching&page=${current_page - 1}" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>`
+        down += `<li class="page-item"><a class="page-link" href="?status=teaching&page=${current_page + 1}" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>`
+    } else {
+        up += `<li class="page-item"><a class="page-link" href="?status=teaching&page=${current_page}" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>`
+        down += ` <li class="page-item"><a class="page-link" href="?status=teaching&page=${current_page}" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>`
+    }
 
-        let pagination = `${up}${pages}${down}`
+    let pagination = `${up}${pages}${down}`
 
-        createPageParent.innerHTML = pagination;
-        pageParent.appendChild(createPageParent)
+    createPageParent.innerHTML = pagination;
+    pageParent.appendChild(createPageParent)
 
 
-        tableParent.innerHTML = items;
-        // tableParent.appendChild(createTable);
+    tableParent.innerHTML = items;
+    // tableParent.appendChild(createTable);
 
 }
 // display with init data 
@@ -830,7 +874,7 @@ function usersControl(current_page = 1, total_page = 1, userData = 1) {
     let pages = ``;
 
     // if there are data
-    console.log("this is usersControl data:",userData)
+    console.log("this is usersControl data:", userData)
     if (typeof (userData) !== Number) {
         // removeChildElement(contentElement)
         console.log("this is have init data")
@@ -877,12 +921,12 @@ function usersControl(current_page = 1, total_page = 1, userData = 1) {
         down += ` <a class="page-link" href="?status=usersControl&page=${current_page}" aria-label="Next">`
     }
     const newContentRight = `
-    <h3 class="title">所有用家</h3><br>
+    <h3 class="title">所有用戶</h3><br>
     <div class="lecture_form">
         <div class="changing_identity_box">
             <input type="text" placeholder="Search.." name="search">
             <button type="submit" class="searching"><img src="/assets/admin/searching.png" /></button>
-            <button class="change_to_teacher">轉為老師</button>
+            <button class="change_to_teacher">切換角色</button>
             <button class="deleting deleting_user">刪除</button><br>
             <div class="showing_table_box">
                 <table class="lecture_table">
@@ -935,9 +979,9 @@ async function changeToTeacher() {
     let params = new URLSearchParams(window.location.search);
     let status = params.get("status");
     const allChecked = document.querySelectorAll("input[name=checkbox]:checked")
-    // console.log("this is allChecked:", allChecked)
+    console.log("this is allChecked:", allChecked)
     const checkArr = Array.from(allChecked).map(checkbox => checkbox.value)
-    // console.log("this is checkArr:", checkArr)
+    console.log("this is checkArr:", checkArr)
     const resp = await fetch("/admin/userData", {
         method: "PUT",
         headers: {
@@ -949,10 +993,10 @@ async function changeToTeacher() {
     if (result.success === true) {
         Swal.fire({
             icon: "success",
-            title: result.message,
+            title: "success",
             showConfirmButton: false,
             timer: 1500,
-        }).then(()=>{location.reload();})
+        }).then(() => { location.reload(); })
         return;
     }
     Swal.fire({
@@ -960,7 +1004,7 @@ async function changeToTeacher() {
         title: result.message,
         showConfirmButton: false,
         timer: 1500,
-    }).then(()=>{location.reload();})
+    }).then(() => { location.reload(); })
 }
 
 
@@ -1017,19 +1061,19 @@ async function changeAdminInfo() {
 
     if (adminForm.password.value !== adminForm.confirm_password.value) {
         Swal.fire({
-            icon: "success",
-            title: result.message,
+            icon: "error",
+            title: "Passwords are not the same",
             showConfirmButton: false,
             timer: 1500,
-        }).then(()=>{location.reload();})
+        })
         return
     } else if (adminForm.email.value === "" || adminForm.password.value === "" || adminForm.confirm_password.value === "") {
         Swal.fire({
             icon: "error",
-            title: result.message,
+            title: "Please fill in all the fields",
             showConfirmButton: false,
             timer: 1500,
-        }).then(()=>{location.reload();})
+        })
         return
     }
     adminFormData.append("email", adminForm.email.value)
@@ -1044,10 +1088,10 @@ async function changeAdminInfo() {
     if (result.success === true) {
         Swal.fire({
             icon: "success",
-            title: result.message,
+            title: "success",
             showConfirmButton: false,
             timer: 1500,
-        }).then(()=>{location.reload();})
+        }).then(() => { location.reload(); })
     }
 }
 
@@ -1145,7 +1189,7 @@ function logout() {
                     }
                 }
             });
-            console.log("logouttt3")
+        console.log("logouttt3")
     });
 
 }

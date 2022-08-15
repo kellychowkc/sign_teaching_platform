@@ -143,7 +143,7 @@ export class AdminController {
     getAllUser = async (req: Request, res: Response) => {
         try {
             const userId = parseInt(req.session["user"].id as string, 10);
-            const NUM_PER_PAGE = 5;
+            const NUM_PER_PAGE = 10;
             let page = parseInt(req.query.page as string, 10);
             let text = req.query.text;
             // console.log("this is text:", text)
@@ -205,16 +205,13 @@ export class AdminController {
     }
     changeToTeacher = async (req: Request, res: Response) => {
         try {
-            console.log("this is hiii:");
+            // console.log("this is hiii:");
             const checkedArr = req.body.checkedArr;
-            console.log("this is changeToTeacher111:", checkedArr)
-            const result = await this.adminService.changeToTeacher(checkedArr);
-            console.log("this is changeToTeacher222:", checkedArr)
-            if (result!) {
+            // console.log("this is changeToTeacher111:", checkedArr)
+            await this.adminService.changeToTeacher(checkedArr);
+            // console.log("this is changeToTeacher222:", checkedArr)
                 res.status(200).json({ success: true ,message: "Success"})
-            } else {
-                res.status(400).json({ success: false, message: "Fail to insert into database" });
-            }
+  
         }
         catch (err) {
             logger.error(err.toString());
