@@ -76,6 +76,7 @@ import { userInfoRoutes } from "./routers/userInfoRoutes";
 import { signRoutes } from "./routers/signRoutes";
 
 import { adminRoutes } from "./routers/adminRoutes";
+import {isLoggedInAdmin} from "./middleware/isLoggedInGuard";
 
 //route handling
 app.use("/signUp", signUpRoutes);
@@ -85,7 +86,7 @@ app.use("/logOut", logOutRoutes);
 app.use("/userInfo", userInfoRoutes);
 
 app.use("/sign", signRoutes);
-app.use("/admin", adminRoutes);
+app.use("/admin",isLoggedInAdmin,adminRoutes);
 
 //folder path
 app.use(express.static(path.join(__dirname, "public")));

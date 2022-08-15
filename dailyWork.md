@@ -77,7 +77,7 @@
 - [x] feature
 - [x] combine
 2. isLoggedInAPI
-- [ ] adding...
+- [x] adding...
 3. testCase
 - [ ] any
 4. login test
@@ -89,9 +89,9 @@
 - [ ] realTime
 7. admin page
 - [x] ui
-- [ ] ui logic
-- [ ] router
-- [ ] server
+- [x] ui logic
+- [x] router
+- [x] server
 8. style
 - [ ] admin.html
 - [ ] freeVideo.html
@@ -113,8 +113,8 @@
 - [x] linking all the pages
 3. try get value
 - [x] checkbox
-- [ ] search
-- [ ] text
+- [x] search
+- [x] text
 4. req
 5. database
 - [ ] Word -- create/, show/, delete, edit
@@ -126,7 +126,7 @@
 - [ ] fancy effect: design, animation
 - [ ] sweetAlert
 - [ ] css: lecture form
-- [ ] show logic: img / openClass, pageNum...
+- [x] show logic: img / openClass, pageNum...
 
 
 
