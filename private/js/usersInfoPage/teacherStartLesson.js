@@ -78,9 +78,9 @@ function createLesson() {
             const lessonId = lesson.getAttribute("value");
             const data = { id: lessonId };
             const resp = await fetch("/userInfo/displayLessonDataForTeacher", {
-                method: 'POST',
+                method: "POST",
                 headers: {
-                    'Content-Type': 'application/json',
+                    "Content-Type": "application/json",
                 },
                 body: JSON.stringify(data),
             });
@@ -89,25 +89,25 @@ function createLesson() {
                 const lessonData = result.message;
                 const swalWithBootstrapButtons = Swal.mixin({
                     customClass: {
-                        confirmButton: 'btn btn-success',
-                        cancelButton: 'btn btn-danger'
+                        confirmButton: "btn btn-success",
+                        cancelButton: "btn btn-danger"
                     },
                     buttonsStyling: false
                 })
 
                 swalWithBootstrapButtons.fire({
-                    title: '是否要開設課室？',
+                    title: "是否要開設課室？",
                     text: `學生 : ${lessonData["student"]}, 時間 : ${lessonData["time"]}`,
-                    icon: 'warning',
+                    icon: "warning",
                     showCancelButton: true,
-                    confirmButtonText: '是',
-                    cancelButtonText: '否',
+                    confirmButtonText: "是",
+                    cancelButtonText: "否",
                     reverseButtons: true
                 }).then(async (result) => {
                     if (result.isConfirmed) {
                         const { value: roomCode } = await Swal.fire({
-                            title: '請創立課室編號',
-                            input: 'text',
+                            title: "請創立課室編號",
+                            input: "text",
                         })
                         if (roomCode) {
                             const lessonRecord = {};
@@ -116,14 +116,14 @@ function createLesson() {
                             const resp = await fetch("/userInfo/createLessonLink", {
                                 method: "POST",
                                 headers: {
-                                    'Content-Type': 'application/json',
+                                    "Content-Type": "application/json",
                                 },
                                 body: JSON.stringify(lessonRecord),
                             })
                             const result = await resp.json();
                             if (result.success === true) {
                                 Swal.fire({
-                                    icon: 'success',
+                                    icon: "success",
                                     title: "已創立課室",
                                     showConfirmButton: false,
                                     timer: 1500
@@ -132,8 +132,9 @@ function createLesson() {
                                 })
                             } else {
                                 Swal.fire({
-                                    icon: 'error',
+                                    icon: "error",
                                     title: "創立失敗",
+                                    text: "請使用其他課室編號",
                                     showConfirmButton: false,
                                     timer: 1500
                                 }).then(function () {
@@ -157,9 +158,9 @@ function enterLesson() {
             const lessonId = lesson.getAttribute("value");
             const data = { id: lessonId };
             const resp = await fetch("/userInfo/displayLessonDataForTeacher", {
-                method: 'POST',
+                method: "POST",
                 headers: {
-                    'Content-Type': 'application/json',
+                    "Content-Type": "application/json",
                 },
                 body: JSON.stringify(data),
             });
@@ -168,19 +169,19 @@ function enterLesson() {
                 const lessonData = result.message;
                 const swalWithBootstrapButtons = Swal.mixin({
                     customClass: {
-                        confirmButton: 'btn btn-success',
-                        cancelButton: 'btn btn-danger'
+                        confirmButton: "btn btn-success",
+                        cancelButton: "btn btn-danger"
                     },
                     buttonsStyling: false
                 })
 
                 swalWithBootstrapButtons.fire({
-                    title: '是否要進入課室？',
+                    title: "是否要進入課室？",
                     text: `學生 : ${lessonData["student"]}, 時間 : ${lessonData["time"]}`,
-                    icon: 'warning',
+                    icon: "warning",
                     showCancelButton: true,
-                    confirmButtonText: '是',
-                    cancelButtonText: '否',
+                    confirmButtonText: "是",
+                    cancelButtonText: "否",
                     reverseButtons: true
                 }).then((result) => {
                     if (result.isConfirmed) {
@@ -199,9 +200,9 @@ function closeLesson() {
             const lessonId = lesson.getAttribute("value");
             const data = { id: lessonId };
             const resp = await fetch("/userInfo/displayLessonDataForTeacher", {
-                method: 'POST',
+                method: "POST",
                 headers: {
-                    'Content-Type': 'application/json',
+                    "Content-Type": "application/json",
                 },
                 body: JSON.stringify(data),
             });
@@ -210,19 +211,19 @@ function closeLesson() {
                 const lessonData = result.message;
                 const swalWithBootstrapButtons = Swal.mixin({
                     customClass: {
-                        confirmButton: 'btn btn-success',
-                        cancelButton: 'btn btn-danger'
+                        confirmButton: "btn btn-success",
+                        cancelButton: "btn btn-danger"
                     },
                     buttonsStyling: false
                 })
 
                 swalWithBootstrapButtons.fire({
-                    title: '是否要關閉課室？',
+                    title: "是否要關閉課室？",
                     text: `學生 : ${lessonData["student"]}, 時間 : ${lessonData["time"]}`,
-                    icon: 'warning',
+                    icon: "warning",
                     showCancelButton: true,
-                    confirmButtonText: '是',
-                    cancelButtonText: '否',
+                    confirmButtonText: "是",
+                    cancelButtonText: "否",
                     reverseButtons: true
                 }).then((result) => {
                     if (result.isConfirmed) {
@@ -237,29 +238,29 @@ function closeLesson() {
 function editLessonLink(id, student) {
     const swalWithBootstrapButtons = Swal.mixin({
         customClass: {
-            confirmButton: 'btn btn-success',
-            cancelButton: 'btn btn-danger'
+            confirmButton: "btn btn-success",
+            cancelButton: "btn btn-danger"
         },
         buttonsStyling: false
     })
 
     swalWithBootstrapButtons.fire({
         title: `學生 : ${student} 有否出席？`,
-        icon: 'warning',
+        icon: "warning",
         showCancelButton: true,
-        confirmButtonText: '出席',
-        cancelButtonText: '缺席',
+        confirmButtonText: "出席",
+        cancelButtonText: "缺席",
         reverseButtons: true
     }).then((result) => {
         if (result.isConfirmed) {
             const status = "attend";
             deleteLessonLink(id, status);
-        } else if (result.isDenied) {
+        } else if (result.dismiss === "cancel") {
             const status = "absent";
             deleteLessonLink(id, status);
-        } else if (result.isDismissed) {
+        } else  {
             Swal.fire({
-                icon: 'error',
+                icon: "error",
                 title: "更改失敗",
                 showConfirmButton: false,
                 timer: 1500
@@ -278,16 +279,16 @@ async function deleteLessonLink(id, status) {
     lessonRecord["link"] = "finish";
     lessonRecord["status"] = status;
     const resp = await fetch("/userInfo/editLessonData", {
-        method: 'POST',
+        method: "POST",
         headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
         },
         body: JSON.stringify(lessonRecord),
     });
     const result = await resp.json();
     if (result.success === true) {
         Swal.fire({
-            icon: 'success',
+            icon: "success",
             title: "更改成功",
             showConfirmButton: false,
             timer: 1500
@@ -296,7 +297,7 @@ async function deleteLessonLink(id, status) {
         })
     } else {
         Swal.fire({
-            icon: 'error',
+            icon: "error",
             title: "更改失敗",
             showConfirmButton: false,
             timer: 1500
