@@ -62,55 +62,42 @@ export class UserInfoService {
         try {
             const eventData = [];
             if (identity === "teacher") {
-                const teacherId: Array<{ id: number }> = 
-                    await txn("teachers")
-                        .select("id")
-                        .where("user_id", id);
-                const lessonData: Array<{ order_id: number, date_time: Date }> = 
+                const lessonData: Array<{ order_id: number, date_time: Date }> =
                     await txn("lessons")
-                        .select("order_id", "date_time")
-                        .where("teacher_id", teacherId[0]["id"]);
+                        .select("lessons.order_id", "lessons.date_time")
+                        .innerJoin("teachers", "lessons.teacher_id", "teachers.id")
+                        .where("teachers.user_id", id);
                 for (let lesson of lessonData) {
                     const lessonDateTime = lesson["date_time"].toLocaleString("en-GB");
-                    const userId: Array<{ user_id: number }> = 
-                        await txn("orders")
-                            .select("user_id")
-                            .where("id", lesson["order_id"]);
-                    const userData: Array<{ username: string }> = 
+                    const userData: Array<{ username: string }> =
                         await txn("users")
-                            .select("username")
-                            .where("id", userId[0]["user_id"]);
-                    eventData.push({ 
-                        title: userData[0]["username"], 
-                        start: lessonDateTime 
+                            .select("users.username")
+                            .innerJoin("orders", "users.id", "orders.user_id")
+                            .where("orders.id", lesson["order_id"]);
+                    eventData.push({
+                        title: userData[0]["username"],
+                        start: lessonDateTime
                     });
                 }
             } else if (identity === "student") {
-                const orderId: Array<{ id: number }> = 
-                    await txn("orders")
-                        .select("id")
-                        .where("user_id", id);
-                for (let order of orderId) {
-                    const lessonData: Array<{ date_time: Date, teacher_id: number }> = 
-                        await txn("lessons")
-                            .select("date_time", "teacher_id")
-                            .where("order_id", order["id"]);
-                    for (let lesson of lessonData) {
-                        const lessonDateTime = lesson["date_time"].toLocaleString("en-GB");
-                        const teacherData: Array<{ user_id: number }> = 
-                            await txn("teachers")
-                                .select("user_id")
-                                .where("id", lesson["teacher_id"]);
-                        const teacherName: Array<{ first_name: string }> = 
-                            await txn("users")
-                                .select("first_name")
-                                .where("id", teacherData[0]["user_id"]);
-                        eventData.push({ 
-                            title: teacherName[0]["first_name"], 
-                            start: lessonDateTime 
-                        });
-                    }
+                const lessonData: Array<{ date_time: Date, teacher_id: number }> =
+                    await txn("lessons")
+                        .select("lessons.date_time", "lessons.teacher_id")
+                        .innerJoin("orders", "lessons.order_id", "orders.id")
+                        .where("orders.user_id", id);
+                for (let lesson of lessonData) {
+                    const lessonDateTime = lesson["date_time"].toLocaleString("en-GB");
+                    const teacherName: Array<{ first_name: string }> =
+                        await txn("users")
+                            .select("users.first_name")
+                            .innerJoin("teachers", "users.id", "teachers.user_id")
+                            .where("teachers.id", lesson["teacher_id"]);
+                    eventData.push({
+                        title: teacherName[0]["first_name"],
+                        start: lessonDateTime
+                    });
                 }
+
             }
             await txn.commit();
             return eventData;

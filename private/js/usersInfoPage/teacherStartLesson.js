@@ -184,7 +184,7 @@ function enterLesson() {
                     reverseButtons: true
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        window.location.href = `./lesson.html?room=${lessonData["link"]}`;
+                        window.location.href = `./onlineLesson.html?room=${lessonData["link"]}`;
                     }
                 })
             }

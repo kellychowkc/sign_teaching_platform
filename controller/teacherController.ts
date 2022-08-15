@@ -2,7 +2,6 @@ import { Request, Response } from "express";
 import fs from "fs";
 import path from "path";
 import { TeacherService } from "../service/teacherService";
-import { hashPassword } from "../utility/hash";
 import { logger } from "../utility/logger";
 import { teacherImage } from "../utility/uploadTeacherImage";
 
@@ -115,7 +114,10 @@ export class TeacherController {
     displayLessonForTeacher = async (req: Request, res: Response) => {
         try {
             const userId = parseInt(req.session["user"].id as string, 10);
-            const lessonData = await this.teacherService.getLessonForTeacher(userId);
+            const today = new Date(Date.now());
+            const upLimitDay = new Date(today.setDate(today.getDate() + 90));
+            const downLimitDay = new Date(today.setDate(today.getDate() - 90));
+            const lessonData = await this.teacherService.getLessonForTeacher(userId, upLimitDay, downLimitDay);
             res.status(200).json({ success: true, message: lessonData });
         }
         catch (err) {
@@ -142,10 +144,12 @@ export class TeacherController {
     createLessonLink = async (req: Request, res: Response) => {
         try {
             const lessonId = parseInt(req.body["id"] as string, 10);
-            const lessonLink = await hashPassword(req.body["link"] as string);
+            const lessonLink = await req.body["link"] as string;
             const result = await this.teacherService.insertLessonLink(lessonId, lessonLink);
-            if (result) {
+            if (result === true) {
                 res.status(200).json({ success: true, message: "Edit Success" });
+            } else {
+                res.status(200).json({ success: false, message: "Edit Unsuccess" });
             }
         }
         catch (err) {

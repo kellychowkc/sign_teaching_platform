@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../css/onlineLesson.css" />
+    <title>手語學堂</title>
+</head>
+
+<body>
+    <div id="videos">
+        <video class="video_player" id="user_1" autoplay playsinline></video>
+        <video class="video_player" id="user_2" autoplay playsinline></video>
+    </div>
+
+    <div id="controls">
+
+        <div class="control_container" id="cameraBtn">
+            <img src="../assets/onlinLessonIcons/camera.png" />
+        </div>
+
+        <div class="control_container" id="micBtn">
+            <img src="../assets/onlinLessonIcons/mic.png" />
+        </div>
+
+        <a href="userInfo.html">
+            <div class="control_container" id="leaveBtn">
+                <img src="../assets/onlinLessonIcons/phone.png" />
+            </div>
+        </a>
+
+    </div>
+</body>
+<script src="../js/onlineLesson/agora-rtm-sdk-1.5.0.js"></script>
+<script src="../js/onlineLesson/onlineLesson.js"></script>
+
+</html>
