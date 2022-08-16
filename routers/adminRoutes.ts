@@ -19,7 +19,7 @@ adminRoutes.delete("/userData",adminController.deleteUserData);
 
 adminRoutes.post("/info", formidableMiddleware, adminController.updateAdminInfo);
 
-function logMiddleware(res:Request,rep:Response, next:NextFunction){
+export function logMiddleware(res:Request,rep:Response, next:NextFunction){
     console.log("logMiddleware")
     next()
 }

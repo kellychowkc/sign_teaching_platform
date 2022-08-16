@@ -1,8 +1,8 @@
-#teacher_intro_box {
+.teacher_intro_box {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
-    width: 75vw;
+    width: 100%;
     height: fit-content;
     margin-left: auto;
     margin-right: auto;

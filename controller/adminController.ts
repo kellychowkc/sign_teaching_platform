@@ -19,7 +19,7 @@ export class AdminController {
                 totalPageNum = 1;
             }
             let result = await this.adminService.loadTeachingData();
-
+            console.log("this is dataLength:",result?.length)
             if (result!.length > 0) {
                 // console.log("this is loadTeachingData:", result)
                 // console.log("this is no:", result)
@@ -52,12 +52,12 @@ export class AdminController {
                 const filterData = result?.slice(startingIndex, startingIndex + NUM_PER_PAGE);
                  // has data
                  console.log("has data")
-                 res.status(200).json({ success: true, current_page: page, total_page: totalPageNum, data: filterData });
+                 res.status(200).json({ success: true, current_page: page, total_page: totalPageNum, data: filterData, dataLength:result?.length });
 
             }else if(result!.length === 0) {
                 // Empty data
                 console.log("empty")
-                res.status(200).json({ success: true, message: "Empty Data" });
+                res.status(200).json({ success: true, message: "Empty Data", dataLength:result?.length });
                 return;
             }
 

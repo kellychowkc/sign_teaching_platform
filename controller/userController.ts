@@ -58,6 +58,7 @@ export class UserController {
   logOut = async (req: Request, res: Response) => {
     try {
       delete req.session["user"];
+      console.log("this is req.session:",req.session["user"])
       res.status(200).json({ success: true, message: "success" });
     } catch (err) {
       logger.error(err.toString());

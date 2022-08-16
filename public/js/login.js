@@ -70,7 +70,7 @@ export function navbarCreate() {
   document.querySelector("#header").innerHTML = `
   <nav class="navbar navbar-expand-lg navbar-light bg-light py-3">
   <div class="container">
-      <a href="../index.html"><img src="../assets/手語學堂logo.png" alt="logo" id="logo" width="100" height="90"></a>
+      <a href="/index.html"><img src="/assets/手語學堂logo.png" alt="logo" id="logo" width="100" height="90"></a>
     
                           
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -83,13 +83,13 @@ export function navbarCreate() {
           <ul class="navbar-nav">
 
               <li class="nav-item">
-                  <a class="nav-link" href="../index.html">手語簡介</a>
+                  <a class="nav-link" href="/index.html">手語簡介</a>
               </li>
               <li class="nav-item">
-                  <a class="nav-link" href="./teacherIntro.html">導師簡介</a>
+                  <a class="nav-link" href="/html/teacherIntro.html">導師簡介</a>
               </li>
               <li class="nav-item">
-                  <a class="nav-link" href="./signTeaching.html">手語入門</a>
+                  <a class="nav-link" href="/html/signTeaching.html">手語入門</a>
               </li>
               <li class="nav-item" id="signIn-box">
                   <a class="nav-link" href="./login.html">登入

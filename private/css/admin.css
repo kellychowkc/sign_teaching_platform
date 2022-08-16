@@ -3,6 +3,7 @@
     --navbar-color: rgb(248, 249, 250);
     --deeper-background-color: rgb(114, 143, 133);
     --deeper-logo-color: rgb(65, 81, 98);
+    --left-button-size: 2.5rem;
 }
 
 
@@ -17,10 +18,38 @@ body {
     display: flex;
     justify-content: flex-start;
     margin-left: 3vw;
+    font-weight: bold;
+}
+
+.display_words > .title{
+
+    /* border-top: 1px dashed var(--deeper-logo-color); */
+    /* border-bottom: 1px dashed var(--deeper-logo-color); */
+    font-size: 2rem;
+    margin: 15px 0 15px;
+    padding: 3px;
+    text-transform: uppercase;
+    color: var(--deeper-logo-color);
+    font-weight: bolder;
+    position: relative;
+}
+span.value_bg{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translateX(-50%) translateY(-50%);
+    -ms-transform: translateX(-50%) translateY(-50%);
+    transform: translateX(-50%) translateY(-50%);
+    color: rgba(114, 143, 133,0.4);
+    font-weight: 600;
+    font-size: 8rem;
+    line-height: 60px;  
+
 }
 
 .system_navbar_buttons a:hover {
     cursor: pointer;
+    background-color: var(--background-color);
 }
 
 
@@ -79,17 +108,18 @@ body {
     /* background: linear-gradient(To right, var(--navbar-color),var(--background-color) ); */
     background-color: var(--navbar-color);
     border-radius: 10px;
-    padding: 10px;
+    padding: 20px;
     display: flex;
     justify-content: space-around;
     margin-top: 8px;
     margin-bottom: 15px;
     height: fit-content;
+
+    
+
+    
 }
 
-.system_button:hover {
-    cursor: pointer;
-}
 
 .system_button>.button_img {
     width: 100px;
@@ -102,13 +132,12 @@ body {
 
 .system_button>.button_title {
     padding-top: 10px;
-    font-size: 25px;
+    font-size: var(--left-button-size);
     font-weight: 450;
-    letter-spacing: 5px;
+    letter-spacing: 1rem;
     color: var(--deeper-logo-color);
     -webkit-text-stroke: 0.5px rgb(91, 113, 105);
-
-
+    word-break: break-all;
 }
 
 /*  教學 */
@@ -167,7 +196,8 @@ body {
 }
 
 /* 統一button style */
-button, input{
+button,
+input {
     border: solid 1px var(--deeper-background-color);
     border-radius: 10px;
     background-color: var(--navbar-color);
@@ -176,14 +206,24 @@ button, input{
 }
 
 #myFile{
-    background-color: white;
+    cursor: pointer;
     border: inherit;
+    background-color: white;
+
+}
+
+#myFile:hover {
+    cursor: pointer;
+    background-color: var(--navbar-color);
+
 }
 
 .searching_text {
     background-color: white;
 }
-.changing_identity_box > input, .changing_identity_box > button{
+
+.changing_identity_box>input,
+.changing_identity_box>button {
     margin-right: 3px;
 }
 
@@ -207,6 +247,8 @@ button, input{
     margin: 10px;
     width: 100%;
 }
+
+
 
 button.searching {
     /* margin-left: 1px; */
@@ -250,19 +292,24 @@ button.searching>img {
     justify-content: center;
     flex-wrap: wrap;
 } */
-.lecture_form{
+.lecture_form {
     width: 90%;
 }
-th,td{
+
+th,
+td {
     text-align: center;
 }
-td>input{
+
+td>input {
     margin-left: 5px;
 }
-.identity{
+
+.identity {
     padding-right: 15px;
 }
-.changing_identity_box{
+
+.changing_identity_box {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -383,7 +430,7 @@ h3 {
     left: 25%;
 }
 
-input#title{
+input#title {
     width: 80%;
 }
 
@@ -396,7 +443,7 @@ input#title{
 .table-section {
     display: flex;
     justify-content: center;
-    margin-top: 10px;
+    margin-top: 15px;
 }
 
 .table-rows {
@@ -629,13 +676,17 @@ input#title{
         top: 50%;
         left: inherit;
     }
-    .video > h3{
+
+    .video>h3 {
         margin-top: 2px;
     }
-    .changing_identity_box > input{
+
+    .changing_identity_box>input {
         width: 60%;
     }
-    input#title{
+
+    input#title {
         width: 100%;
     }
+
 }

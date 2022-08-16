@@ -83,18 +83,35 @@
 4. login test
 - [ ] mock logger
 - [ ] logger -> (put in) ts
-5. logOut trigger
+5. logOut
 6. user page
 - [x] timeTable
-- [ ] realTime
+- [x] realTime
 7. admin page
 - [x] ui
 - [x] ui logic
 - [x] router
 - [x] server
 8. style
-- [ ] admin.html
-- [ ] freeVideo.html
+- [x] admin.html
+- [x] freeVideo.html
+
+## 11/8
+1. testCase
+- [ ] any
+- [ ] mock logger
+- [ ] logger -> (put in) ts
+2. logOut
+3. CI/CD
+4. Dashboard
+5. CSS
+- [ ] style
+- [ ] mobile response
+6. ppt
+7. pratise Demo
+
+
+
 
 
 
@@ -124,7 +141,7 @@
 
 6. UI
 - [ ] fancy effect: design, animation
-- [ ] sweetAlert
+- [x] sweetAlert
 - [ ] css: lecture form
 - [x] show logic: img / openClass, pageNum...
 

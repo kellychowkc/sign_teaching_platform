@@ -132,7 +132,8 @@ async function deleting() {
 
 
 // 教學
-document.querySelector("#teaching").addEventListener("click", async () => {
+const teachingNavButton = document.querySelector("#teaching");
+teachingNavButton.addEventListener("click", async () => {
     // change bar font
     window.location.href = "admin.html?status=teaching"
     await loadTeachingData();
@@ -147,7 +148,7 @@ async function loadTeachingData() {
     // 
     // teaching(result["current_page"], result["total_page"], result["data"]);
     if (result.success === true) {
-        showWord(result["current_page"], result["total_page"], result["data"]);
+        showWord(result["current_page"], result["total_page"], result["data"], result["dataLength"]);
 
         document.querySelector(".deleting").addEventListener("click", () => {
             deleting()
@@ -219,12 +220,12 @@ async function showVideo(label) {
 }
 
 // display with init data or search data
-function showWord(current_page, total_page, data) {
+function showWord(current_page, total_page, data,dataLength) {
     let items = ``;
     let pages = ``;
     let up = ``;
     let down = ``;
-    console.log("this is data:", data)
+    console.log("this is dataLength:", dataLength)
     if (data) {
         // init data
         if (typeof (data[0]) === "object") {
@@ -258,7 +259,7 @@ function showWord(current_page, total_page, data) {
     </div>
 </div>
 <div class="display_words">
-    <div class="title">已有詞語</div>
+    <div class="title">已有詞語<span class="value_bg">${dataLength}</span></div>
     <div class="display_word words_box">
         <div class="words_form">
             <div>
@@ -301,7 +302,7 @@ function showWord(current_page, total_page, data) {
 
 
         <label for="fn" class="uploading"><b>詞語： </b></label>
-        <input type="text" placeholder="輸入格式為Hksl_able_to.mp4" name="title" id="title" required />
+        <input type="text" placeholder="輸入格式為Hksl_(english)" name="title" id="title" required />
         <br><br>
 
         <label for="file"><b>選擇上載文件 : </b></label>
