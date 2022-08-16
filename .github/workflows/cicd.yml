@@ -51,7 +51,7 @@ jobs:
                       git pull origin production
                       yarn install
                       yarn knex migrate:latest --env production
-                      forever restart ts-node server.ts
+                      forever restart index.js
                   host: 13.213.169.99
                   user: ubuntu
                   key: ${{secrets.SSH_PRIVATE_KEY}}
