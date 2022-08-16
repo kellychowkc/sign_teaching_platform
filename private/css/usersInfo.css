@@ -1,6 +1,10 @@
-@import './usersNavbar.css';
-@import './userInfoPage/timeTable.css';
-@import './userInfoPage/xdialog.3.4.0.css';
+
+@import "./usersNavbar.css";
+@import "./userInfoPage/packages.css";
+@import "./userInfoPage/timeTable.css";
+@import "./userInfoPage/timeLine.css";
+@import "./userInfoPage/orderCard.css";
+@import "./userInfoPage/xdialog.3.4.0.css";
 
 article {
     display: flex;

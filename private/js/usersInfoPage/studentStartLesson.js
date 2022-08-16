@@ -3,7 +3,7 @@ import Swal from 'https://cdn.jsdelivr.net/npm/sweetalert2@11/src/sweetalert2.js
 
 export function startLessonForStudent() {
     document.querySelector("#startLesson").addEventListener("click", async () => {
-        const resp = await fetch("/userInfo/displayStudentLessonLink", { method: "POST" });
+        const resp = await fetch("/userInfo/displayLessonForStudent", { method: "POST" });
         const result = await resp.json();
         if (result) {
             const data = result.message;
@@ -53,7 +53,7 @@ export function startLessonForStudent() {
                             <td>${lesson["teacher"]}</td>
                             <td>${lesson["learningDate"]}</td>
                             <td>
-                                <button type="button" class="btn btn-primary enterBtn" value="${lesson["lessonLink"]}">入課室</button>
+                                <button type="button" class="btn btn-primary enterBtn" value="${lesson["id"]}">入課室</button>
                             </td>
                         </tr>
                         `;
@@ -69,9 +69,9 @@ export function startLessonForStudent() {
 function enterLesson() {
     document.querySelectorAll(".enterBtn").forEach((lesson) => {
         lesson.addEventListener("click", async () => {
-            const lessonLink = lesson.getAttribute("value");
-            const data = { link: lessonLink };
-            const resp = await fetch("/userInfo/displayLessonDataForStudent", {
+            const lessonId = lesson.getAttribute("value");
+            const data = { id: lessonId };
+            const resp = await fetch("/userInfo/displayThatLessonData", {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -99,7 +99,7 @@ function enterLesson() {
                     reverseButtons: true
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        window.location.href = `./onlineLesson.html?room=${lessonLink}`;
+                        window.location.href = `./onlineLesson.html?room=${lessonData["link"]}`;
                     }
                 })
             }

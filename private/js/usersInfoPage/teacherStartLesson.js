@@ -3,7 +3,7 @@ import Swal from 'https://cdn.jsdelivr.net/npm/sweetalert2@11/src/sweetalert2.js
 
 export function startLessonForTeacher() {
     document.querySelector("#startLesson").addEventListener("click", async () => {
-        const resp = await fetch("/userInfo/displayTeacherLessonLink", { method: "POST" });
+        const resp = await fetch("/userInfo/displayLessonForTeacher", { method: "POST" });
         const result = await resp.json();
         if (result.success === true) {
             const data = result.message;
@@ -77,7 +77,7 @@ function createLesson() {
         lesson.addEventListener("click", async () => {
             const lessonId = lesson.getAttribute("value");
             const data = { id: lessonId };
-            const resp = await fetch("/userInfo/displayLessonDataForTeacher", {
+            const resp = await fetch("/userInfo/displayThatLessonData", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

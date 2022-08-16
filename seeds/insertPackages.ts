@@ -8,9 +8,9 @@ export async function seed(knex: Knex): Promise<void> {
     // Inserts seed entries
     // insert three packages
     const packagesId: Array<{id: number}> = await knex("packages").insert([
-        { package_name: "Short Course", package_description: "Total Lesson : 5", total_lesson_num: 5 },
-        { package_name: "Middle Course", package_description: "Total Lesson : 10", total_lesson_num: 10 },
-        { package_name: "Long Course", package_description: "Total Lesson : 20", total_lesson_num: 20 }
+        { package_name: "初級學習方案", package_description: "為期五堂, 自由選擇時間, 一小時專業導師教授, 由淺入深學習手語", total_lesson_num: 5 },
+        { package_name: "中級學習方案", package_description: "為期十堂, 自由選擇時間, 一小時專業導師教授, 由淺入深學習手語", total_lesson_num: 10 },
+        { package_name: "高級學習方案", package_description: "為期二十堂, 自由選擇時間, 一小時專業導師教授, 由淺入深學習手語", total_lesson_num: 20 }
     ]).returning('id');
 
     // insert packages prices
