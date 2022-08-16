@@ -1,0 +1,39 @@
+# This is a basic workflow to help you get started with Actions
+
+name: CI/CD
+
+# Controls when the workflow will run
+on:
+    # Triggers the workflow on push or pull request events but only for the "main" branch
+    push:
+        branches: ['*']
+
+    # Allows you to run this workflow manually from the Actions tab
+    workflow_dispatch:
+
+env:
+    POSTGRES_DB: bad_project_test
+    POSTGRES_USER: postgres
+    POSTGRES_PASSWORD: postgres
+    POSTGRES_HOST: postgres
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+    test:
+        runs-on: ubuntu-latest
+        container: node:16
+        services:
+            postgres:
+                image: postgres
+                env:
+                    POSTGRES_DB: ${{env.POSTGRES_DB}}
+                    POSTGRES_PASSWORD: ${{env.POSTGRES_PASSWORD}}
+                ports:
+                    - 5432:5432
+        steps:
+            - uses: actions/checkout@v3
+            - name: Testing
+              run: |
+                  yarn install
+                  yarn knex migrate:latest --env test
+                  yarn test
