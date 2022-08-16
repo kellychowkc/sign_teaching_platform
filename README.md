@@ -17,11 +17,11 @@
 ├── controller
 │   ├── userController.ts
 │   └── testing
-│       └── userController.test
+│       └── userController.test.ts
 ├── service
 │   ├── userService.ts
 │   └── testing
-│       └── userService.test
+│       └── userService.test.ts
 ├── routers
 │   ├── signUp.ts
 │   └── logIn.ts
@@ -55,7 +55,7 @@
 - [ ] yarn add --dev jest
 - [ ] yarn add --dev typescript ts-jest @types/jest @types/node ts-node ts-node-dev
 - [ ] yarn ts-jest config:init
-- [ ] yarn add knex  pg @types/pg
+- [ ] yarn add knex pg @types/pg
 - [ ] yarn knex init -x ts
 - [ ] yarn add --dev playwright 
 - [ ] yarn add redis @types/redis
@@ -133,17 +133,4 @@ node_modules
 .env
 package-lock.json
 
-```
-
-### git push to other branches
-```
-git fetch
-git switch [branch]
-git checkout [branch]
-
-```
-
-### models
-```
-https://github.com/google/shuwa
 ```

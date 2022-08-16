@@ -1,0 +1,44 @@
+@import './usersNavbar.css';
+@import './userInfoPage/timeTable.css';
+@import './userInfoPage/xdialog.3.4.0.css';
+
+article {
+    display: flex;
+    width: 90vw;
+    color: rgb(65, 81, 98);
+}
+
+aside {
+    width: 20vw;
+}
+
+section {
+    width: 80vw;
+}
+
+#calendar {
+    width: 75vw;
+}
+
+#userInfoDisplay {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#usersImages {
+    width: 40px;
+    height: 40px;
+}
+
+#userInfoTitle {
+    display: flex;
+    justify-content: space-between;
+    color: rgb(65, 81, 98);
+}
+
+.nav-item {
+    cursor: pointer;
+    color: rgb(65, 81, 98);
+}

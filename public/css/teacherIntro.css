@@ -1,0 +1,72 @@
+#teacher_intro_box {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 75vw;
+    height: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 70px;
+}
+
+.intro_box {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 80px;
+}
+
+.photo {
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.photo>img {
+    width: 300px;
+}
+
+.name {
+    font-size: 40px;
+    font-weight: bold;
+}
+
+.position {
+    width: 100%;
+    font-size: larger;
+    margin-top: -5px;
+}
+
+.position>img {
+    width: 30px;
+    margin-right: 10px;
+}
+
+.content_box {
+    width: 800px;
+    margin-left: 100px;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.intro {
+    margin-top: 10px;
+    font-size: 17px;
+}
+
+
+
+@media screen and (max-width: 500px) {
+
+    .content_box {
+        width: 500px;
+        margin-left: 0;
+        margin-top: auto;
+        margin-bottom: auto;
+        margin-top: 10px;
+    }
+
+
+    .intro_box {
+        margin-top: 50px;
+    }
+}

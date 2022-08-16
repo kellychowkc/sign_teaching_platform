@@ -11,6 +11,8 @@ export async function up(knex: Knex): Promise<void> {
             table.string("password").notNullable();
             table.string("first_name").notNullable();
             table.string("last_name").notNullable();
+            table.string("email").notNullable().unique;
+            table.integer("phone_num").notNullable().unique;
             table.string("identity").notNullable();
             table.timestamps(true, true);
         });
@@ -20,19 +22,19 @@ export async function up(knex: Knex): Promise<void> {
     if (!hasTableTeachers) {
         await knex.schema.createTable("teachers", (table) => {
             table.increments();
-            table.string("teacher_image").notNullable();
-            table.string("teacher_description").notNullable();
+            table.string("teacher_image");
+            table.string("teacher_description");
             table.integer("user_id").unsigned;
-            table.foreign("user_id").references("users.id");
+            table.foreign("user_id").references("users.id").onDelete("CASCADE").onUpdate("CASCADE");
         })
     };
 
-    const hasTableTimetable = await knex.schema.hasTable("timetable");
-    if (!hasTableTimetable) {
-        await knex.schema.createTable("timetable", (table) => {
+    const hasTableTimeTable = await knex.schema.hasTable("time_table");
+    if (!hasTableTimeTable) {
+        await knex.schema.createTable("time_table", (table) => {
             table.increments();
             table.string("weekday").notNullable();
-            table.time("booking_time").notNullable();
+            table.string("booking_time").notNullable();
         })
     };
 
@@ -41,9 +43,9 @@ export async function up(knex: Knex): Promise<void> {
         await knex.schema.createTable("can_booking_table", (table) => {
             table.increments();
             table.integer("teacher_id").unsigned;
-            table.foreign("teacher_id").references("teachers.id");
-            table.integer("timetable_id").unsigned;
-            table.foreign("timetable_id").references("timetable.id");
+            table.foreign("teacher_id").references("teachers.id").onDelete("CASCADE").onUpdate("CASCADE");
+            table.integer("time_table_id").unsigned;
+            table.foreign("time_table_id").references("time_table.id").onDelete("CASCADE").onUpdate("CASCADE");
         })
     };
 
@@ -64,7 +66,7 @@ export async function up(knex: Knex): Promise<void> {
             table.integer("price").notNullable();
             table.timestamp("activate_time").notNullable();
             table.integer("package_id").unsigned;
-            table.foreign("package_id").references("packages.id");
+            table.foreign("package_id").references("packages.id").onDelete("CASCADE").onUpdate("CASCADE");
         })
     };
 
@@ -76,9 +78,9 @@ export async function up(knex: Knex): Promise<void> {
             table.integer("remaining_lesson_num").notNullable();
             table.timestamp("created_at").defaultTo(knex.fn.now());
             table.integer("package_id").unsigned;
-            table.foreign("package_id").references("packages.id");
+            table.foreign("package_id").references("packages.id").onDelete("CASCADE").onUpdate("CASCADE");
             table.integer("user_id").unsigned;
-            table.foreign("user_id").references("users.id");
+            table.foreign("user_id").references("users.id").onDelete("CASCADE").onUpdate("CASCADE");
         })
     };
 
@@ -90,9 +92,9 @@ export async function up(knex: Knex): Promise<void> {
             table.string("lesson_link");
             table.string("status").notNullable();
             table.integer("order_id").unsigned;
-            table.foreign("order_id").references("orders.id");
+            table.foreign("order_id").references("orders.id").onDelete("CASCADE").onUpdate("CASCADE");
             table.integer("teacher_id").unsigned;
-            table.foreign("teacher_id").references("teachers.id");
+            table.foreign("teacher_id").references("teachers.id").onDelete("CASCADE").onUpdate("CASCADE");
         })
     };
 
@@ -114,9 +116,9 @@ export async function up(knex: Knex): Promise<void> {
             table.timestamp("created_at").defaultTo(knex.fn.now());
             table.integer("best_match_ratio").notNullable();
             table.integer("user_id").unsigned;
-            table.foreign("user_id").references("users.id");
+            table.foreign("user_id").references("users.id").onDelete("CASCADE").onUpdate("CASCADE");
             table.integer("sample_SL_id").unsigned;
-            table.foreign("sample_SL_id").references("sample_sign_language.id");
+            table.foreign("sample_SL_id").references("sample_sign_language.id").onDelete("CASCADE").onUpdate("CASCADE");
         })
     };
 }
@@ -130,7 +132,7 @@ export async function down(knex: Knex): Promise<void> {
     await knex.schema.dropTableIfExists("packages_prices");
     await knex.schema.dropTableIfExists("packages");
     await knex.schema.dropTableIfExists("can_booking_table");
-    await knex.schema.dropTableIfExists("timetable");
+    await knex.schema.dropTableIfExists("time_table");
     await knex.schema.dropTableIfExists("teachers");
     await knex.schema.dropTableIfExists("users");
 }

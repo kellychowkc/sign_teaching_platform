@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx"
+            crossorigin="anonymous"
+        />
+        <link rel="stylesheet" href="../css/signUp.css" />
+        <link rel="stylesheet" href="../css/navbar.css" />
+        <title>手語學堂</title>
+    </head>
+
+    <body>
+        <header id="header"></header>
+
+        <article>
+            <section class="form my-7 mx-5">
+                <div class="container">
+                    <div class="row no-gutters">
+                        <div class="col-lg-6" id="image">
+                            <img
+                                src="../assets/signup.jpeg"
+                                class="img-fluid"
+                                alt=""
+                            />
+                        </div>
+                        <div class="col-lg-6 px-5 pt-3">
+                            <h1 class="font-weight-bold py-3">註冊</h1>
+                            <form id="signUp">
+                                <div class="form-row">
+                                    <div class="col-lg-10">
+                                        <input
+                                            type="text"
+                                            placeholder="登入名稱"
+                                            class="form-control"
+                                            name="username"
+                                            required
+                                        />
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="col-lg-10">
+                                        <input
+                                            type="text"
+                                            placeholder="姓氏"
+                                            class="form-control"
+                                            name="firstName"
+                                            required
+                                        />
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="col-lg-10">
+                                        <input
+                                            type="text"
+                                            placeholder="名字"
+                                            class="form-control"
+                                            name="lastName"
+                                            required
+                                        />
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="col-lg-10">
+                                        <input
+                                            type="password"
+                                            placeholder="密碼"
+                                            class="form-control"
+                                            name="password"
+                                            required
+                                        />
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="col-lg-10">
+                                        <input
+                                            type="password"
+                                            placeholder="確認密碼"
+                                            class="form-control"
+                                            name="confirmPassword"
+                                            required
+                                        />
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="col-lg-10">
+                                        <input
+                                            type="email"
+                                            placeholder="電郵"
+                                            class="form-control"
+                                            name="email"
+                                            required
+                                        />
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="col-lg-10">
+                                        <input
+                                            type="text"
+                                            placeholder="電話號碼"
+                                            class="form-control"
+                                            name="phoneNum"
+                                            required
+                                        />
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="col-lg-10">
+                                        <button
+                                            type="submit"
+                                            class="btn1 mt-3 mb-5"
+                                        >
+                                            加入我們
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="login-box">
+                                    <a href="./login.html">登入</a>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </article>
+
+        <script type="module" src="../js/signup.js"></script>
+        <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
+            crossorigin="anonymous"
+        ></script>
+    </body>
+</html>
