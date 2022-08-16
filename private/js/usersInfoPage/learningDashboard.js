@@ -6,7 +6,7 @@ export async function displayDashboard() {
                 <h4 class="mb-3">學習進度</h4>
             </div>
             <div class="container">
-                <div class="row">
+                <div class="row" id="chart">
                     <div class="col" id="chart1" style="width: 600px; height: 400px"></div>
                     <div class="col" id="chart2" style="width: 600px; height: 400px"></div>
                 </div>

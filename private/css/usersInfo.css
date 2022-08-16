@@ -46,3 +46,35 @@ section {
     cursor: pointer;
     color: rgb(65, 81, 98);
 }
+
+
+.menu {
+    font-size: 1.2rem;
+    position: absolute;
+    top: 1.5rem;
+    right: 1.3rem;
+}
+
+@media only screen and (max-width: 900px) {
+    article {
+        flex-direction: column;
+    }
+
+    #chart {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .sidebar {
+        display: none;
+    }
+
+
+    .show_sidebar {
+        margin-left: 0;
+    }
+
+    .push_body {
+        margin-left: 30rem;
+    }
+}

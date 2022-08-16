@@ -1,4 +1,27 @@
-#logo {
-    width: 5rem;
-    height: 4.5rem;
+
+.navbar-collapse {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.nav-item {
+    margin: 1rem;
+}
+
+@media only screen and (max-width: 900px) {
+    /* body > nav > div > button:hover,
+    body > nav > div > button:focus {
+        background-color: black;
+    } */
+
+    #navbarSupportedContent > ul {
+        margin: 1rem;
+        padding-right: 1rem;
+        display: flex;
+        justify-content: flex-end;
+        text-align: right;
+    }
+    #navbarSupportedContent > ul > li:nth-child(n) > a {
+        padding: 10px 0;
+    }
 }
