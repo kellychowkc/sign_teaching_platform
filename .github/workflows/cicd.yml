@@ -52,6 +52,6 @@ jobs:
                       yarn install
                       yarn knex migrate:latest --env production
                       forever restart ts-node server.ts
-                  host: bad-projecrt.tecky-kc.me
+                  host: bad-project.tecky-kc.me
                   user: ubuntu
                   key: ${{secrets.SSH_PRIVATE_KEY}}
