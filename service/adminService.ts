@@ -121,7 +121,7 @@ export class AdminService {
                 if (userData["identity"] === "student") {
                     updatedUserId = await this.knex("users").select("id").update("identity", "teacher").where("id", userData["id"]).returning("id")
                     console.log("this is updatedUserID:", updatedUserId)
-                    await this.knex.insert({ teacher_image: "", teacher_description: "", user_id: updatedUserId[0]["id"] }).into("teachers")
+                    await this.knex.insert({ teacher_image: "teacher_icon.png", teacher_description: "nothing", user_id: updatedUserId[0]["id"] }).into("teachers")
                 }else{
                     updatedUserId = await this.knex("users").select("id").update("identity", "student").where("id", userData["id"]).returning("id")
                     console.log("this is teacherId:",updatedUserId)

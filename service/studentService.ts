@@ -1,10 +1,67 @@
 
 import { Knex } from "knex";
+import { checkPassword, hashPassword } from "../utility/hash";
 
 export class StudentService {
     constructor(private knex: Knex) { }
 
-    async getTeacherData() {
+    async getStudentInfo(id: number) {
+        const result: Array<{ username: string, first_name: string, last_name: string, email: string, phone_num: number }> =
+            await this.knex("users")
+                .select("username",
+                    "first_name",
+                    "last_name",
+                    "email",
+                    "phone_num",
+                )
+                .where("id", id);
+        return result[0];
+    }
+
+
+    async editStudentInfo(id: number, fname: string, lname: string, email: string, phoneNum: number) {
+        const result = 
+            await this.knex("users")
+                .update({
+                    first_name: fname,
+                    last_name: lname, 
+                    email: email, 
+                    phone_num: phoneNum
+                })
+            .where("id", id);
+        if (result) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
+    async editStudentPass(id: number, oldPass: string, newPass: string) {
+        const checkPass: Array<{ password: string }> =
+            await this.knex("users")
+                .select("password")
+                .where("id", id);
+        const match = await checkPassword(oldPass, checkPass[0]["password"]);
+        if (match === true) {
+            const newPassword = await hashPassword(newPass);
+            if (newPassword) {
+                await this.knex("users")
+                    .update({
+                        password: newPassword
+                    })
+                    .where("id", id);
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+
+
+    async getTeacherTimeTable() {
         const canBookingData: Array<{ id: number, username: string, teacher_image: string, weekday: string, booking_time: string }> =
             await this.knex("can_booking_table")
                 .select(
@@ -73,7 +130,7 @@ export class StudentService {
         }
     }
 
-    async getShoppingRecord(id: number) {
+    async getPackagesRecord(id: number) {
         const priceRecord: Array<{ package_id: number }> =
             await this.knex("packages_prices")
                 .select("package_id");
@@ -103,7 +160,7 @@ export class StudentService {
         return packagesRecord;
     }
 
-    async getOrderRecord(id: number) {
+    async getAllOrderData(id: number) {
         const ordersRecord: Array<{ id: number, package_name: string, total_lesson_num: number, remaining_lesson_num: number, created_at: Date }> =
             await this.knex("orders")
                 .select(
@@ -117,23 +174,56 @@ export class StudentService {
                 .where("orders.user_id", id)
                 .orderBy("orders.created_at", "desc");
         let ordersList = [];
+        let bookingNum = 0;
+        let attendNum = 0;
+        let absentNum = 0;
+        let remainNum = 0;
         if (ordersRecord.length > 0) {
             for (let order of ordersRecord) {
-                let orderDateTime = order["created_at"].toLocaleString("en-US");
+                const lessonStatus: Array<{ status: string }> = 
+                await this.knex("lessons")
+                    .select("status")
+                    .where("order_id", order["id"]);
+                if (lessonStatus) {
+                    for (let lesson of lessonStatus) {
+                        switch (lesson["status"]) {
+                            case "booking" :
+                                bookingNum += 1;
+                                break;
+                            case "attend" :
+                                attendNum += 1;
+                                break;
+                            case "absent" :
+                                absentNum += 1;
+                            break;
+                        }
+                    }
+                }
+                let orderMonth = order["created_at"].toLocaleDateString("en-US", { month: "short" });
+                let orderDate = order["created_at"].toLocaleDateString("en-US", { day: "2-digit" });
+                let orderTime = order["created_at"].toLocaleTimeString("en-US");
+                remainNum += order["remaining_lesson_num"];
                 ordersList.push({
                     "orderId": order["id"],
                     "packageName": order["package_name"],
                     "totalLessonNum": order["total_lesson_num"],
                     "remainingLessonNum": order["remaining_lesson_num"],
-                    "createdDate": orderDateTime
+                    "createdMonth": orderMonth,
+                    "createdDate": orderDate,
+                    "createdTime": orderTime
                 });
             }
         }
-        return ordersList;
+        let attendRatio = parseInt((attendNum / (bookingNum + attendNum + absentNum)).toFixed(3), 10);
+        if (isNaN(attendRatio)) {
+            attendRatio = 0;
+        }
+        const usedNum = { booking: bookingNum, attend: attendNum, absent: absentNum, remain: remainNum, ratio: attendRatio };
+        return { usedNum, ordersList };
     }
 
 
-    async getOrderData(id: number) {
+    async getThatOrderData(id: number) {
         const txn = await this.knex.transaction();
         try {
             const orderList: Array<{ package_name: string, total_lesson_num: number, remaining_lesson_num: number, created_at: Date }> =
@@ -175,8 +265,7 @@ export class StudentService {
             const result = { thisOrder, lessonList };
             await txn.commit();
             return result;
-        }
-        catch (err) {
+        } catch (err) {
             await txn.rollback();
             return;
         }
@@ -214,9 +303,9 @@ export class StudentService {
 
 
     async getLessonForStudent(id: number, upLimitDay: Date, downLimitDay: Date) {
-        const allLessonData: Array<{ first_name: string, lesson_link: string, date_time: Date }> =
+        const allLessonData: Array<{ id: number, first_name: string, lesson_link: string, date_time: Date }> =
             await this.knex("lessons")
-                .select("users.first_name", "lessons.lesson_link", "lessons.date_time")
+                .select("lessons.id", "users.first_name", "lessons.lesson_link", "lessons.date_time")
                 .innerJoin("orders", "lessons.order_id", "orders.id")
                 .innerJoin("teachers", "lessons.teacher_id", "teachers.id")
                 .innerJoin("users", "teachers.user_id", "users.id")
@@ -227,6 +316,7 @@ export class StudentService {
         const lessonData = [];
         for (let lesson of allLessonData) {
             lessonData.push({
+                id: lesson["id"],
                 teacher: lesson["first_name"],
                 learningDate: lesson["date_time"].toLocaleString("en-US"),
                 lessonLink: lesson["lesson_link"]
@@ -236,16 +326,17 @@ export class StudentService {
     }
 
 
-    async getLessonData(link: string) {
-        const lessonData: Array<{ first_name: string, date_time: Date }> =
+    async getThatLessonData(id: number) {
+        const lessonData: Array<{ first_name: string, date_time: Date, lesson_link: string }> =
             await this.knex("teachers")
-                .select("users.first_name", "lessons.date_time")
+                .select("users.first_name", "lessons.date_time", "lessons.lesson_link")
                 .innerJoin("users", "teachers.user_id", "users.id")
                 .innerJoin("lessons", "teachers.id", "lessons.teacher_id")
-                .where("lessons.lesson_link", link);
+                .where("lessons.id", id);
         const data = {
             teacher: lessonData[0]["first_name"],
-            time: lessonData[0]["date_time"].toLocaleString("en-US")
+            time: lessonData[0]["date_time"].toLocaleString("en-US"),
+            link: lessonData[0]["lesson_link"]
         };
         return data;
     }

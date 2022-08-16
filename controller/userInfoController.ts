@@ -22,63 +22,6 @@ export class UserInfoController {
     }
 
 
-    displayUserInfo = async (req: Request, res: Response) => {
-        try {
-            console.log(req.session["user"])
-            const userId = parseInt(req.session["user"].id as string, 10);
-            const userData = await this.userInfoService.getUserData(userId);
-            if (!userData) {
-                res.status(401).json({ success: false, message: "Not This User" });
-                return;
-            } else {
-                res.status(200).json({ success: true, message: userData });
-            }
-        }
-        catch (err) {
-            logger.error(err.toString());
-            res.status(400).json({ success: false, message: "Display Error" })
-            return;
-        }
-    }
-
-
-    editUserInfo = async (req: Request, res: Response) => {
-        try {
-            const userId = parseInt(req.session["user"].id as string, 10);
-            const newData: { username: string, firstName: string, lastName: string, email: string, phoneNum: number } = req.body;
-            const result = await this.userInfoService.editUserInfo(userId, newData);
-            if (result) {
-                res.status(200).json({ success: true, message: "Edit Success" });
-            }
-        }
-        catch (err) {
-            logger.error(err.toString());
-            res.status(400).json({ success: false, message: "Edit Error" })
-            return;
-        }
-    }
-
-
-    editUserPassword = async (req: Request, res: Response) => {
-        try {
-            const userId = parseInt(req.session["user"].id as string, 10);
-            const password: { oldPassword: string, newPassword: string } = req.body;
-            const result = await this.userInfoService.editUserPassword(userId, password);
-            if (result === false) {
-                res.status(400).json({ success: false, message: "Edit Error" });
-                return;
-            } else {
-                res.status(200).json({ success: true, message: "Edit Success" });
-            }
-        }
-        catch (err) {
-            logger.error(err.toString());
-            res.status(400).json({ success: false, message: "Edit Error" })
-            return;
-        }
-    }
-
-
     displayCalendarData = async (req: Request, res: Response) => {
         try {
             const userId = parseInt(req.session["user"].id as string, 10);

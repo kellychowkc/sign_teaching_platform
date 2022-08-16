@@ -1,10 +1,90 @@
 
 import { Knex } from "knex";
+import { checkPassword, hashPassword } from "../utility/hash";
 
 export class TeacherService {
     constructor(private knex: Knex) { }
 
-    async getTeacherTimeList(id: number) {
+    async getTeacherInfo(id: number) {
+        const result =
+            await this.knex("users")
+                .select("users.username",
+                    "users.first_name",
+                    "users.last_name",
+                    "users.email",
+                    "users.phone_num",
+                    "teachers.teacher_image",
+                    "teachers.teacher_description"
+                )
+                .innerJoin("teachers", "users.id", "teachers.user_id")
+                .where("users.id", id);
+        return result[0];
+    }
+
+
+    async editTeacherInfo(id: number, fname: string, lname: string, email: string, phoneNum: number, description: string) {
+        const txn = await this.knex.transaction();
+        try {
+            await txn("users")
+                .update({
+                    first_name: fname,
+                    last_name: lname, 
+                    email: email, 
+                    phone_num: phoneNum
+                })
+            .where("id", id);
+            await txn("teachers")
+                .update({ teacher_description: description })
+                .where("user_id", id);
+            await txn.commit();
+            return true;
+        }
+        catch (err) {
+            await txn.rollback();
+            return false;
+        }
+    }
+
+
+    async editTeacherImage(id: number, image: string) {
+        const teacherOldData: Array<{ teacher_image: string }> =
+            await this.knex("teachers")
+                .select("teacher_image")
+                .where("user_id", id);
+        await this.knex("teachers")
+            .update({
+                teacher_image: image
+            })
+            .where("user_id", id);
+        return teacherOldData[0]["teacher_image"];
+    }
+
+
+    async editTeacherPass(id: number, oldPass: string, newPass: string) {
+        const checkPass: Array<{ password: string }> =
+            await this.knex("users")
+                .select("password")
+                .where("id", id);
+        const match = await checkPassword(oldPass, checkPass[0]["password"]);
+        if (match === true) {
+            const newPassword = await hashPassword(newPass);
+            if (newPassword) {
+                await this.knex("users")
+                    .update({
+                        password: newPassword
+                    })
+                    .where("id", id);
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+
+    
+    async getCanTeachingTime(id: number) {
         const teacherBookingData: Array<{ weekday: string, booking_time: string }> =
             await this.knex("can_booking_table")
                 .select("time_table.weekday", "time_table.booking_time")
@@ -22,7 +102,7 @@ export class TeacherService {
     }
 
 
-    async editTeacherTimeList(id: number, weekdayData: string, timeData: string) {
+    async editCanTeachingTime(id: number, weekdayData: string, timeData: string) {
         const txn = await this.knex.transaction();
         try {
             const teacherData: Array<{ id: number }> =
@@ -67,9 +147,7 @@ export class TeacherService {
                         });
                 } else {
                     // if already have, delete that one
-                    await txn("can_booking_table")
-                        .where("id", hasData[0]["id"])
-                        .del();
+                    await txn("can_booking_table").where("id", hasData[0]["id"]).del();
                 }
             }
             await txn.commit();
@@ -79,42 +157,6 @@ export class TeacherService {
             await txn.rollback();
             return false;
         }
-    }
-
-
-    async getTeacherData(id: number) {
-        const teacherData: Array<{ teacher_image: string, teacher_description: string }> =
-            await this.knex("teachers")
-                .select("teacher_image", "teacher_description")
-                .where("user_id", id);
-        const result = {
-            "image": teacherData[0]["teacher_image"],
-            "description": teacherData[0]["teacher_description"]
-        };
-        return result;
-    }
-
-
-    async editTeacherDescription(id: number, description: string) {
-        return await this.knex("teachers")
-            .update({
-                teacher_description: description
-            })
-            .where("user_id", id);
-    }
-
-
-    async editTeacherImage(id: number, title: string) {
-        const teacherOldData: Array<{ teacher_image: string }> =
-            await this.knex("teachers")
-                .select("teacher_image")
-                .where("user_id", id);
-        await this.knex("teachers")
-            .update({
-                teacher_image: title
-            })
-            .where("user_id", id);
-        return teacherOldData[0]["teacher_image"];
     }
 
 
@@ -129,10 +171,12 @@ export class TeacherService {
                 .orderBy("lessons.date_time");
         let eachLesson = [];
         for (let lesson of lessonOfTeaching) {
-            const lessonDateTime = lesson["date_time"].toLocaleString("en-US");
+            const lessonTime = lesson["date_time"].toLocaleTimeString("en-US");
+            const lessonDate = lesson["date_time"].toLocaleDateString("en-US");
             eachLesson.push({
                 "studentName": lesson["username"],
-                "teachingDate": lessonDateTime,
+                "teachingDate": lessonDate,
+                "teachingTime" : lessonTime,
                 "status": lesson["status"]
             });
         }
@@ -163,7 +207,7 @@ export class TeacherService {
         return lessonData;
     }
 
-    async getLessonData(id: number) {
+    async getThatLessonData(id: number) {
         const lessonData: Array<{ username: string, lesson_link: string, date_time: Date }> =
             await this.knex("orders")
                 .select("users.username", "lessons.lesson_link", "lessons.date_time")
@@ -180,31 +224,19 @@ export class TeacherService {
     }
 
     async insertLessonLink(id: number, link: string) {
-        const matchLink: Array<{ id: number}> = 
-            await this.knex("lessons")
-                .select("id")
-                .where("lesson_link", link);
+        const matchLink: Array<{ id: number }> = await this.knex("lessons").select("id").where("lesson_link", link);
         if (matchLink.length > 0) {
             return false;
         } else {
-            await this.knex("lessons")
-            .update({
-                lesson_link: link
-            })
-            .where("id", id);
+            await this.knex("lessons").update({ lesson_link: link }).where("id", id);
             return true;
         }
-        
+
     }
 
 
     async editLessonData(id: number, link: string, status: string) {
-        return this.knex("lessons")
-            .update({
-                lesson_link: link, 
-                status: status
-            })
-            .where("id", id);
+        return this.knex("lessons").update({ lesson_link: link, status: status }).where("id", id);
     }
 
 }

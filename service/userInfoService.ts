@@ -1,60 +1,8 @@
 
 import { Knex } from "knex";
-import { checkPassword, hashPassword } from "../utility/hash";
 
 export class UserInfoService {
     constructor(private knex: Knex) { }
-
-    async getUserData(id: number) {
-        const userData: Array<{ username: string, first_name: string, last_name: string, email: string, phone_num: number }> =
-            await this.knex("users")
-                .select(
-                    "username",
-                    "first_name",
-                    "last_name",
-                    "email",
-                    "phone_num"
-                )
-                .where("id", id);
-        return userData[0];
-    }
-
-
-    async editUserInfo(id: number, data: { username: string, firstName: string, lastName: string, email: string, phoneNum: number }) {
-        return await this.knex("users")
-            .update({
-                username: data.username,
-                first_name: data.firstName,
-                last_name: data.lastName,
-                email: data.email,
-                phone_num: data.phoneNum
-            })
-            .where("id", id);
-    }
-
-
-    async editUserPassword(id: number, password: { oldPassword: string, newPassword: string }) {
-        const checkPass: Array<{ password: string }> =
-            await this.knex("users")
-                .select("password")
-                .where("id", id);
-        const match = await checkPassword(password["oldPassword"], checkPass[0]["password"]);
-        if (match === true) {
-            const newPass = await hashPassword(password["newPassword"]);
-            if (newPass) {
-                await this.knex("users")
-                    .update({
-                        password: newPass
-                    })
-                    .where("id", id);
-                return true;
-            } else {
-                return false;
-            }
-        } else {
-            return false;
-        }
-    }
 
 
     async getCalendarData(id: number, identity: string) {

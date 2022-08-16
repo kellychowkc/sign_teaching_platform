@@ -1,10 +1,13 @@
 
+import { userFooter } from "./userFooter.js";
 import { userNavbar } from "./userNavbar.js";
 import { studentSidebar, teacherSidebar } from "./usersInfoPage/usersSidebar.js";
 
 window.onload = () => {
-    userNavbar();
     checkIdentity();
+    userNavbar();
+    userFooter();
+
 }
 
 async function checkIdentity() {

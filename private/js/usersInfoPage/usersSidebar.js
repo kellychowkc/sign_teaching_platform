@@ -1,74 +1,76 @@
-import { userInfoData } from "./usersInfoData.js";
+import { teacherInfoData } from "./teacherInfoData.js";
+import { studentInfoData } from "./studentInfoData.js";
 import { teacherTimeTable } from "./teachersTimeTable.js";
 import { displayBookingTable } from "./studentLessonBooking.js";
-import { teacherImage } from "./teacherImage.js";
-import { displayLearningRecord } from "./studentLearnRecord.js";
 import { teacherTeachingRecord } from "./teacherTeachingRecord.js";
 import { startLessonForStudent } from "./studentStartLesson.js";
 import { startLessonForTeacher } from "./teacherStartLesson.js";
 import { displayDashboard } from "./learningDashboard.js";
+import { displayPackages } from "./packages.js";
+
 
 export async function studentSidebar() {
   document.querySelector("#userInfoList").innerHTML = `
     <div class="d-flex flex-column flex-shrink-0 p-3 bg-light" style="width: 280px;">
-    <a href="./userInfo.html" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
-        <svg class="bi pe-none me-2" width="40" height="32">
-            <img src="../assets/usersImages/student_icon.png" rel="mages" id="usersImages" />
-        </svg>
-        <span class="fs-4">用戶資訊</span>
-    </a>
-    <hr>
-    <ul class="nav nav-pills flex-column mb-auto">
-        <li class="nav-item">
-            <div class="nav-link link-dark" id="userInfo">
-                <svg class="bi pe-none me-2" width="16" height="16">
-                    <i class="fa-solid fa-file-pen"></i>
-                </svg>
-                個人資料
-            </div>
-        </li>
-        <li class="nav-item">
-            <div class="nav-link link-dark" id="lessonBooking">
-                <svg class="bi pe-none me-2" width="16" height="16">
-                    <i class="fa-solid fa-person-chalkboard"></i>
-                </svg>
-                預約課堂
-            </div>
-        </li>
-        <li  class="nav-item">
-            <div class="nav-link link-dark" id="learningRecord">
-                <svg class="bi pe-none me-2" width="16" height="16">
-                    <i class="fa-brands fa-leanpub"></i>
-                </svg>
-                購買課堂
-            </div>
-        </li>
-        <li class="nav-item">
-            <div class="nav-link link-dark" id="startLesson">
-                <svg class="bi pe-none me-2" width="16" height="16">
-                    <i class="fa-solid fa-chalkboard-user"></i>
-                </svg>
-                準備開課
-            </div>
-        </li>
-        <li class="nav-item">
-        <div class="nav-link link-dark" id="dashboard">
-            <svg class="bi pe-none me-2" width="16" height="16">
-                <i class="fa-solid fa-chalkboard"></i>
+        <a href="./userInfo.html" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
+            <svg class="bi pe-none me-2" width="40" height="32">
+                <img src="../assets/usersImages/student_icon.png" rel="mages" id="usersImages" />
             </svg>
-            學習進度
-        </div>
-    </li>
-    </ul>
-</div>
+            <span class="fs-4">用戶資訊</span>
+        </a>
+        <hr>
+        <ul class="nav nav-pills flex-column mb-auto">
+            <li class="nav-item">
+                <div class="nav-link link-dark" id="userInfo">
+                    <svg class="bi pe-none me-2" width="16" height="16">
+                        <i class="fa-solid fa-file-pen"></i>
+                    </svg>
+                    個人資料
+                </div>
+            </li>
+            <li class="nav-item">
+                <div class="nav-link link-dark" id="lessonBooking">
+                    <svg class="bi pe-none me-2" width="16" height="16">
+                        <i class="fa-solid fa-person-chalkboard"></i>
+                    </svg>
+                    預約課堂
+                </div>
+            </li>
+            <li  class="nav-item">
+                <div class="nav-link link-dark" id="buyPackages">
+                    <svg class="bi pe-none me-2" width="16" height="16">
+                        <i class="fa-brands fa-leanpub"></i>
+                    </svg>
+                    購買課堂
+                </div>
+            </li>
+            <li class="nav-item">
+                <div class="nav-link link-dark" id="dashboard">
+                    <svg class="bi pe-none me-2" width="16" height="16">
+                        <i class="fa-solid fa-chalkboard"></i>
+                    </svg>
+                    學習進度
+                </div>
+            </li>
+            <li class="nav-item">
+                <div class="nav-link link-dark" id="startLesson">
+                    <svg class="bi pe-none me-2" width="16" height="16">
+                        <i class="fa-solid fa-chalkboard-user"></i>
+                    </svg>
+                    準備開課
+                </div>
+            </li>
+        </ul>
+    </div>
     `;
 
-  userInfoData();
+  studentInfoData();
   displayBookingTable();
-  displayLearningRecord();
+  displayPackages();
   startLessonForStudent();
   displayDashboard();
 }
+
 
 export async function teacherSidebar() {
   document.querySelector("#userInfoList").innerHTML = `
@@ -87,14 +89,6 @@ export async function teacherSidebar() {
                     <i class="fa-solid fa-file-pen"></i>
                 </svg>
                 個人資料
-            </div>
-        </li>
-        <li class="nav-item">
-            <div class="nav-link link-dark" id="teacherImage">
-                <svg class="bi pe-none me-2" width="16" height="16">
-                <i class="fa-solid fa-user-pen"></i>
-                </svg>
-                個人形象
             </div>
         </li>
         <li class="nav-item">
@@ -125,8 +119,7 @@ export async function teacherSidebar() {
 </div>
     `;
 
-  userInfoData();
-  teacherImage();
+  teacherInfoData();
   teacherTimeTable();
   teacherTeachingRecord();
   startLessonForTeacher();

@@ -82,7 +82,7 @@ function logout() {
               showConfirmButton: false,
               timer: 1500,
             }).then(function () {
-              window.location.href = `http://localhost:8080/`;
+              window.location.href = `/index.html`;
             });
           }
         }

@@ -6,9 +6,63 @@ import { logger } from "../utility/logger";
 export class StudentController {
     constructor(private studentService: StudentService) { }
 
-    displayTeacher = async (req: Request, res: Response) => {
+    displayStudentInfo = async (req:Request, res: Response) => {
         try {
-            const teacherData = await this.studentService.getTeacherData();
+            const userId = parseInt(req.session["user"].id as string, 10);
+            const data = await this.studentService.getStudentInfo(userId);
+            if (data) {
+                res.status(200).json({ success: true, message: data });
+            }
+        } catch (err) {
+            logger.error(err.toString());
+            res.status(400).json({ success: false, message: "Display Error" });
+            return;
+        }
+    }
+
+
+    editStudentInfo = async (req: Request, res: Response) => {
+        try {
+            const userId = parseInt(req.session["user"].id as string, 10);
+            const fname = req.body["fname"] as string;
+            const lname = req.body["lname"] as string;
+            const email = req.body["email"] as string;
+            const phoneNum = parseInt(req.body["phoneNum"] as string, 10);
+            const oldPass = req.body?.["oldPass"] as string;
+            const newPass = req.body?.["newPass"] as string;
+            const editInfoResult = await this.studentService.editStudentInfo(userId, fname, lname, email, phoneNum);
+            let editPassResult;
+            if (oldPass && newPass) {
+                editPassResult = await this.studentService.editStudentPass(userId, oldPass, newPass);
+            }
+            
+            if (editInfoResult === true) {
+                if (oldPass) {
+                    if (editPassResult === true) {
+                        res.status(200).json({ success: true, message: "Edit Success" });
+                        return;
+                    } else {
+                        res.status(400).json({ success: false, message: "Edit Unsuccess" })
+                        return;
+                    }
+                } else {
+                    res.status(200).json({ success: true, message: "Edit Success" });
+                    return;
+                }
+            } else {
+                res.status(400).json({ success: false, message: "Edit Unsuccess" })
+                return;
+            }
+        } catch (err) {
+            logger.error(err.toString());
+            res.status(400).json({ success: false, message: "Edit Error" });
+            return;
+        }
+    }
+
+    displayTeacherTimeTable = async (req: Request, res: Response) => {
+        try {
+            const teacherData = await this.studentService.getTeacherTimeTable();
             if (teacherData.length > 0) {
                 res.status(200).json({ success: true, message: teacherData })
             } else {
@@ -84,47 +138,11 @@ export class StudentController {
     }
 
 
-    displayShoppingRecord = async (req: Request, res: Response) => {
+    displayPackagesRecord = async (req: Request, res: Response) => {
         try {
             const userId = parseInt(req.session["user"].id as string, 10);
-            const shoppingRecord = await this.studentService.getShoppingRecord(userId);
+            const shoppingRecord = await this.studentService.getPackagesRecord(userId);
             res.status(200).json({ success: true, message: shoppingRecord });
-        }
-        catch (err) {
-            logger.error(err.toString());
-            res.status(400).json({ success: false, message: "Display Error" })
-            return;
-        }
-    }
-
-
-    displayOrderRecord = async (req: Request, res: Response) => {
-        try {
-            const userId = parseInt(req.session["user"].id as string, 10);
-            const orderRecord = await this.studentService.getOrderRecord(userId);
-            res.status(200).json({ success: true, message: orderRecord });
-        }
-        catch (err) {
-            logger.error(err.toString());
-            res.status(400).json({ success: false, message: "Display Error" })
-            return;
-        }
-    }
-
-
-    displayOrderData = async (req: Request, res: Response) => {
-        try {
-            const orderId = parseInt(req.body["id"] as string, 10);
-            const orderData = await this.studentService.getOrderData(orderId);
-            if (orderData) {
-                const thisOrderData = orderData.thisOrder;
-                const lessonDataInOrder = orderData.lessonList;
-                if (lessonDataInOrder.length === 0) {
-                    res.status(200).json({ success: true, message: { "order": thisOrderData } });
-                } else {
-                    res.status(200).json({ success: true, message: { "order": thisOrderData, "lessonList": lessonDataInOrder } });
-                }
-            }
         }
         catch (err) {
             logger.error(err.toString());
@@ -169,6 +187,42 @@ export class StudentController {
     }
 
 
+    displayAllOrder = async (req: Request, res: Response) => {
+        try {
+            const userId = parseInt(req.session["user"].id as string, 10);
+            const orderRecord = await this.studentService.getAllOrderData(userId);
+            res.status(200).json({ success: true, message: orderRecord });
+        }
+        catch (err) {
+            logger.error(err.toString());
+            res.status(400).json({ success: false, message: "Display Error" })
+            return;
+        }
+    }
+
+
+    displayThatOrder = async (req: Request, res: Response) => {
+        try {
+            const orderId = parseInt(req.body["id"] as string, 10);
+            const orderData = await this.studentService.getThatOrderData(orderId);
+            if (orderData) {
+                const thisOrderData = orderData.thisOrder;
+                const lessonDataInOrder = orderData.lessonList;
+                if (lessonDataInOrder.length === 0) {
+                    res.status(200).json({ success: true, message: { "order": thisOrderData } });
+                } else {
+                    res.status(200).json({ success: true, message: { "order": thisOrderData, "lessonList": lessonDataInOrder } });
+                }
+            }
+        }
+        catch (err) {
+            logger.error(err.toString());
+            res.status(400).json({ success: false, message: "Display Error" })
+            return;
+        }
+    }
+
+
     displayLessonForStudent = async (req: Request, res: Response) => {
         try {
             const userId = parseInt(req.session["user"].id as string, 10);
@@ -186,10 +240,10 @@ export class StudentController {
     }
 
 
-    displayLessonData = async (req: Request, res: Response) => {
+    displayThatLessonData = async (req: Request, res: Response) => {
         try {
-            const lessonLink = req.body["link"] as string;
-            const lessonData = await this.studentService.getLessonData(lessonLink);
+            const lessonId = parseInt(req.body["id"] as string, 10);
+            const lessonData = await this.studentService.getThatLessonData(lessonId);
             res.status(200).json({ success: true, message: lessonData});
         }
         catch (err) {

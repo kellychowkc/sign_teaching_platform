@@ -65,7 +65,7 @@ export function teacherTimeTable() {
 
 
 async function displayTime() {
-    const resp = await fetch("/userInfo/displayTeacherTime", { method: "POST" });
+    const resp = await fetch("/userInfo/displayCanTeachingTime", { method: "POST" });
     const result = await resp.json();
     if (result.success === true) {
         const timeList = result.message;

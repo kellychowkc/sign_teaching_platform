@@ -62,7 +62,7 @@ export function displayBookingTable() {
 
 
 async function displayTeacher() {
-    const resp = await fetch("/userInfo/displayTeacher", { method: "POST" });
+    const resp = await fetch("/userInfo/displayTeacherTimeTable", { method: "POST" });
     const result = await resp.json();
     if (result.success === true) {
         const teacherData = result.message;
@@ -80,6 +80,7 @@ async function displayTeacher() {
         }
     }
 }
+
 
 function selectTeacher() {
     document.querySelectorAll(".bookingBtn").forEach((item) => {
@@ -124,7 +125,6 @@ function selectTeacher() {
         })
     })
 }
-
 
 
 async function selectBookingDate(id, weekday, time) {
