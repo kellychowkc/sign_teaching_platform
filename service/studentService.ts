@@ -214,7 +214,7 @@ export class StudentService {
                 });
             }
         }
-        let attendRatio = parseInt((attendNum / (bookingNum + attendNum + absentNum)).toFixed(3), 10);
+        let attendRatio = attendNum / (bookingNum + attendNum + absentNum);
         if (isNaN(attendRatio)) {
             attendRatio = 0;
         }

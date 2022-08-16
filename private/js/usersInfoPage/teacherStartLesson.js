@@ -157,7 +157,7 @@ function enterLesson() {
         lesson.addEventListener("click", async () => {
             const lessonId = lesson.getAttribute("value");
             const data = { id: lessonId };
-            const resp = await fetch("/userInfo/displayLessonDataForTeacher", {
+            const resp = await fetch("/userInfo/displayThatLessonData", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -199,7 +199,7 @@ function closeLesson() {
         lesson.addEventListener("click", async () => {
             const lessonId = lesson.getAttribute("value");
             const data = { id: lessonId };
-            const resp = await fetch("/userInfo/displayLessonDataForTeacher", {
+            const resp = await fetch("/userInfo/displayThatLessonData", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

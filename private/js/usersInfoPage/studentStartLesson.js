@@ -71,7 +71,7 @@ function enterLesson() {
         lesson.addEventListener("click", async () => {
             const lessonId = lesson.getAttribute("value");
             const data = { id: lessonId };
-            const resp = await fetch("/userInfo/displayThatLessonData", {
+            const resp = await fetch("/userInfo/displayThisLessonData", {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

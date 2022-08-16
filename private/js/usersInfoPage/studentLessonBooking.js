@@ -87,7 +87,8 @@ function selectTeacher() {
         item.addEventListener("click", async () => {
             const teacherName = item.getAttribute("id");
             const bookingData = item.getAttribute("value");
-            const resp = await fetch("/userInfo/displayTeacher", { method: "POST" });
+            console.log(teacherName, bookingData)
+            const resp = await fetch("/userInfo/displayTeacherTimeTable", { method: "POST" });
             const result = await resp.json();
             if (result.success === true) {
                 const teacherData = result.message;

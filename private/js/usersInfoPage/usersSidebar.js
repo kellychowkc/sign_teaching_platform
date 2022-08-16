@@ -12,6 +12,9 @@ import { displayPackages } from "./packages.js";
 export async function studentSidebar() {
   document.querySelector("#userInfoList").innerHTML = `
     <div class="d-flex flex-column flex-shrink-0 p-3 bg-light" style="width: 280px;">
+        <div class="rightMenu"><i class="fa-solid fa-caret-right fa-3x"></i></div>
+        <div class="leftMenu"><i class="fa-solid fa-caret-left fa-3x"></i></div>
+
         <div class="sidebar">
             <a href="./userInfo.html" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
                 <svg class="bi pe-none me-2" width="40" height="32">
@@ -79,6 +82,8 @@ export async function studentSidebar() {
 export async function teacherSidebar() {
   document.querySelector("#userInfoList").innerHTML = `
     <div class="sidebar_wrapper d-flex flex-column flex-shrink-0 p-3 bg-light" style="width: 280px;">
+        <div class="rightMenu"><i class="fa-solid fa-caret-right fa-3x"></i></div>
+        <div class="leftMenu"><i class="fa-solid fa-caret-left fa-3x"></i></div>
         <div class="sidebar">
             <a href="./userInfo.html" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
                 <svg class="bi pe-none me-2" width="40" height="32">
@@ -122,7 +127,6 @@ export async function teacherSidebar() {
                 </li>
             </ul>
         </div>
-        <div class="menu"><i id="sideIcon" class="fa-solid fa-caret-right fa-2x"></i></div>
     </div>
     `;
 
@@ -136,9 +140,14 @@ export async function teacherSidebar() {
 
 
 function hiddenSidebar() {
-    document.querySelector(".menu").addEventListener("click", () => {
-        document.querySelector("#sideIcon").classList.toggle("fa-caret-right fa-caret-left");
-        document.querySelector(".sidebar_wrapper").classList.toggle("show_sidebar");
-        document.querySelector("body").classList.toggle("push_body");
+    document.querySelector(".rightMenu").addEventListener("click", () => {
+        document.querySelector(".rightMenu").style.display = "none";
+        document.querySelector(".leftMenu").style.display = "contents";
+        document.querySelector(".sidebar").style.display = "contents";
+    })
+    document.querySelector(".leftMenu").addEventListener("click", () => {
+        document.querySelector(".leftMenu").style.display = "none";
+        document.querySelector(".rightMenu").style.display = "contents";
+        document.querySelector(".sidebar").style.display = "none";
     })
 }

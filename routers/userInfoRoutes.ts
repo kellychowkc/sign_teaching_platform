@@ -31,4 +31,4 @@ userInfoRoutes.post("/insertNewOrder", isLoggedInStudent, studentController.addN
 userInfoRoutes.post("/displayAllOrder", isLoggedInStudent, studentController.displayAllOrder);
 userInfoRoutes.post("/displayThatOrder", isLoggedInStudent, studentController.displayThatOrder);
 userInfoRoutes.post("/displayLessonForStudent", isLoggedInStudent, studentController.displayLessonForStudent);
-userInfoRoutes.post("/displayThatLessonData", isLoggedInStudent, studentController.displayThatLessonData);
+userInfoRoutes.post("/displayThisLessonData", isLoggedInStudent, studentController.displayThatLessonData);

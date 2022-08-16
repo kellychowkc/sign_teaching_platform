@@ -21,7 +21,7 @@ section {
 }
 
 #calendar {
-    width: 75vw;
+    width: 78vw;
 }
 
 #userInfoDisplay {
@@ -48,16 +48,31 @@ section {
 }
 
 
-.menu {
-    font-size: 1.2rem;
-    position: absolute;
-    top: 1.5rem;
-    right: 1.3rem;
+.rightMenu, .leftMenu {
+    display: none;
 }
+
+
 
 @media only screen and (max-width: 900px) {
     article {
         flex-direction: column;
+    }
+    
+    section {
+        width: 100vw;
+    }
+
+    #calendar {
+        width: 95vw;
+    }
+
+    .sidebar {
+        display: none;
+    }
+
+    .rightMenu {
+        display: contents;
     }
 
     #chart {
@@ -65,13 +80,9 @@ section {
         flex-direction: column;
     }
 
-    .sidebar {
-        display: none;
-    }
-
-
-    .show_sidebar {
-        margin-left: 0;
+    .show {
+        display: contents;
+        position: relative;
     }
 
     .push_body {
