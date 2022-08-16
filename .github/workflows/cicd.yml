@@ -36,3 +36,22 @@ jobs:
                   yarn install
                   yarn knex migrate:latest --env test
                   yarn test
+    deploy:
+        if: github.ref_name == 'production'
+        runs-on: ubuntu-latest
+        needs: test
+
+        # Steps represent a sequence of tasks that will be executed as part of the job
+        steps:
+            - name: ssh to pull latest version\
+              uses: fifsky/ssh-action@master
+              with:
+                  command: |
+                      cd c21-tw-bad-group4
+                      git pull origin production
+                      yarn install
+                      yarn knex migrate:latest --env production
+                      forever restart ts-node server.ts
+                  host: bad-projecrt.tecky-kc.me
+                  user: ubuntu
+                  key: ${{secrets.SSH_PRIVATE_KEY}}
