@@ -562,6 +562,7 @@ function showSearchUser(current_page, total_page, userData) {
   // table 1. delete children of parentElement; 2.create its first children
   const tableParent = document.querySelector("tbody");
   removeChildElement(tableParent);
+  console.log("this is userId:",userData)
 
   // pagination
   const pageParent = document.querySelector("nav.page_box");
