@@ -40,7 +40,7 @@ export function studentInfoData() {
                                                     </div>
                                                     <div class="col d-flex flex-column flex-sm-row justify-content-between mb-3">
                                                         <div class="text-center text-sm-left mb-2 mb-sm-0">
-                                                            <h4 class="pt-sm-2 pb-1 mb-0 text-nowrap">${studentData["username"]}</h4>
+                                                            <h4 class="pt-sm-2 pb-1 mb-0 text-nowrap student-username" >${studentData["username"]}</h4>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -121,7 +121,7 @@ function editStudentInfo() {
                     </div>
                     <div class="col d-flex flex-column flex-sm-row justify-content-between mb-3">
                         <div class="text-center text-sm-left mb-2 mb-sm-0">
-                            <h4 class="pt-sm-2 pb-1 mb-0 text-nowrap">${studentData["username"]}</h4>
+                            <h4 class="pt-sm-2 pb-1 mb-0 text-nowrap student-username">${studentData["username"]}</h4>
                         </div>
                     </div>
                 </div>

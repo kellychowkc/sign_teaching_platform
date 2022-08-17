@@ -3,7 +3,7 @@ export async function displayDashboard() {
     document.querySelector("#userInfoDisplay").innerHTML = `
         <div class="container text-center">
             <div class="col-md-7 col-lg-8 m-auto">
-                <h4 class="mb-3">學習進度</h4>
+                <h2 class="mb-3">學習進度</h2>
             </div>
             <div class="container">
                 <div class="row" id="chart">
