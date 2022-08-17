@@ -1,4 +1,3 @@
-
 import Swal from "https://cdn.jsdelivr.net/npm/sweetalert2@11/src/sweetalert2.js";
 
 export function navbarCreate() {
@@ -39,7 +38,6 @@ export function navbarCreate() {
 </nav>
     `;
 }
-
 
 export function footerCreate() {
   document.querySelector("#footer").innerHTML = `
@@ -84,15 +82,13 @@ export function footerCreate() {
       `;
 }
 
-
-
-export async function checkIfLogIn(){
-    const resp = await fetch("/status", {method: "GET"});
-    const result = await resp.json();
-    console.log("this is result:", result)
-    if(result.success === true && result.message === "Status: log-in"){
-        console.log("this is result:", result.message)
-        document.querySelector("#header").innerHTML = `
+export async function checkIfLogIn() {
+  const resp = await fetch("/status", { method: "GET" });
+  const result = await resp.json();
+  console.log("this is result:", result);
+  if (result.success === true && result.message === "Status: log-in") {
+    console.log("this is result:", result.message);
+    document.querySelector("#header").innerHTML = `
     <nav class="navbar navbar-expand-lg navbar-light bg-light py-3">
     <div class="container">
         <a href="/index.html"><img src="/assets/手語學堂logo.png" alt="logo" id="logo" id="logo" width="100" height="90"></a>
@@ -132,57 +128,57 @@ export async function checkIfLogIn(){
             </div>
         </div>
     </nav>
-    `
-    logout()
-    };
+    `;
+    logout();
   }
-  
-  function logout() {
-    document.querySelector("#logout").addEventListener("click", () => {
-      const swalWithBootstrapButtons = Swal.mixin({
-        customClass: {
-          confirmButton: "btn btn-success",
-          cancelButton: "btn btn-danger",
-        },
-        buttonsStyling: false,
-      });
-  
-      swalWithBootstrapButtons
-        .fire({
-          title: "是否登出?",
-          icon: "warning",
-          showCancelButton: true,
-          confirmButtonText: "是",
-          cancelButtonText: "否",
-          reverseButtons: true,
-        })
-        .then(async (result) => {
-          if (result.isConfirmed) {
-            const resp = await fetch("/logout");
-            const result = await resp.json();
-  
-            if (result.success === false) {
-              Swal.fire({
-                icon: "error",
-                title: "登出失敗",
-                title: result.message,
-                showConfirmButton: false,
-                timer: 1500,
-              }).then(function () {
-                window.location.reload();
-              });
-              return;
-            } else {
-              Swal.fire({
-                icon: "success",
-                title: "登出成功",
-                showConfirmButton: false,
-                timer: 1500,
-              }).then(function () {
-                window.location.href = `/index.html`;
-              });
-            }
-          }
-        });
+}
+
+function logout() {
+  document.querySelector("#logout").addEventListener("click", () => {
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        confirmButton: "btn btn-success",
+        cancelButton: "btn btn-danger",
+      },
+      buttonsStyling: false,
     });
-  }
+
+    swalWithBootstrapButtons
+      .fire({
+        title: "是否登出?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "是",
+        cancelButtonText: "否",
+        reverseButtons: true,
+      })
+      .then(async (result) => {
+        if (result.isConfirmed) {
+          const resp = await fetch("/logout");
+          const result = await resp.json();
+
+          if (result.success === false) {
+            Swal.fire({
+              icon: "error",
+              title: "登出失敗",
+              title: result.message,
+              showConfirmButton: false,
+              timer: 1500,
+            }).then(function () {
+              window.location.reload();
+            });
+            return;
+          } else {
+            Swal.fire({
+              icon: "success",
+              title: "登出成功",
+              showConfirmButton: false,
+              timer: 1500,
+            }).then(function () {
+              window.location.href = `/index.html`;
+            });
+          }
+        }
+      });
+  });
+}

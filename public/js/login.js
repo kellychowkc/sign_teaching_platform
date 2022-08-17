@@ -25,39 +25,39 @@ function loginForm() {
       body: JSON.stringify(formData),
     });
     const result = await resp.json();
-    console.log("this is identity:", result.identity)
+    console.log("this is identity:", result.identity);
     if (result.success === true && result.identity === "student") {
       Swal.fire({
         icon: "success",
-        title: result.message,
+        title: "登入成功",
         showConfirmButton: false,
         timer: 1500,
-      }).then(function(){
+      }).then(function () {
         window.location.href = `/html/user.html`;
       });
-    } else if(result.success === true && result.identity === "teacher"){
+    } else if (result.success === true && result.identity === "teacher") {
       Swal.fire({
         icon: "success",
-        title: result.message,
+        title: "登入成功",
         showConfirmButton: false,
         timer: 1500,
-      }).then(function(){
+      }).then(function () {
         window.location.href = `/html/user.html`;
       });
-    } else if(result.success === true && result.identity === "admin"){
+    } else if (result.success === true && result.identity === "admin") {
       Swal.fire({
         icon: "success",
-        title: result.message,
+        title: "登入成功",
         showConfirmButton: false,
         timer: 1500,
-      }).then(function(){
-        console.log("this is admin!")
+      }).then(function () {
+        console.log("this is admin!");
         window.location.href = `/html/admin.html?status=teaching`;
       });
     } else {
       Swal.fire({
         icon: "error",
-        text: result.message,
+        title: "登入失敗",
         showConfirmButton: false,
         timer: 1500,
       }).then(function () {

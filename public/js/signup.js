@@ -47,8 +47,7 @@ function signUpForm() {
     if (result.success === true) {
       Swal.fire({
         icon: "success",
-        title: result.message,
-        text: result.message,
+        title: "註冊成功",
         showConfirmButton: false,
         timer: 1500,
       });
@@ -56,10 +55,9 @@ function signUpForm() {
     } else {
       Swal.fire({
         icon: "error",
-        text: result.message,
+        title: "註冊失敗",
       });
       window.location.reload();
     }
   });
 }
-

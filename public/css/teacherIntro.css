@@ -21,7 +21,7 @@
     margin-bottom: auto;
 }
 
-.photo>img {
+.photo > img {
     width: 300px;
 }
 
@@ -36,7 +36,7 @@
     margin-top: -5px;
 }
 
-.position>img {
+.position > img {
     width: 30px;
     margin-right: 10px;
 }
@@ -53,10 +53,7 @@
     font-size: 17px;
 }
 
-
-
 @media screen and (max-width: 500px) {
-
     .content_box {
         width: 500px;
         margin-left: 0;
@@ -64,7 +61,6 @@
         margin-bottom: auto;
         margin-top: 10px;
     }
-
 
     .intro_box {
         margin-top: 50px;

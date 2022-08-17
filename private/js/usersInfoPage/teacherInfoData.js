@@ -1,23 +1,22 @@
-
 import Swal from "https://cdn.jsdelivr.net/npm/sweetalert2@11/src/sweetalert2.js";
 
 export function teacherInfoData() {
-    document.querySelector("#userInfo").addEventListener("click", async () => {
-        const resp = await fetch("/userInfo/displayTeacherInfo", { method: "POST" });
-        const result = await resp.json();
-        if (result.success === false) {
-            Swal.fire({
-                icon: 'error',
-                title: "資料失敗",
-                showConfirmButton: false,
-                timer: 1500
-            }).then(function () {
-                window.location.href = "/user.html";
-            })
-        } else {
-            const teacherData = result.message;
-            if (teacherData) {
-                document.querySelector("#userInfoDisplay").innerHTML = `
+  document.querySelector("#userInfo").addEventListener("click", async () => {
+    const resp = await fetch("/userInfo/displayTeacherInfo", { method: "POST" });
+    const result = await resp.json();
+    if (result.success === false) {
+      Swal.fire({
+        icon: "error",
+        title: "資料失敗",
+        showConfirmButton: false,
+        timer: 1500,
+      }).then(function () {
+        window.location.href = "/user.html";
+      });
+    } else {
+      const teacherData = result.message;
+      if (teacherData) {
+        document.querySelector("#userInfoDisplay").innerHTML = `
                 <div class="container">
                     <div class="row flex-lg-nowrap">
                         <div class="col">
@@ -106,21 +105,20 @@ export function teacherInfoData() {
                 </div>
                 `;
 
-                editTeacherInfo();
-            }
-        }
-    })
+        editTeacherInfo();
+      }
+    }
+  });
 }
 
-
 function editTeacherInfo() {
-    document.querySelector("#editTeacherInfo").addEventListener("click", async () => {
-        const resp = await fetch("/userInfo/displayTeacherInfo", { method: "POST" });
-        const result = await resp.json();
-        if (result.success === true) {
-            const teacherData = result.message;
-            if (teacherData) {
-                document.querySelector(".e-profile").innerHTML = `
+  document.querySelector("#editTeacherInfo").addEventListener("click", async () => {
+    const resp = await fetch("/userInfo/displayTeacherInfo", { method: "POST" });
+    const result = await resp.json();
+    if (result.success === true) {
+      const teacherData = result.message;
+      if (teacherData) {
+        document.querySelector(".e-profile").innerHTML = `
                 <div class="row">
                     <div class="col-12 col-sm-auto mb-3">
                         <div class="mx-auto" style="width: 200px;">
@@ -250,90 +248,88 @@ function editTeacherInfo() {
                 </div>
                 `;
 
-                const newImage = document.querySelector("#image");
-                const imagePreview = document.querySelector("#image_preview");
-                newImage.onchange = () => {
-                    const [file] = newImage.files
-                    if (file) {
-                        imagePreview.src = URL.createObjectURL(file)
-                    }
-                }
-                confirmPassword();
-                submitNewInfo();
-            }
-        }
-    })
+        const newImage = document.querySelector("#image");
+        const imagePreview = document.querySelector("#image_preview");
+        newImage.onchange = () => {
+          const [file] = newImage.files;
+          if (file) {
+            imagePreview.src = URL.createObjectURL(file);
+          }
+        };
+        confirmPassword();
+        submitNewInfo();
+      }
+    }
+  });
 }
 
 function confirmPassword() {
-    const oldPass = document.querySelector("#oldPass");
-    const newPass = document.querySelector("#newPass");
-    const confirmPass = document.querySelector("#confirmPass");
-    newPass.addEventListener("keyup", () => {
-        if (oldPass.value === newPass.value) {
-            newPass.classList.remove("is-valid");
-            newPass.classList.add("is-invalid");
-        } else {
-            newPass.classList.remove("is-invalid");
-            newPass.classList.add("is-valid");
-        }
-    })
-    confirmPass.addEventListener("keyup", () => {
-        if (newPass.value !== confirmPass.value) {
-            confirmPass.classList.remove("is-valid");
-            confirmPass.classList.add("is-invalid");
-        } else {
-            confirmPass.classList.remove("is-invalid");
-            confirmPass.classList.add("is-valid");
-        }
-    })
-
+  const oldPass = document.querySelector("#oldPass");
+  const newPass = document.querySelector("#newPass");
+  const confirmPass = document.querySelector("#confirmPass");
+  newPass.addEventListener("keyup", () => {
+    if (oldPass.value === newPass.value) {
+      newPass.classList.remove("is-valid");
+      newPass.classList.add("is-invalid");
+    } else {
+      newPass.classList.remove("is-invalid");
+      newPass.classList.add("is-valid");
+    }
+  });
+  confirmPass.addEventListener("keyup", () => {
+    if (newPass.value !== confirmPass.value) {
+      confirmPass.classList.remove("is-valid");
+      confirmPass.classList.add("is-invalid");
+    } else {
+      confirmPass.classList.remove("is-invalid");
+      confirmPass.classList.add("is-valid");
+    }
+  });
 }
 
-
 function submitNewInfo() {
-    const submitForm = document.querySelector("#newInfo");
-    submitForm.addEventListener("submit", async (event) => {
-        event.preventDefault();
-        if (!submitForm.checkValidity()) {
-            event.stopPropagation();
-            submitForm.classList.add("was-validated");
-            return;
-        } else {
-            const form = event.target;
-            const formData = new FormData();
-            formData.append("fname", form.fname.value);
-            formData.append("lname", form.lname.value);
-            formData.append("email", form.email.value);
-            formData.append("phoneNum", form.phoneNum.value);
-            formData.append("description", form.description.value);
-            formData.append("oldPass", form.oldPass?.value);
-            formData.append("newPass", form.newPass?.value);
-            formData.append("image", form.image?.files[0]);
-            const resp = await fetch("/userInfo/editTeacherInfo", {
-                method: "POST",
-                body: formData
-            })
-            const result = await resp.json();
-            if (result.success === true) {
-                Swal.fire({
-                    icon: 'success',
-                    title: "更改成功",
-                    showConfirmButton: false,
-                    timer: 1500
-                }).then(function () {
-                    window.location.reload();
-                })
-            } else {
-                Swal.fire({
-                    icon: 'error',
-                    title: "更改失敗",
-                    showConfirmButton: false,
-                    timer: 1500
-                }).then(function () {
-                    window.location.reload();
-                })
-            }
-        }
-    })
+  const submitForm = document.querySelector("#newInfo");
+  submitForm.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    if (!submitForm.checkValidity()) {
+      event.stopPropagation();
+      submitForm.classList.add("was-validated");
+      return;
+    } else {
+      const form = event.target;
+      const formData = new FormData();
+      formData.append("fname", form.fname.value);
+      formData.append("lname", form.lname.value);
+      formData.append("email", form.email.value);
+      formData.append("phoneNum", form.phoneNum.value);
+      formData.append("description", form.description.value);
+      formData.append("oldPass", form.oldPass?.value);
+      formData.append("newPass", form.newPass?.value);
+      formData.append("image", form.image?.files[0]);
+      const resp = await fetch("/userInfo/editTeacherInfo", {
+        method: "POST",
+        body: formData,
+      });
+      const result = await resp.json();
+      if (result.success === true) {
+        Swal.fire({
+          icon: "success",
+          title: "更改成功",
+          showConfirmButton: false,
+          timer: 1500,
+        }).then(function () {
+          window.location.reload();
+        });
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "更改失敗",
+          showConfirmButton: false,
+          timer: 1500,
+        }).then(function () {
+          window.location.reload();
+        });
+      }
+    }
+  });
 }

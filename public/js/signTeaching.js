@@ -1,4 +1,3 @@
-
 import { navbarCreate, footerCreate, checkIfLogIn } from "./navbar.js";
 
 window.onload = () => {

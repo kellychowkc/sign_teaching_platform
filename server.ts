@@ -52,7 +52,6 @@ import { AdminService } from "./service/adminService";
 import { SignController } from "./controller/signController";
 import { SignService } from "./service/signService";
 
-
 import { StatusController } from "./controller/statusController";
 
 //server & controller set up
@@ -82,7 +81,7 @@ import { userInfoRoutes } from "./routers/userInfoRoutes";
 import { signRoutes } from "./routers/signRoutes";
 
 import { adminRoutes } from "./routers/adminRoutes";
-import {isLoggedInAdmin} from "./middleware/isLoggedInGuard";
+import { isLoggedInAdmin } from "./middleware/isLoggedInGuard";
 
 //route handling
 app.use("/signUp", signUpRoutes);
@@ -92,9 +91,9 @@ app.use("/logOut", logOutRoutes);
 app.use("/userInfo", userInfoRoutes);
 
 app.use("/sign", signRoutes);
-app.use("/admin",isLoggedInAdmin,adminRoutes);
+app.use("/admin", isLoggedInAdmin, adminRoutes);
 
-app.use("/status",statusRoutes);
+app.use("/status", statusRoutes);
 
 //folder path
 app.use(express.static(path.join(__dirname, "public")));

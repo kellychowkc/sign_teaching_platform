@@ -1,23 +1,22 @@
-
 import Swal from "https://cdn.jsdelivr.net/npm/sweetalert2@11/src/sweetalert2.js";
 
 export function studentInfoData() {
-    document.querySelector("#userInfo").addEventListener("click", async () => {
-        const resp = await fetch("/userInfo/displayStudentInfo", { method: "POST" });
-        const result = await resp.json();
-        if (result.success === false) {
-            Swal.fire({
-                icon: 'error',
-                title: "資料失敗",
-                showConfirmButton: false,
-                timer: 1500
-            }).then(function () {
-                window.location.href = "/user.html";
-            })
-        } else {
-            const studentData = result.message;
-            if (studentData) {
-                document.querySelector("#userInfoDisplay").innerHTML = `
+  document.querySelector("#userInfo").addEventListener("click", async () => {
+    const resp = await fetch("/userInfo/displayStudentInfo", { method: "POST" });
+    const result = await resp.json();
+    if (result.success === false) {
+      Swal.fire({
+        icon: "error",
+        title: "資料失敗",
+        showConfirmButton: false,
+        timer: 1500,
+      }).then(function () {
+        window.location.href = "/user.html";
+      });
+    } else {
+      const studentData = result.message;
+      if (studentData) {
+        document.querySelector("#userInfoDisplay").innerHTML = `
                 <div class="container">
                     <div class="row flex-lg-nowrap">
                         <div class="col">
@@ -98,20 +97,20 @@ export function studentInfoData() {
                 </div>
                 `;
 
-                editStudentInfo();
-            }
-        }
-    })
+        editStudentInfo();
+      }
+    }
+  });
 }
 
 function editStudentInfo() {
-    document.querySelector("#editStudentInfo").addEventListener("click", async () => {
-        const resp = await fetch("/userInfo/displayStudentInfo", { method: "POST" });
-        const result = await resp.json();
-        if (result.success === true) {
-            const studentData = result.message;
-            if (studentData) {
-                document.querySelector(".e-profile").innerHTML = `
+  document.querySelector("#editStudentInfo").addEventListener("click", async () => {
+    const resp = await fetch("/userInfo/displayStudentInfo", { method: "POST" });
+    const result = await resp.json();
+    if (result.success === true) {
+      const studentData = result.message;
+      if (studentData) {
+        document.querySelector(".e-profile").innerHTML = `
                 <div class="row">
                     <div class="col-12 col-sm-auto mb-3">
                         <div class="mx-auto" style="width: 200px;">
@@ -226,83 +225,81 @@ function editStudentInfo() {
                 </div>
                 `;
 
-                confirmPassword();
-                submitNewInfo();
-            }
-        }
-    })
+        confirmPassword();
+        submitNewInfo();
+      }
+    }
+  });
 }
 
 function confirmPassword() {
-    const oldPass = document.querySelector("#oldPass");
-    const newPass = document.querySelector("#newPass");
-    const confirmPass = document.querySelector("#confirmPass");
-    newPass.addEventListener("keyup", () => {
-        if (oldPass.value === newPass.value) {
-            newPass.classList.remove("is-valid");
-            newPass.classList.add("is-invalid");
-        } else {
-            newPass.classList.remove("is-invalid");
-            newPass.classList.add("is-valid");
-        }
-    })
-    confirmPass.addEventListener("keyup", () => {
-        if (newPass.value !== confirmPass.value) {
-            confirmPass.classList.remove("is-valid");
-            confirmPass.classList.add("is-invalid");
-        } else {
-            confirmPass.classList.remove("is-invalid");
-            confirmPass.classList.add("is-valid");
-        }
-    })
-
+  const oldPass = document.querySelector("#oldPass");
+  const newPass = document.querySelector("#newPass");
+  const confirmPass = document.querySelector("#confirmPass");
+  newPass.addEventListener("keyup", () => {
+    if (oldPass.value === newPass.value) {
+      newPass.classList.remove("is-valid");
+      newPass.classList.add("is-invalid");
+    } else {
+      newPass.classList.remove("is-invalid");
+      newPass.classList.add("is-valid");
+    }
+  });
+  confirmPass.addEventListener("keyup", () => {
+    if (newPass.value !== confirmPass.value) {
+      confirmPass.classList.remove("is-valid");
+      confirmPass.classList.add("is-invalid");
+    } else {
+      confirmPass.classList.remove("is-invalid");
+      confirmPass.classList.add("is-valid");
+    }
+  });
 }
 
-
 function submitNewInfo() {
-    const submitForm = document.querySelector("#newInfo");
-    submitForm.addEventListener("submit", async (event) => {
-        event.preventDefault();
-        if (!submitForm.checkValidity()) {
-            event.stopPropagation();
-            submitForm.classList.add("was-validated");
-            return;
-        } else {
-            const form = event.target;
-            const formObject = {};
-            formObject["fname"] = form.fname.value;
-            formObject["lname"] = form.lname.value;
-            formObject["email"] = form.email.value;
-            formObject["phoneNum"] = form.phoneNum.value;
-            formObject["oldPass"] = form.oldPass?.value;
-            formObject["newPass"] = form.newPass?.value;
-            const resp = await fetch("/userInfo/editStudentInfo", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(formObject),
-            })
-            const result = await resp.json();
-            if (result.success === true) {
-                Swal.fire({
-                    icon: 'success',
-                    title: "更改成功",
-                    showConfirmButton: false,
-                    timer: 1500
-                }).then(function () {
-                    window.location.reload();
-                })
-            } else {
-                Swal.fire({
-                    icon: 'error',
-                    title: "更改失敗",
-                    showConfirmButton: false,
-                    timer: 1500
-                }).then(function () {
-                    window.location.reload();
-                })
-            }
-        }
-    })
+  const submitForm = document.querySelector("#newInfo");
+  submitForm.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    if (!submitForm.checkValidity()) {
+      event.stopPropagation();
+      submitForm.classList.add("was-validated");
+      return;
+    } else {
+      const form = event.target;
+      const formObject = {};
+      formObject["fname"] = form.fname.value;
+      formObject["lname"] = form.lname.value;
+      formObject["email"] = form.email.value;
+      formObject["phoneNum"] = form.phoneNum.value;
+      formObject["oldPass"] = form.oldPass?.value;
+      formObject["newPass"] = form.newPass?.value;
+      const resp = await fetch("/userInfo/editStudentInfo", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formObject),
+      });
+      const result = await resp.json();
+      if (result.success === true) {
+        Swal.fire({
+          icon: "success",
+          title: "更改成功",
+          showConfirmButton: false,
+          timer: 1500,
+        }).then(function () {
+          window.location.reload();
+        });
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "更改失敗",
+          showConfirmButton: false,
+          timer: 1500,
+        }).then(function () {
+          window.location.reload();
+        });
+      }
+    }
+  });
 }

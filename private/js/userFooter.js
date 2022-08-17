@@ -1,6 +1,5 @@
-
 export function userFooter() {
-    document.querySelector("#footer").innerHTML = `
+  document.querySelector("#footer").innerHTML = `
     <div class="row container mx-auto pt-5">
         <div class="footer-one col-lg-4 col-md-6 col-12 mb-3">
             <img src="/assets/手語學堂logo.png" alt="logo" width="100" height="90">
