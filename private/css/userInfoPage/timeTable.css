@@ -28,7 +28,11 @@
 }
 
 .bg-green {
-    background-color: #5bbd2a;
+    background-color: #7d9172;
+}
+
+.bg-green:hover {
+    background-color: teal;
 }
 
 .padding-5px {

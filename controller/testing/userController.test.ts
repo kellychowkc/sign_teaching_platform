@@ -6,7 +6,7 @@ import { checkPassword } from "../../utility/hash";
 
 jest.mock("../../service/userService");
 jest.mock("../../utility/logger.ts");
-jest.mock("../../utility/hash.ts")
+jest.mock("../../utility/hash.ts");
 
 describe("userService", () => {
   let service: UserService;
@@ -15,10 +15,9 @@ describe("userService", () => {
   let res: Response;
 
   beforeEach(() => {
-
     service = new UserService({} as Knex);
-    service.logIn = jest.fn(() => Promise.resolve(
-      {
+    service.logIn = jest.fn(() =>
+      Promise.resolve({
         id: 2,
         username: "anna",
         password: "1234",
@@ -26,9 +25,9 @@ describe("userService", () => {
         last_name: "Hussell",
         email: "ahusselloc@latimes.com",
         phone_num: 81448569,
-        identity: "student"
-      },
-    ))
+        identity: "student",
+      })
+    );
     req = {
       params: {},
       query: {},
@@ -44,25 +43,24 @@ describe("userService", () => {
   });
 
   it("logIn - failed with no password", async () => {
-    req.body = { username: "anna" }
+    req.body = { username: "anna" };
     await controller.logIn(req, res);
     expect(res.status).toBeCalledWith(400);
     expect(res.json).toBeCalledWith({ success: false, message: "invalid username/password" });
   });
 
   it("logIn - failed with no username", async () => {
-    req.body = { password: "1234" }
+    req.body = { password: "1234" };
     await controller.logIn(req, res);
     expect(res.status).toBeCalledWith(400);
     expect(res.json).toBeCalledWith({ success: false, message: "invalid username/password" });
   });
 
   it("logIn - success", async () => {
-    req.body = { username: "anna", password: "1234" }
+    req.body = { username: "anna", password: "1234" };
     await controller.logIn(req, res);
     expect(service.logIn).toBeCalledTimes(1);
     expect(service.logIn).toBeCalledWith("anna");
     expect(res.json).toBeCalledWith({ success: true, message: "success", identity: "student" });
   });
-
 });

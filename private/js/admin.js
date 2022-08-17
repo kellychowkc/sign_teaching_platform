@@ -205,10 +205,13 @@ function showWord(current_page, total_page, data, dataLength) {
     if (typeof data[0] === "object") {
       removeChildElement(contentElement);
       if (current_page - 1 !== 0 || !(current_page + 1 > total_page)) {
-        console.log("this is current_page:",current_page)
-        up += `<a class="page-link" href="?status=teaching&page=${current_page- 1
+        console.log("this is current_page:", current_page);
+        up += `<a class="page-link" href="?status=teaching&page=${
+          current_page - 1
         }" aria-label="Previous">`;
-        down += ` <a class="page-link" href="?status=teaching&page=${current_page + 1}" aria-label="Next">`;
+        down += ` <a class="page-link" href="?status=teaching&page=${
+          current_page + 1
+        }" aria-label="Next">`;
       } else {
         up += `<a class="page-link" href="?status=teaching&page=${current_page}" aria-label="Previous">`;
         down += ` <a class="page-link" href="?status=teaching&page=${current_page}" aria-label="Next">`;

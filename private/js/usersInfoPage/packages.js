@@ -51,7 +51,7 @@ async function displayPackagesList() {
           descriptionStr +
           `
                         </ul>
-                        <a href="#" class="btn btn-primary btn-mid buyBtn" value="${packages["packageId"]}">購買</a>
+                        <a href="#" class="btn formBtn btn-mid buyBtn" value="${packages["packageId"]}">購買</a>
                     </div>
                 </div>
                 `;

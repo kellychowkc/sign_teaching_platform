@@ -48,7 +48,7 @@ async function displayTeachingRecord() {
             break;
           case "absent":
             status = "缺席";
-            statusHtmlStr = `<i class="fa-solid fa-circle-x"></i>`;
+            statusHtmlStr = `<i class="fa-solid fa-circle-xmark"></i>`;
             break;
         }
         document.querySelector(".timeline").innerHTML += `
