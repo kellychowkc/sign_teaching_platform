@@ -35,7 +35,7 @@ export function startLessonForTeacher() {
                         <tr>
                             <td>${lesson["student"]}</td>
                             <td>${lesson["learningDate"]}</td>
-                            <td><button type="button" class="btn btn-primary createBtn" value="${lesson["id"]}">開課</button></td>
+                            <td><button type="button" class="btn formBtn createBtn" value="${lesson["id"]}">開課</button></td>
                         </tr>
                         `;
           } else if (lesson["lessonLink"] === "finish") {
@@ -53,8 +53,8 @@ export function startLessonForTeacher() {
                             <td>${lesson["learningDate"]}</td>
                             <td>
                                 <div>
-                                    <button type="button" class="btn btn-primary enterBtn" value="${lesson["id"]}">入課室</button>
-                                    <button type="button" class="btn btn-primary closeBtn" value="${lesson["id"]}">下課</button>
+                                    <button type="button" class="btn formBtn enterBtn" value="${lesson["id"]}">入課室</button>
+                                    <button type="button" class="btn formBtn closeBtn" value="${lesson["id"]}">下課</button>
                                 </div>
                             </td>
                         </tr>

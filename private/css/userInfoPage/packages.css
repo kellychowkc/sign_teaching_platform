@@ -134,7 +134,7 @@
     color: #fff;
     float: right;
 }
-.price-card .btn.btn-primary {
+.price-card .btn {
     border: 0 !important;
 }
 .price-card.featured {

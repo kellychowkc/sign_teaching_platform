@@ -194,7 +194,7 @@ async function displayChartData() {
                             <li class="widget-49-meeting-item"><span>可使用堂數 : ${order["remainingLessonNum"]}</span></li>
                         </ul>
                         <div class="widget-49-meeting-action">
-                            <button type="button" class="btn btn-primary orderBtn" value="${order["orderId"]}">詳細資料</button>
+                            <button type="button" class="btn formBtn orderBtn" value="${order["orderId"]}">詳細資料</button>
                         </div>
                     </div>
                 </div>

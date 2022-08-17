@@ -52,6 +52,15 @@ section {
     display: none;
 }
 
+.formBtn {
+    background-color: rgba(139, 176, 163, 0.6);
+    color: white;
+}
+
+.formBtn:hover {
+    background-color: rgb(114, 143, 133);
+}
+
 @media only screen and (max-width: 900px) {
     article {
         flex-direction: column;

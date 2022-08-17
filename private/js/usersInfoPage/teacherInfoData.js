@@ -26,7 +26,7 @@ export function teacherInfoData() {
                                         <div class="card-body">
                                             <div class="row">
                                                 <div class="col d-flex justify-content-end">
-                                                    <button class="btn btn-primary" id="editTeacherInfo">更改資料</button>
+                                                    <button class="btn formBtn" id="editTeacherInfo">更改資料</button>
                                                 </div>
                                             </div>
                                             <div class="e-profile">
@@ -240,7 +240,7 @@ function editTeacherInfo() {
                             </div>
                             <div class="row">
                                 <div class="col d-flex justify-content-end">
-                                    <button class="btn btn-primary" type="submit">提交</button>
+                                    <button class="btn formBtn" type="submit">提交</button>
                                 </div>
                             </div>
                         </form>
