@@ -1,5 +1,8 @@
 @import './usersNavbar.css';
+@import './userInfoPage/packages.css';
 @import './userInfoPage/timeTable.css';
+@import './userInfoPage/timeLine.css';
+@import './userInfoPage/orderCard.css';
 @import './userInfoPage/xdialog.3.4.0.css';
 
 article {
@@ -8,8 +11,9 @@ article {
     color: rgb(65, 81, 98);
 }
 
-aside {
-    width: 20vw;
+aside,
+.infoList {
+    width: 280px;
 }
 
 section {
@@ -17,7 +21,7 @@ section {
 }
 
 #calendar {
-    width: 75vw;
+    width: 78vw;
 }
 
 #userInfoDisplay {
@@ -41,4 +45,46 @@ section {
 .nav-item {
     cursor: pointer;
     color: rgb(65, 81, 98);
+}
+
+.rightMenu,
+.leftMenu {
+    display: none;
+}
+
+@media only screen and (max-width: 900px) {
+    article {
+        flex-direction: column;
+    }
+
+    aside,
+    .infoList {
+        width: 100vw;
+        font-size: 16px;
+    }
+
+    section {
+        width: 100vw;
+    }
+
+    #calendar {
+        width: 95vw;
+    }
+
+    .sidebar {
+        display: none;
+    }
+
+    .rightMenu {
+        display: contents;
+    }
+
+    #chart {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .packagesList {
+        margin: 5px 0;
+    }
 }

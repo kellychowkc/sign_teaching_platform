@@ -39,9 +39,15 @@ const config: { [key: string]: Knex.Config } = {
   production: {
     client: "postgresql",
     connection: {
+<<<<<<< HEAD
       database: process.env.DB_NAME,
       user: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
+=======
+      database: process.env.TEST_DB_NAME,
+      user: process.env.TEST_DB_USERNAME,
+      password: process.env.TEST_DB_PASSWORD,
+>>>>>>> e7792df9ebc838795fffc55259a3b8f61435ae36
     },
     pool: {
       min: 2,

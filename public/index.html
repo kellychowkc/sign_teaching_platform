@@ -11,44 +11,91 @@
             integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx"
             crossorigin="anonymous"
         />
-        <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300&display=swap" rel="stylesheet">
+        <link
+            href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300&display=swap"
+            rel="stylesheet"
+        />
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.css"
+        />
         <link rel="stylesheet" href="./css/index.css" />
         <link rel="stylesheet" href="./css/navbar.css" />
 
         <title>手語學堂</title>
     </head>
+
     <body>
         <header id="header">
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <div class="container">
-                    <a href="/index.html"><img src="/assets/手語學堂logo.png" alt="logo" width="100" height="90"></a>
-                    
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                    aria-label="Toggle navigation">
+                    <a href="/index.html"
+                        ><img
+                            src="/assets/手語學堂logo.png"
+                            alt="logo"
+                            width="100"
+                            height="90"
+                    /></a>
+
+                    <button
+                        class="navbar-toggler"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#navbarSupportedContent"
+                        aria-controls="navbarSupportedContent"
+                        aria-expanded="false"
+                        aria-label="Toggle navigation"
+                    >
                         <span class="navbar-toggler-icon"></span>
-                     </button>
-                     
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    </button>
+
+                    <div
+                        class="collapse navbar-collapse"
+                        id="navbarSupportedContent"
+                    >
                         <ul class="navbar-nav">
-        
                             <li class="nav-item">
-                                <a class="nav-link" href="/index.html">手語簡介</a>
+                                <a class="nav-link" href="/index.html"
+                                    >手語簡介</a
+                                >
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="/html/teacherIntro.html">導師簡介</a>
+                                <a
+                                    class="nav-link"
+                                    href="/html/teacherIntro.html"
+                                    >導師簡介</a
+                                >
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="/html/signTeaching.html">手語入門</a>
+                                <a
+                                    class="nav-link"
+                                    href="/html/signTeaching.html"
+                                    >手語入門</a
+                                >
                             </li>
                             <li class="nav-item" id="signIn-box">
-                                <a class="nav-link" href="/html/login.html">登入
-                                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="#5D281D" class="bi bi-box-arrow-in-right" viewBox="0 0 16 16">
-                                    <path fill-rule="evenodd" d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0v-2z"/>
-                                    <path fill-rule="evenodd" d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>
-                                </svg>
+                                <a class="nav-link" href="/html/login.html"
+                                    >登入
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="25"
+                                        height="25"
+                                        fill="#5D281D"
+                                        class="bi bi-box-arrow-in-right"
+                                        viewBox="0 0 16 16"
+                                    >
+                                        <path
+                                            fill-rule="evenodd"
+                                            d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0v-2z"
+                                        />
+                                        <path
+                                            fill-rule="evenodd"
+                                            d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"
+                                        />
+                                    </svg>
                                 </a>
                             </li>
+                        </ul>
                     </div>
                 </div>
             </nav>
@@ -56,37 +103,55 @@
 
         <div class="intro-container">
             <div class="container-fluid">
-                <div class="row" style="margin-bottom:5rem">
-                    <div class=" col-md-6 col-12 mb-3">
-                        <img src="/assets/indexPagePic.gif" alt="sign language" id="indexPagePic">
+                <div class="row" style="margin-bottom: 5rem">
+                    <div class="col-md-6 col-12 mb-3">
+                        <img
+                            src="/assets/indexPagePic.gif"
+                            alt="sign language"
+                            id="indexPagePic"
+                        />
                     </div>
-                    <div class=" col-md-6 col-12 mb-3" id="intro-box">
-                        <p id="intro">語言常被稱為人類的天賦，但究竟什麼才是聾人的語言?
+                    <div class="col-md-6 col-12 mb-3" id="intro-box">
+                        <p id="intro">
+                            語言常被稱為人類的天賦，但究竟什麼才是聾人的語言?
                             他們所發出的聲音是否反映他們對語言方面的知識？他們所做出的一連串手語是不是反映了背後已形成了語言的知識呢？
                             這一連串手語往往被誤以為是一些身體姿勢，又或是一種物件或事件的圖像性表達方法。
                             另外，一般語言學的研究均指出健聽兒童學習口語是輕而易舉的，那麼聾童又如何跟健聽孩童一樣獲得這被認為是天賦的語言？
                             手語是否能像口語一樣反映人類自然語言的語法結構？
                             這一連串問題，當今的手語研究已有證據顯示其實「手語」是人類語言通過另外一個渠道來表達和接收的方法。
-                            這一連串手形符號標誌着語言的特質，可以被適當地描述為「語言」──「用手表達的語言」</p>
+                            這一連串手形符號標誌着語言的特質，可以被適當地描述為「語言」──「用手表達的語言」
+                        </p>
                     </div>
                 </div>
             </div>
         </div>
-        <hr>
+        <hr />
         <section id="featured" class="my-5 pb-5">
-            <div id="featured-function" class="row mx-auto container-fluid" >
+            <div id="featured-function" class="row mx-auto container-fluid">
                 <div class="function text-center col-md-4 col-12">
-                    <img class="img-fluid mb-3" src="./assets/teacher.webp" alt="">
+                    <img
+                        class="img-fluid mb-3"
+                        src="./assets/teacher.webp"
+                        alt=""
+                    />
                     <h2>導師簡介</h2>
                     <button class="buy-btn">睇下先</button>
                 </div>
                 <div class="function text-center col-md-4 col-12">
-                    <img class="img-fluid mb-3" src="./assets/sign.png" alt="">
+                    <img
+                        class="img-fluid mb-3"
+                        src="./assets/sign.png"
+                        alt=""
+                    />
                     <h2>手語教學</h2>
                     <button class="buy-btn">學下先</button>
                 </div>
                 <div class="function text-center col-md-4 col-12">
-                    <img class="img-fluid mb-3" src="./assets/teaching.jpeg" alt="">
+                    <img
+                        class="img-fluid mb-3"
+                        src="./assets/teaching.jpeg"
+                        alt=""
+                    />
                     <h2>一對一網上教學</h2>
                     <button class="buy-btn">上下先</button>
                 </div>
@@ -96,11 +161,18 @@
         <footer class="mt-5 py-5">
             <div class="row container mx-auto pt-5">
                 <div class="footer-one col-lg-4 col-md-6 col-12 mb-3">
-                    <img src="/assets/手語學堂logo.png" alt="logo" width="100" height="90">
-                    <p>中心開辦手語培訓課程，以鼓勵健聽人士學習手語，並掌握基本的對話技巧及相關的文化知識，使他們能夠與聽障人士溝通，以建立共融社會。</p>
+                    <img
+                        src="/assets/手語學堂logo.png"
+                        alt="logo"
+                        width="100"
+                        height="90"
+                    />
+                    <p>
+                        中心開辦手語培訓課程，以鼓勵健聽人士學習手語，並掌握基本的對話技巧及相關的文化知識，使他們能夠與聽障人士溝通，以建立共融社會。
+                    </p>
                 </div>
                 <div class="footer-one col-lg-4 col-md-6 col-12 mb-3">
-                    <h5 class="pb-2">關於我們</h5>   
+                    <h5 class="pb-2">關於我們</h5>
                     <ul class="text-uppercase list-unstyled">
                         <li><a href="#"></a>免責聲明</li>
                         <li><a href="#"></a>私隱聲明</li>
@@ -109,7 +181,7 @@
                     </ul>
                 </div>
                 <div class="footer-one col-lg-4 col-md-6 col-12 mb-3">
-                    <h5 class="pb-2">聯絡我們</h5>   
+                    <h5 class="pb-2">聯絡我們</h5>
                     <div>
                         <h6 class="text-uppercase">電話</h6>
                         <p>(852) 1234-5678</p>
@@ -120,22 +192,24 @@
                     </div>
                     <div>
                         <h6 class="text-uppercase">辦公室地址</h6>
-                        <p>新界荃灣福來邨永樂樓地下
-                            7-10號(荃灣港鐵站A3出口)</p>
+                        <p>新界荃灣福來邨永樂樓地下 7-10號(荃灣港鐵站A3出口)</p>
                     </div>
                 </div>
             </div>
             <div class="copyright mt-5">
                 <div class="row conatiner mx-auto">
                     <div class="col-lg-4 col-md-6 col-12 text-nowrap mb-2">
-                        <p> © 2022 手語學堂 版權所有 不得轉載 </p>
+                        <p>© 2022 手語學堂 版權所有 不得轉載</p>
                     </div>
                 </div>
             </div>
         </footer>
-    <!-- JavaScript Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" 
-    integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" 
-    crossorigin="anonymous"></script>
+        <!-- JavaScript Bundle with Popper -->
+        <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
+            crossorigin="anonymous"
+        ></script>
+        <script src="/js/main.js" type="module"></script>
     </body>
 </html>

@@ -1,6 +1,8 @@
-import { navbarCreate } from "/js/navbar.js";
+import { navbarCreate, footerCreate, checkIfLogIn } from "./navbar.js";
 
-console.log("teacherIntro.js")
-window.onload = async () => {
-    await navbarCreate();
+console.log("teacherIntro.js");
+window.onload = () => {
+  navbarCreate();
+  footerCreate();
+  checkIfLogIn();
 };
