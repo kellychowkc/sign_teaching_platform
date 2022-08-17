@@ -559,6 +559,7 @@ function showSearchUser(current_page, total_page, userData) {
   // table 1. delete children of parentElement; 2.create its first children
   const tableParent = document.querySelector("tbody");
   removeChildElement(tableParent);
+  console.log("this is userId:",userData)
 
   // pagination
   const pageParent = document.querySelector("nav.page_box");
@@ -569,7 +570,7 @@ function showSearchUser(current_page, total_page, userData) {
   for (let i = 0; i < userData.length; i++) {
     const userName = userData[i]["username"];
     const userIdentity = userData[i]["identity"];
-    const userId = userData[i]["id"]
+    const userId = userData[i]["id"];
     items += `
                 <tr class="table-rows"> <th scope="row">
                   ${userId}

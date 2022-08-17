@@ -127,11 +127,12 @@ export class AdminController {
             let resultsUsername = result![i]["username"];
             let resultsIdentity = result![i]["identity"];
             let resultId = result![i]["id"];
-            resultText.push({ username: resultsUsername, identity: resultsIdentity, Id:resultId });
+            resultText.push({ username: resultsUsername, identity: resultsIdentity, id:resultId });
           }
           resultText.filter((resultsUsername: {}) => {
             if (resultsUsername["username"].includes(text as any as string)) {
               searchedText.push({
+                id: resultsUsername["id"],
                 username: resultsUsername["username"],
                 identity: resultsUsername["identity"],
               });
