@@ -118,7 +118,8 @@ async function editTeacherTime() {
                   const data = {};
                   data["weekdayData"] = timeId.substring(0, timeId.length - 2);
                   data["timeData"] = timeId.substring(timeId.length - 2);
-                  const resp = await fetch("/userInfo/editTeacherTime", {
+                  console.log(data);
+                  const resp = await fetch("/userInfo/editCanTeachingTime", {
                     method: "POST",
                     headers: {
                       "Content-Type": "application/json",
@@ -126,6 +127,7 @@ async function editTeacherTime() {
                     body: JSON.stringify(data),
                   });
                   const result = await resp.json();
+                  console.log(result)
                   if (result.success === true) {
                     Swal.fire({
                       icon: "success",
