@@ -10,7 +10,6 @@ adminRoutes.get("/teachingData", adminController.loadTeachingData);
 adminRoutes.get("/teachingVideo", adminController.teachingVideo);
 adminRoutes.post("/video", formidableMiddleware, adminController.uploadVideo);
 
-adminRoutes.get("/lectureData", formidableMiddleware, adminController.loadLectureData);
 
 adminRoutes.put("/userData", logMiddleware, adminController.changeToTeacher);
 adminRoutes.get("/userData", formidableMiddleware, adminController.getAllUser);

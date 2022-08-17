@@ -39,7 +39,7 @@ export async function seed(knex: Knex): Promise<void> {
       identity: "admin",
     },
     {
-      username: "anna",
+      username: "adams",
       password: (await hashPassword("1234")).toString(),
       first_name: "anna",
       last_name: "Hussell",
@@ -53,7 +53,7 @@ export async function seed(knex: Knex): Promise<void> {
   const teacherId: Array<{ id: number }> = await knex("users")
     .insert([
       {
-        username: "tomas",
+        username: "lyn",
         password: (await hashPassword("1234")).toString(),
         first_name: "Tomas",
         last_name: "Aldrich",
@@ -71,7 +71,7 @@ export async function seed(knex: Knex): Promise<void> {
         identity: "teacher",
       },
       {
-        username: "david",
+        username: "bruce",
         password: (await hashPassword("1234")).toString(),
         first_name: "David",
         last_name: "Petras",

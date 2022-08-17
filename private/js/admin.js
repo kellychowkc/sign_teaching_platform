@@ -112,7 +112,7 @@ async function deleting() {
   if (result.success === true) {
     Swal.fire({
       icon: "success",
-      title: "success",
+      title: "成功",
       showConfirmButton: false,
       timer: 1500,
     }).then(() => {
@@ -204,13 +204,11 @@ function showWord(current_page, total_page, data, dataLength) {
     // init data
     if (typeof data[0] === "object") {
       removeChildElement(contentElement);
-      if (current_page - 1 !== 0 && !(current_page + 1 > total_page)) {
-        up += `<a class="page-link" href="?status=teaching&page=${
-          current_page - 1
+      if (current_page - 1 !== 0 || !(current_page + 1 > total_page)) {
+        console.log("this is current_page:",current_page)
+        up += `<a class="page-link" href="?status=teaching&page=${current_page- 1
         }" aria-label="Previous">`;
-        down += ` <a class="page-link" href="?status=teaching&page=${
-          current_page + 1
-        }" aria-label="Next">`;
+        down += ` <a class="page-link" href="?status=teaching&page=${current_page + 1}" aria-label="Next">`;
       } else {
         up += `<a class="page-link" href="?status=teaching&page=${current_page}" aria-label="Previous">`;
         down += ` <a class="page-link" href="?status=teaching&page=${current_page}" aria-label="Next">`;
@@ -479,7 +477,7 @@ async function uploadFile() {
   if (files.length > 1 || files.length === 0 || field.length === 0) {
     Swal.fire({
       icon: "error",
-      title: "Please input all the fields",
+      title: "請輸入所有資料",
       showConfirmButton: false,
       timer: 1500,
     });
@@ -487,7 +485,7 @@ async function uploadFile() {
   } else if (field.substring(0, 5) !== "Hksl_") {
     Swal.fire({
       icon: "error",
-      title: "Title should be 'Hksl_'",
+      title: "格式須為'Hksl_'",
       showConfirmButton: false,
       timer: 1500,
     });
@@ -505,7 +503,7 @@ async function uploadFile() {
   if (result.success === true) {
     Swal.fire({
       icon: "success",
-      title: "success",
+      title: "成功",
       showConfirmButton: false,
       timer: 1500,
     }).then(() => {
@@ -571,10 +569,11 @@ function showSearchUser(current_page, total_page, userData) {
   for (let i = 0; i < userData.length; i++) {
     const userName = userData[i]["username"];
     const userIdentity = userData[i]["identity"];
+    const userId = userData[i]["id"]
     items += `
-                <tr class="table-rows"> <th scope="row">${
-                  i + 1
-                }</th><td>${userName}</td> <td>${userIdentity} <input type="checkbox" name="checkbox" id="${userName}" name="${userName}" value="${userName}">
+                <tr class="table-rows"> <th scope="row">
+                  ${userId}
+                </th><td>${userName}</td> <td>${userIdentity} <input type="checkbox" name="checkbox" id="${userName}" name="${userName}" value="${userName}">
                 </td></tr>
             `;
   }
@@ -616,9 +615,10 @@ function usersControl(current_page = 1, total_page = 1, userData = 1) {
     for (let i = 0; i < userData.length; i++) {
       const userName = userData[i]["username"];
       const userIdentity = userData[i]["identity"];
+      const userId = userData[i]["id"];
       items += `
                 <tr class="table-rows">
-                    <th scope="row">${i + 1}</th>
+                    <th scope="row">${userId}</th>
                     <td>${userName}</td>
                     <td>${userIdentity} <input type="checkbox" name="checkbox" id="${userName}" name="${userName}" value="${userName}">
                     </td>
@@ -731,7 +731,7 @@ async function changeToTeacher() {
   if (result.success === true) {
     Swal.fire({
       icon: "success",
-      title: "success",
+      title: "成功",
       showConfirmButton: false,
       timer: 1500,
     }).then(() => {
@@ -802,7 +802,7 @@ async function changeAdminInfo() {
   if (adminForm.password.value !== adminForm.confirm_password.value) {
     Swal.fire({
       icon: "error",
-      title: "Passwords are not the same",
+      title: "密碼不相同",
       showConfirmButton: false,
       timer: 1500,
     });
@@ -814,7 +814,7 @@ async function changeAdminInfo() {
   ) {
     Swal.fire({
       icon: "error",
-      title: "Please fill in all the fields",
+      title: "請輸入所有資料",
       showConfirmButton: false,
       timer: 1500,
     });
@@ -832,7 +832,7 @@ async function changeAdminInfo() {
   if (result.success === true) {
     Swal.fire({
       icon: "success",
-      title: "success",
+      title: "成功",
       showConfirmButton: false,
       timer: 1500,
     }).then(() => {

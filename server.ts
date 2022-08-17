@@ -18,12 +18,10 @@ app.use(
 
 
 //knex set up
-// const knexConfigs = require("./knexfile");
 import knexConfigs from "./knexfile";
 const configMode = process.env.NODE_ENV || "development";
 const knexConfig = knexConfigs[configMode];
 const knex = Knex(knexConfig);
-// console.log(knex);
 
 import { UserService } from "./service/userService";
 import { UserController } from "./controller/userController";
