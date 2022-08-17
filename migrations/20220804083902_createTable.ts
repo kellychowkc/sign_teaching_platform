@@ -78,7 +78,7 @@ export async function up(knex: Knex): Promise<void> {
       table.increments();
       table.integer("total_lesson_num").notNullable();
       table.integer("remaining_lesson_num").notNullable();
-      table.timestamp("created_at").defaultTo(knex.fn.now());
+      table.timestamps(true, true);
       table.integer("package_id").unsigned;
       table.foreign("package_id").references("packages.id").onDelete("CASCADE").onUpdate("CASCADE");
       table.integer("user_id").unsigned;
