@@ -73,7 +73,6 @@ let handleMessageFromPeer = async (message, memberId) => {
 };
 
 let handleUserJoined = async (memberId) => {
-  console.log("A new user joined the channel:", memberId);
   createOffer(memberId);
 };
 

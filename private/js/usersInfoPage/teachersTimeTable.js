@@ -33,7 +33,7 @@ export function teacherTimeTable() {
                     <h4 class="mb-3">可開堂時間</h4>
                 </div>
                 <div>
-                    <button type="button" class="btn btn-primary" id="editTeacherTime">更改時間</button>
+                    <button type="button" class="btn formBtn" id="editTeacherTime">更改時間</button>
                 </div>
             </div>
                 <div class="table-responsive">
@@ -118,7 +118,7 @@ async function editTeacherTime() {
                   const data = {};
                   data["weekdayData"] = timeId.substring(0, timeId.length - 2);
                   data["timeData"] = timeId.substring(timeId.length - 2);
-                  const resp = await fetch("/userInfo/editTeacherTime", {
+                  const resp = await fetch("/userInfo/editCanTeachingTime", {
                     method: "POST",
                     headers: {
                       "Content-Type": "application/json",

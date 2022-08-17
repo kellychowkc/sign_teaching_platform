@@ -52,7 +52,7 @@ export function startLessonForStudent() {
                             <td>${lesson["teacher"]}</td>
                             <td>${lesson["learningDate"]}</td>
                             <td>
-                                <button type="button" class="btn btn-primary enterBtn" value="${lesson["id"]}">入課室</button>
+                                <button type="button" class="btn formBtn enterBtn" value="${lesson["id"]}">入課室</button>
                             </td>
                         </tr>
                         `;

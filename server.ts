@@ -16,7 +16,6 @@ app.use(
   })
 );
 
-
 //knex set up
 import knexConfigs from "./knexfile";
 const configMode = process.env.NODE_ENV || "development";
@@ -39,7 +38,7 @@ import { SignController } from "./controller/signController";
 import { SignService } from "./service/signService";
 
 import { StatusController } from "./controller/statusController";
-import { isLoggedInAll} from "./middleware/isLoggedInGuard";
+import { isLoggedInAll } from "./middleware/isLoggedInGuard";
 
 //server & controller set up
 const userService = new UserService(knex);
@@ -75,7 +74,7 @@ app.use("/signUp", signUpRoutes);
 app.use("/logIn", logInRoutes);
 app.use("/logOut", logOutRoutes);
 
-app.use("/userInfo",isLoggedInAll, userInfoRoutes);
+app.use("/userInfo", isLoggedInAll, userInfoRoutes);
 
 app.use("/sign", signRoutes);
 app.use("/admin", isLoggedInAdmin, adminRoutes);

@@ -69,14 +69,14 @@ export class AdminService {
       return;
     }
   }
-  
+
   async getAllUser(userId: number) {
     try {
       const isAdmin = await this.knex("users").select("id").where("id", userId).first();
       const isAminId = isAdmin["id"];
 
       const getAllUserData = await this.knex("users")
-        .select("username", "identity","id")
+        .select("username", "identity", "id")
         .whereNot("id", isAminId);
       return getAllUserData;
     } catch (err) {
