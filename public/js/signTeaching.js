@@ -1,8 +1,10 @@
-import { navbarCreate } from "/js/navbar.js";
+import { navbarCreate, footerCreate, checkIfLogIn } from "./navbar.js";
 
-window.onload = async () => {
-  await navbarCreate();
+window.onload = () => {
+  navbarCreate();
+  footerCreate();
   getSignLabel();
+  checkIfLogIn();
 };
 
 async function getSignLabel() {

@@ -52,6 +52,8 @@ import { AdminService } from "./service/adminService";
 import { SignController } from "./controller/signController";
 import { SignService } from "./service/signService";
 
+import { StatusController } from "./controller/statusController";
+
 //server & controller set up
 const userService = new UserService(knex);
 export const userController = new UserController(userService);
@@ -68,15 +70,18 @@ export const adminController = new AdminController(adminService);
 const signService = new SignService(knex);
 export const signController = new SignController(signService);
 
+export const statusController = new StatusController();
+
 import { logInRoutes } from "./routers/logInRoutes";
 import { signUpRoutes } from "./routers/signUpRoutes";
 import { logOutRoutes } from "./routers/logOutRoutes";
+import { statusRoutes } from "./routers/statusRoutes";
 
 import { userInfoRoutes } from "./routers/userInfoRoutes";
 import { signRoutes } from "./routers/signRoutes";
 
 import { adminRoutes } from "./routers/adminRoutes";
-import {isLoggedInAdmin} from "./middleware/isLoggedInGuard";
+import { isLoggedInAdmin } from "./middleware/isLoggedInGuard";
 
 //route handling
 app.use("/signUp", signUpRoutes);
@@ -86,7 +91,9 @@ app.use("/logOut", logOutRoutes);
 app.use("/userInfo", userInfoRoutes);
 
 app.use("/sign", signRoutes);
-app.use("/admin",isLoggedInAdmin,adminRoutes);
+app.use("/admin", isLoggedInAdmin, adminRoutes);
+
+app.use("/status", statusRoutes);
 
 //folder path
 app.use(express.static(path.join(__dirname, "public")));
