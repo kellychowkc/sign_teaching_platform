@@ -1,6 +1,6 @@
 import { SignService } from "../service/signService";
 import type { Request, Response } from "express";
-import { logger } from "../server";
+import { logger } from "../utility/logger";
 
 export class SignController {
   constructor(private signService: SignService) {}
