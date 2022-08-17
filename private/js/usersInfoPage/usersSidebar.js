@@ -8,12 +8,11 @@ import { startLessonForTeacher } from "./teacherStartLesson.js";
 import { displayDashboard } from "./learningDashboard.js";
 import { displayPackages } from "./packages.js";
 
-
 export async function studentSidebar() {
   document.querySelector("#userInfoList").innerHTML = `
-    <div class="d-flex flex-column flex-shrink-0 p-3 bg-light" style="width: 280px;">
-        <div class="rightMenu"><i class="fa-solid fa-caret-right fa-3x"></i></div>
-        <div class="leftMenu"><i class="fa-solid fa-caret-left fa-3x"></i></div>
+    <div class="d-flex flex-column flex-shrink-0 p-3 bg-light infoList">
+        <div class="rightMenu"><i class="fa-solid fa-caret-right fa-2x"></i></div>
+        <div class="leftMenu"><i class="fa-solid fa-caret-left fa-2x"></i></div>
 
         <div class="sidebar">
             <a href="./userInfo.html" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
@@ -78,12 +77,11 @@ export async function studentSidebar() {
   hiddenSidebar();
 }
 
-
 export async function teacherSidebar() {
   document.querySelector("#userInfoList").innerHTML = `
-    <div class="sidebar_wrapper d-flex flex-column flex-shrink-0 p-3 bg-light" style="width: 280px;">
-        <div class="rightMenu"><i class="fa-solid fa-caret-right fa-3x"></i></div>
-        <div class="leftMenu"><i class="fa-solid fa-caret-left fa-3x"></i></div>
+    <div class="sidebar_wrapper d-flex flex-column flex-shrink-0 p-3 bg-light infoList">
+        <div class="rightMenu"><i class="fa-solid fa-caret-right fa-2x"></i></div>
+        <div class="leftMenu"><i class="fa-solid fa-caret-left fa-2x"></i></div>
         <div class="sidebar">
             <a href="./userInfo.html" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
                 <svg class="bi pe-none me-2" width="40" height="32">
@@ -138,16 +136,15 @@ export async function teacherSidebar() {
   hiddenSidebar();
 }
 
-
 function hiddenSidebar() {
-    document.querySelector(".rightMenu").addEventListener("click", () => {
-        document.querySelector(".rightMenu").style.display = "none";
-        document.querySelector(".leftMenu").style.display = "contents";
-        document.querySelector(".sidebar").style.display = "contents";
-    })
-    document.querySelector(".leftMenu").addEventListener("click", () => {
-        document.querySelector(".leftMenu").style.display = "none";
-        document.querySelector(".rightMenu").style.display = "contents";
-        document.querySelector(".sidebar").style.display = "none";
-    })
+  document.querySelector(".rightMenu").addEventListener("click", () => {
+    document.querySelector(".rightMenu").style.display = "none";
+    document.querySelector(".leftMenu").style.display = "contents";
+    document.querySelector(".sidebar").style.display = "contents";
+  });
+  document.querySelector(".leftMenu").addEventListener("click", () => {
+    document.querySelector(".leftMenu").style.display = "none";
+    document.querySelector(".rightMenu").style.display = "contents";
+    document.querySelector(".sidebar").style.display = "none";
+  });
 }

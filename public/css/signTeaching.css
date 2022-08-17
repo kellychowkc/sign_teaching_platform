@@ -91,13 +91,13 @@
     outline: 0;
 }
 .hksl-sign-button.active {
-    background-color: #e2a221;
+    background-color: #475f73;
 }
 
 .video-caption {
     font-weight: bolder;
     margin-bottom: 1.5rem;
-    color: #be8e2c;
+    color: #475f73;
 }
 
 @media only screen and (max-width: 900px) {

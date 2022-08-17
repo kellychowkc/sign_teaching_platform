@@ -8,6 +8,7 @@ export class UserService {
 
   async logIn(username: string): Promise<User> {
     const foundUser = await this.knex.select("*").from("users").where("username", username).first();
+    console.log(foundUser);
     return foundUser;
   }
 

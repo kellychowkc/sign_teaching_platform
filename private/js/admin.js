@@ -1,13 +1,13 @@
 import Swal from "https://cdn.jsdelivr.net/npm/sweetalert2@11/src/sweetalert2.js";
 
 window.onload = () => {
-    userNavbar();
-    loadDifferentPage();
-    footer();
+  userNavbar();
+  loadDifferentPage();
+  footer();
 };
 
 function userNavbar() {
-    document.querySelector("#header").innerHTML = `
+  document.querySelector("#header").innerHTML = `
     <nav class="navbar navbar-expand-lg navbar-light bg-light py-3">
     <div class="container">
         <a href="../index.html"><img src="../assets/手語學堂logo.png" alt="logo" id="logo" id="logo" width="100" height="90"></a>
@@ -39,28 +39,27 @@ function userNavbar() {
         </div>
     </nav>
     `;
-    logout();
+  logout();
 }
-
 
 function loadDifferentPage() {
-    const queryParams = new URLSearchParams(window.location.search);
-    const status = queryParams.get("status")
-    if (status === "teaching") {
-        loadTeachingData();
-    } else if (status === "usersControl") {
-        getAllUser()
-    } else if (status === "lectureDetail") {
-        loadingLectureDetail()
-    } else if (status === "lecture") {
-        loadingLecture();
-    } else if (status === "setting") {
-        setting();
-    }
+  const queryParams = new URLSearchParams(window.location.search);
+  const status = queryParams.get("status");
+  if (status === "teaching") {
+    loadTeachingData();
+  } else if (status === "usersControl") {
+    getAllUser();
+  } else if (status === "lectureDetail") {
+    loadingLectureDetail();
+  } else if (status === "lecture") {
+    loadingLecture();
+  } else if (status === "setting") {
+    setting();
+  }
 }
 
-const styles = /**css */`padding: 30px;`;
-const stylesTeaching = /**css */`
+const styles = /**css */ `padding: 30px;`;
+const stylesTeaching = /**css */ `
                 padding: 30px;
                 display: flex;
                 justify-content: center;
@@ -73,111 +72,108 @@ createLeftBox.className = "content_box left_box";
 let createRightBox = document.createElement("div");
 createRightBox.className = "content_box right_box";
 
-
 let newContentLeft;
 let newContentRight;
 
 function removeChildElement(parent, target = 1) {
-    if (Number(target)) {
-        for (let i = 0; i = parent.childElementCount; i++) {
-            parent.removeChild(parent.firstElementChild)
-        }
-        return
+  if (Number(target)) {
+    for (let i = 0; (i = parent.childElementCount); i++) {
+      parent.removeChild(parent.firstElementChild);
     }
-    parent.removeChild(target)
+    return;
+  }
+  parent.removeChild(target);
 }
 async function deleting() {
-    // different situation
-    let params = new URLSearchParams(window.location.search);
-    let status = params.get("status");
-    const allChecked = document.querySelectorAll("input[name=checkbox]:checked")
-    const checkArr = Array.from(allChecked).map(checkbox => checkbox.value)
-    let resp;
-    if (status === "teaching") {
-        resp = await fetch(`/admin/teachingData`, {
-            method: "DELETE",
-            headers: {
-                "Content-Type": "application/json; charset=utf-8"
-            },
-            body: JSON.stringify({ checkedArr: checkArr }),
-        });
-    } else if (status === "usersControl") {
-        resp = await fetch(`/admin/userData`, {
-            method: "DELETE",
-            headers: {
-                "Content-Type": "application/json; charset=utf-8"
-            },
-            body: JSON.stringify({ checkedArr: checkArr }),
-        });
-
-    }
-    let result = await resp.json();
-    if (result.success === true) {
-        Swal.fire({
-            icon: "success",
-            title: "success",
-            showConfirmButton: false,
-            timer: 1500,
-        }).then(() => { location.reload(); })
-    }
-
+  // different situation
+  let params = new URLSearchParams(window.location.search);
+  let status = params.get("status");
+  const allChecked = document.querySelectorAll("input[name=checkbox]:checked");
+  const checkArr = Array.from(allChecked).map((checkbox) => checkbox.value);
+  let resp;
+  if (status === "teaching") {
+    resp = await fetch(`/admin/teachingData`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+      },
+      body: JSON.stringify({ checkedArr: checkArr }),
+    });
+  } else if (status === "usersControl") {
+    resp = await fetch(`/admin/userData`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+      },
+      body: JSON.stringify({ checkedArr: checkArr }),
+    });
+  }
+  let result = await resp.json();
+  if (result.success === true) {
+    Swal.fire({
+      icon: "success",
+      title: "success",
+      showConfirmButton: false,
+      timer: 1500,
+    }).then(() => {
+      location.reload();
+    });
+  }
 }
-
-
-
 
 // 教學
 const teachingNavButton = document.querySelector("#teaching");
 teachingNavButton.addEventListener("click", async () => {
-    // change bar font
-    window.location.href = "admin.html?status=teaching"
-    await loadTeachingData();
-})
+  // change bar font
+  window.location.href = "admin.html?status=teaching";
+  await loadTeachingData();
+});
 
 // init data and listening to search
 async function loadTeachingData() {
-    const queryParams = new URLSearchParams(window.location.search);
-    const page = queryParams.get("page") || 1;
-    const resp = await fetch(`/admin/teachingData?page=${page}`, { method: "GET" });
-    const result = await resp.json();
-    if (result.success === true) {
-        showWord(result["current_page"], result["total_page"], result["data"], result["dataLength"]);
+  const queryParams = new URLSearchParams(window.location.search);
+  const page = queryParams.get("page") || 1;
+  const resp = await fetch(`/admin/teachingData?page=${page}`, { method: "GET" });
+  const result = await resp.json();
+  if (result.success === true) {
+    showWord(result["current_page"], result["total_page"], result["data"], result["dataLength"]);
 
-        document.querySelector(".deleting").addEventListener("click", () => {
-            deleting()
-        })
+    document.querySelector(".deleting").addEventListener("click", () => {
+      deleting();
+    });
 
-        document.querySelector(".submitVideo").addEventListener("click", (event) => {
-            event.preventDefault();
-            uploadFile()
-        })
+    document.querySelector(".submitVideo").addEventListener("click", (event) => {
+      event.preventDefault();
+      uploadFile();
+    });
 
-        const textInputElement = document.querySelector('input[name=search]');
-        textInputElement.addEventListener('keyup', async function () {
-            let text = textInputElement.value;
-            console.log("this is text:", text)
-            let resp = await fetch(`/admin/teachingData?page=${page}&text=${text}`, { method: "GET" });
-            let result = await resp.json();
-            showWord(result["current_page"], result["total_page"], result["data"])
-        })
+    const textInputElement = document.querySelector("input[name=search]");
+    textInputElement.addEventListener("keyup", async function () {
+      let text = textInputElement.value;
+      console.log("this is text:", text);
+      let resp = await fetch(`/admin/teachingData?page=${page}&text=${text}`, { method: "GET" });
+      let result = await resp.json();
+      showWord(result["current_page"], result["total_page"], result["data"]);
+    });
 
+    let tableBody = document.querySelector(".tbody");
 
-        let tableBody = document.querySelector(".tbody");
-
-        const showVideoButton = document.querySelectorAll(".itemsIndex")
-        showVideoButton.forEach(item => item.addEventListener("click", () => {
-            if (item.id) {
-                showVideo(item.id)
-            }
-        }))
-    }
+    const showVideoButton = document.querySelectorAll(".itemsIndex");
+    showVideoButton.forEach((item) =>
+      item.addEventListener("click", () => {
+        if (item.id) {
+          showVideo(item.id);
+        }
+      })
+    );
+  }
 }
 // display chosen video
 async function showVideo(label) {
-    let resp = await fetch(`/admin/teachingVideo?label=${label}`, { method: "GET" });
-    let result = await resp.json();
+  let resp = await fetch(`/admin/teachingVideo?label=${label}`, { method: "GET" });
+  let result = await resp.json();
 
-    const video_box = /**html */`
+  const video_box = /**html */ `
     <div class="video_box">
     <div class="video">
         <h3 class="title">${result["data"]["label"]}</h3>
@@ -190,47 +186,51 @@ async function showVideo(label) {
         </div>
     </div>
 </div>
-`
-    document.querySelector(".video_container").innerHTML = video_box;
-    document.querySelector(".close").addEventListener("click", () => {
-        const video_box = document.querySelector(".video_box")
-        video_box.remove()
-    })
-
-
+`;
+  document.querySelector(".video_container").innerHTML = video_box;
+  document.querySelector(".close").addEventListener("click", () => {
+    const video_box = document.querySelector(".video_box");
+    video_box.remove();
+  });
 }
 
 // display with init data or search data
-function showWord(current_page, total_page, data,dataLength) {
-    let items = ``;
-    let pages = ``;
-    let up = ``;
-    let down = ``;
-    if (data) {
-        // init data
-        if (typeof (data[0]) === "object") {
-            removeChildElement(contentElement);
-            if (current_page - 1 !== 0 && !(current_page + 1 > total_page)) {
-                up += `<a class="page-link" href="?status=teaching&page=${current_page - 1}" aria-label="Previous">`
-                down += ` <a class="page-link" href="?status=teaching&page=${current_page + 1}" aria-label="Next">`
-            } else {
-                up += `<a class="page-link" href="?status=teaching&page=${current_page}" aria-label="Previous">`
-                down += ` <a class="page-link" href="?status=teaching&page=${current_page}" aria-label="Next">`
-            }
-            for (let i = 0; i < data.length; i++) {
-                const title = data[i]["label"]
-                const id = data[i]["id"]
-                items += `
+function showWord(current_page, total_page, data, dataLength) {
+  let items = ``;
+  let pages = ``;
+  let up = ``;
+  let down = ``;
+  if (data) {
+    // init data
+    if (typeof data[0] === "object") {
+      removeChildElement(contentElement);
+      if (current_page - 1 !== 0 && !(current_page + 1 > total_page)) {
+        up += `<a class="page-link" href="?status=teaching&page=${
+          current_page - 1
+        }" aria-label="Previous">`;
+        down += ` <a class="page-link" href="?status=teaching&page=${
+          current_page + 1
+        }" aria-label="Next">`;
+      } else {
+        up += `<a class="page-link" href="?status=teaching&page=${current_page}" aria-label="Previous">`;
+        down += ` <a class="page-link" href="?status=teaching&page=${current_page}" aria-label="Next">`;
+      }
+      for (let i = 0; i < data.length; i++) {
+        const title = data[i]["label"];
+        const id = data[i]["id"];
+        items += `
                 <tr class="table-rows">
                     <td class="items itemsIndex" id="${title}">${id}</td>
                     <td class="items" id="${title}">${title}<input type="checkbox" name="checkbox"id="${title}" name="${title}" value="${title}"></td>
                 </tr>`;
-            }
-            for (let i = 0; i < total_page; i++) {
-                pages += `
-                <li class="page-items"><a class="page-link" href="?status=teaching&page=${i + 1}">${i + 1}</a></li>`;
-            }
-            newContentLeft = `
+      }
+      for (let i = 0; i < total_page; i++) {
+        pages += `
+                <li class="page-items"><a class="page-link" href="?status=teaching&page=${i + 1}">${
+          i + 1
+        }</a></li>`;
+      }
+      newContentLeft = `
                             <div class="system_buttons">
                                 <div class="system_button adding_word">
                                     <div class="button_img"><img src="/assets/admin/add.gif" alt="adding_word"></div>
@@ -269,10 +269,10 @@ function showWord(current_page, total_page, data,dataLength) {
                                 </nav>
                             </div>`;
 
-            createLeftBox.innerHTML = newContentLeft;
-            contentElement.appendChild(createLeftBox);
+      createLeftBox.innerHTML = newContentLeft;
+      contentElement.appendChild(createLeftBox);
 
-            const newContentRight = `
+      const newContentRight = `
                     <form action="/action_page.php" class="content_form">
                         <div class="container uploadVideo">
                             <h1>上載影片</h1>
@@ -294,98 +294,109 @@ function showWord(current_page, total_page, data,dataLength) {
 
                         </div>
                     </form>`;
-            createRightBox.innerHTML = newContentRight;
-            contentElement.appendChild(createRightBox);
-            const rightBox = document.querySelector(".right_box");
-            rightBox.setAttribute("style", `${stylesTeaching}`)
+      createRightBox.innerHTML = newContentRight;
+      contentElement.appendChild(createRightBox);
+      const rightBox = document.querySelector(".right_box");
+      rightBox.setAttribute("style", `${stylesTeaching}`);
 
-            const showVideoButton = document.querySelectorAll(".itemsIndex")
-            showVideoButton.forEach(item => item.addEventListener("click", () => {
-                if (item.id) {
-                    showVideo(item.id)
-                }
-            }))
-
-            const textInputElement = document.querySelector('input[name=search]');
-        textInputElement.addEventListener('keyup', async function () {
-            let text = textInputElement.value;
-            console.log("this is text:", text)
-            let resp = await fetch(`/admin/teachingData?page=${page}&text=${text}`, { method: "GET" });
-            let result = await resp.json();
-            showWord(result["current_page"], result["total_page"], result["data"])
+      const showVideoButton = document.querySelectorAll(".itemsIndex");
+      showVideoButton.forEach((item) =>
+        item.addEventListener("click", () => {
+          if (item.id) {
+            showVideo(item.id);
+          }
         })
+      );
 
-        } else if (Array.isArray(data) && data[0].length !== 0) {
+      const textInputElement = document.querySelector("input[name=search]");
+      textInputElement.addEventListener("keyup", async function () {
+        let text = textInputElement.value;
+        console.log("this is text:", text);
+        let resp = await fetch(`/admin/teachingData?page=${page}&text=${text}`, { method: "GET" });
+        let result = await resp.json();
+        showWord(result["current_page"], result["total_page"], result["data"]);
+      });
+    } else if (Array.isArray(data) && data[0].length !== 0) {
+      console.log("this is searching data:", data);
 
-            console.log("this is searching data:", data)
+      // table 1. delete children of parentElement; 2.create its first children
+      const tableParent = document.querySelector("table");
+      removeChildElement(tableParent);
 
-            // table 1. delete children of parentElement; 2.create its first children
-            const tableParent = document.querySelector("table");
-            removeChildElement(tableParent);
+      // pagination
+      const pageParent = document.querySelector("nav.page_box");
+      let createPageParent = document.createElement("ul");
+      createPageParent.className = "pagination";
+      removeChildElement(pageParent);
 
-            // pagination
-            const pageParent = document.querySelector("nav.page_box");
-            let createPageParent = document.createElement("ul");
-            createPageParent.className = "pagination";
-            removeChildElement(pageParent);
-
-            for (let i = 0; i < data.length; i++) {
-                const title = data[i];
-                items += `
+      for (let i = 0; i < data.length; i++) {
+        const title = data[i];
+        items += `
                     <tr class="table-rows">
                     <td class="items itemsIndex" id="${title}">${i + 1}</td>
                     <td class="items">${title}<input type="checkbox" name="checkbox" id="${title}" name="${title}" value="${title}"></td></tr>
                 `;
-            }
+      }
 
-            for (let i = 0; i < total_page; i++) {
-                pages += `
-                <li class="page-items"><a class="page-link" href="?status=teaching&page=${i + 1}">${i + 1}</a></li>`;
-            }
+      for (let i = 0; i < total_page; i++) {
+        pages += `
+                <li class="page-items"><a class="page-link" href="?status=teaching&page=${i + 1}">${
+          i + 1
+        }</a></li>`;
+      }
 
-            if (current_page - 1 !== 0 && !(current_page + 1 > total_page)) {
-                up += `<li class="page-item"><a class="page-link" href="?status=teaching&page=${current_page - 1}" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>`
-                down += `<li class="page-item"><a class="page-link" href="?status=teaching&page=${current_page + 1}" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>`
-            } else {
-                up += `<li class="page-item"><a class="page-link" href="?status=teaching&page=${current_page}" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>`
-                down += ` <li class="page-item"><a class="page-link" href="?status=teaching&page=${current_page}" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>`
-            }
+      if (current_page - 1 !== 0 && !(current_page + 1 > total_page)) {
+        up += `<li class="page-item"><a class="page-link" href="?status=teaching&page=${
+          current_page - 1
+        }" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>`;
+        down += `<li class="page-item"><a class="page-link" href="?status=teaching&page=${
+          current_page + 1
+        }" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>`;
+      } else {
+        up += `<li class="page-item"><a class="page-link" href="?status=teaching&page=${current_page}" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>`;
+        down += ` <li class="page-item"><a class="page-link" href="?status=teaching&page=${current_page}" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>`;
+      }
 
-            let pagination = `${up}${pages}${down}`
+      let pagination = `${up}${pages}${down}`;
 
-            createPageParent.innerHTML = pagination;
-            pageParent.appendChild(createPageParent)
+      createPageParent.innerHTML = pagination;
+      pageParent.appendChild(createPageParent);
 
-
-            tableParent.innerHTML = items;
-            const showVideoButton = document.querySelectorAll(".itemsIndex")
-            showVideoButton.forEach(item => item.addEventListener("click", () => {
-                if (item.id) {
-                    showVideo(item.id)
-                }
-            }))
-
-            const textInputElement = document.querySelector('input[name=search]');
-        textInputElement.addEventListener('keyup', async function () {
-            let text = textInputElement.value;
-            let resp = await fetch(`/admin/teachingData?page=${page}&text=${text}`, { method: "GET" });
-            let result = await resp.json();
-            showWord(result["current_page"], result["total_page"], result["data"])
+      tableParent.innerHTML = items;
+      const showVideoButton = document.querySelectorAll(".itemsIndex");
+      showVideoButton.forEach((item) =>
+        item.addEventListener("click", () => {
+          if (item.id) {
+            showVideo(item.id);
+          }
         })
-        }
-    } else {
-        items = /**html */`
+      );
+
+      const textInputElement = document.querySelector("input[name=search]");
+      textInputElement.addEventListener("keyup", async function () {
+        let text = textInputElement.value;
+        let resp = await fetch(`/admin/teachingData?page=${page}&text=${text}`, { method: "GET" });
+        let result = await resp.json();
+        showWord(result["current_page"], result["total_page"], result["data"]);
+      });
+    }
+  } else {
+    items = /**html */ `
         <tr class="table-rows">
             <td class="items">空</td>
-        </tr>`
-        if (current_page - 1 !== 0 && !(current_page + 1 > total_page)) {
-            up += `<a class="page-link" href="?status=teaching&page=${current_page - 1}" aria-label="Previous">`
-            down += ` <a class="page-link" href="?status=teaching&page=${current_page + 1}" aria-label="Next">`
-        } else {
-            up += `<a class="page-link" href="?status=teaching&page=${current_page}" aria-label="Previous">`
-            down += ` <a class="page-link" href="?status=teaching&page=${current_page}" aria-label="Next">`
-        }
-        newContentLeft = `
+        </tr>`;
+    if (current_page - 1 !== 0 && !(current_page + 1 > total_page)) {
+      up += `<a class="page-link" href="?status=teaching&page=${
+        current_page - 1
+      }" aria-label="Previous">`;
+      down += ` <a class="page-link" href="?status=teaching&page=${
+        current_page + 1
+      }" aria-label="Next">`;
+    } else {
+      up += `<a class="page-link" href="?status=teaching&page=${current_page}" aria-label="Previous">`;
+      down += ` <a class="page-link" href="?status=teaching&page=${current_page}" aria-label="Next">`;
+    }
+    newContentLeft = `
                 <div class="system_buttons">
                     <div class="system_button adding_word">
                         <div class="button_img"><img src="/assets/admin/add.gif" alt="adding_word"></div>
@@ -425,10 +436,10 @@ function showWord(current_page, total_page, data,dataLength) {
                 </div>
                     `;
 
-        createLeftBox.innerHTML = newContentLeft;
-        contentElement.appendChild(createLeftBox);
+    createLeftBox.innerHTML = newContentLeft;
+    contentElement.appendChild(createLeftBox);
 
-        const newContentRight = `
+    const newContentRight = `
                 <form action="/action_page.php" class="content_form">
                     <div class="container uploadVideo">
                         <h1>上載影片</h1>
@@ -451,196 +462,206 @@ function showWord(current_page, total_page, data,dataLength) {
                     </div>
 
                 </form>`;
-        createRightBox.innerHTML = newContentRight;
-        contentElement.appendChild(createRightBox);
-        const rightBox = document.querySelector(".right_box");
-        rightBox.setAttribute("style", `${stylesTeaching}`)
-        
-
-    }
+    createRightBox.innerHTML = newContentRight;
+    contentElement.appendChild(createRightBox);
+    const rightBox = document.querySelector(".right_box");
+    rightBox.setAttribute("style", `${stylesTeaching}`);
+  }
 }
 
 // upload file
 async function uploadFile() {
-    let form = document.querySelector(".content_form")
-    const files = document.getElementById("myFile").files
-    const formData = new FormData();
-    const field = form.title.value
+  let form = document.querySelector(".content_form");
+  const files = document.getElementById("myFile").files;
+  const formData = new FormData();
+  const field = form.title.value;
 
-    if (files.length > 1 || files.length === 0 || field.length === 0) {
-        Swal.fire({
-            icon: "error",
-            title: "Please input all the fields",
-            showConfirmButton: false,
-            timer: 1500,
-        })
-        return;
-    } else if (field.substring(0, 5) !== "Hksl_") {
-        Swal.fire({
-            icon: "error",
-            title: "Title should be 'Hksl_'",
-            showConfirmButton: false,
-            timer: 1500,
-        })
-        return
-    }
-
-    formData.append("title", form.title.value)
-    formData.append("files", files[0]);
-
-    const resp = await fetch("/admin/video", {
-        method: "POST",
-        body: formData
+  if (files.length > 1 || files.length === 0 || field.length === 0) {
+    Swal.fire({
+      icon: "error",
+      title: "Please input all the fields",
+      showConfirmButton: false,
+      timer: 1500,
     });
-    const result = await resp.json();
-    if (result.success === true) {
-        Swal.fire({
-            icon: "success",
-            title: "success",
-            showConfirmButton: false,
-            timer: 1500,
-        }).then(() => { location.reload(); })
-    } else {
-        Swal.fire({
-            icon: "error",
-            title: result.message,
-            showConfirmButton: false,
-            timer: 1500,
-        }).then(() => { location.reload(); })
-    }
+    return;
+  } else if (field.substring(0, 5) !== "Hksl_") {
+    Swal.fire({
+      icon: "error",
+      title: "Title should be 'Hksl_'",
+      showConfirmButton: false,
+      timer: 1500,
+    });
+    return;
+  }
+
+  formData.append("title", form.title.value);
+  formData.append("files", files[0]);
+
+  const resp = await fetch("/admin/video", {
+    method: "POST",
+    body: formData,
+  });
+  const result = await resp.json();
+  if (result.success === true) {
+    Swal.fire({
+      icon: "success",
+      title: "success",
+      showConfirmButton: false,
+      timer: 1500,
+    }).then(() => {
+      location.reload();
+    });
+  } else {
+    Swal.fire({
+      icon: "error",
+      title: result.message,
+      showConfirmButton: false,
+      timer: 1500,
+    }).then(() => {
+      location.reload();
+    });
+  }
 }
 
 // 用戶管理
 document.querySelector("#users_control").addEventListener("click", () => {
-    // change bar font
-    window.location.href = "admin.html?status=usersControl"
-})
+  // change bar font
+  window.location.href = "admin.html?status=usersControl";
+});
 // get init data and search request
 async function getAllUser() {
-    const queryParams = new URLSearchParams(window.location.search);
-    const page = queryParams.get("page") || 1;
-    const resp = await fetch(`/admin/userData?page=${page}`, { method: "GET" })
-    const result = await resp.json()
-    if (result.success === true && result.message === "Get users") {
-        // init data
-        usersControl(result["current_page"], result["total_page"], result["data"])
-        // searching
-        const textInputElement = document.querySelector('input[name=search]');
-        textInputElement.addEventListener('keyup', async () => {
-            const queryParams = new URLSearchParams(window.location.search);
-            const page = queryParams.get("page") || 1;
-            let text = textInputElement.value;
-            const resp = await fetch(`/admin/userData?page=${page}&text=${text}`, { method: "GET" })
-            const result = await resp.json()
-            if (result.success === true) {
-                showSearchUser(result["current_page"], result["total_page"], result["data"])
-            }
-        })
-
-
-
-    } else if (result["message"] === "No user") {
-        usersControl()
-    }
+  const queryParams = new URLSearchParams(window.location.search);
+  const page = queryParams.get("page") || 1;
+  const resp = await fetch(`/admin/userData?page=${page}`, { method: "GET" });
+  const result = await resp.json();
+  if (result.success === true && result.message === "Get users") {
+    // init data
+    usersControl(result["current_page"], result["total_page"], result["data"]);
+    // searching
+    const textInputElement = document.querySelector("input[name=search]");
+    textInputElement.addEventListener("keyup", async () => {
+      const queryParams = new URLSearchParams(window.location.search);
+      const page = queryParams.get("page") || 1;
+      let text = textInputElement.value;
+      const resp = await fetch(`/admin/userData?page=${page}&text=${text}`, { method: "GET" });
+      const result = await resp.json();
+      if (result.success === true) {
+        showSearchUser(result["current_page"], result["total_page"], result["data"]);
+      }
+    });
+  } else if (result["message"] === "No user") {
+    usersControl();
+  }
 }
 function showSearchUser(current_page, total_page, userData) {
+  let items = ``;
+  let pages = ``;
+  let up = ``;
+  let down = ``;
+  // table 1. delete children of parentElement; 2.create its first children
+  const tableParent = document.querySelector("tbody");
+  removeChildElement(tableParent);
 
-    let items = ``;
-    let pages = ``;
-    let up = ``;
-    let down = ``;
-    // table 1. delete children of parentElement; 2.create its first children
-    const tableParent = document.querySelector("tbody");
-    removeChildElement(tableParent);
+  // pagination
+  const pageParent = document.querySelector("nav.page_box");
+  let createPageParent = document.createElement("ul");
+  createPageParent.className = "pagination";
+  removeChildElement(pageParent);
 
-    // pagination
-    const pageParent = document.querySelector("nav.page_box");
-    let createPageParent = document.createElement("ul");
-    createPageParent.className = "pagination";
-    removeChildElement(pageParent);
-
-    for (let i = 0; i < userData.length; i++) {
-        const userName = userData[i]["username"];
-        const userIdentity = userData[i]["identity"];
-        items += `
-                <tr class="table-rows"> <th scope="row">${i + 1}</th><td>${userName}</td> <td>${userIdentity} <input type="checkbox" name="checkbox" id="${userName}" name="${userName}" value="${userName}">
+  for (let i = 0; i < userData.length; i++) {
+    const userName = userData[i]["username"];
+    const userIdentity = userData[i]["identity"];
+    items += `
+                <tr class="table-rows"> <th scope="row">${
+                  i + 1
+                }</th><td>${userName}</td> <td>${userIdentity} <input type="checkbox" name="checkbox" id="${userName}" name="${userName}" value="${userName}">
                 </td></tr>
             `;
-    }
+  }
 
-    for (let i = 0; i < total_page; i++) {
-        pages += `
-            <li class="page-items"><a class="page-link" href="?status=teaching&page=${i + 1}">${i + 1}</a></li>`;
-    }
+  for (let i = 0; i < total_page; i++) {
+    pages += `
+            <li class="page-items"><a class="page-link" href="?status=teaching&page=${i + 1}">${
+      i + 1
+    }</a></li>`;
+  }
 
-    if (current_page - 1 !== 0 && !(current_page + 1 > total_page)) {
-        up += `<li class="page-item"><a class="page-link" href="?status=teaching&page=${current_page - 1}" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>`
-        down += `<li class="page-item"><a class="page-link" href="?status=teaching&page=${current_page + 1}" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>`
-    } else {
-        up += `<li class="page-item"><a class="page-link" href="?status=teaching&page=${current_page}" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>`
-        down += ` <li class="page-item"><a class="page-link" href="?status=teaching&page=${current_page}" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>`
-    }
+  if (current_page - 1 !== 0 && !(current_page + 1 > total_page)) {
+    up += `<li class="page-item"><a class="page-link" href="?status=teaching&page=${
+      current_page - 1
+    }" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>`;
+    down += `<li class="page-item"><a class="page-link" href="?status=teaching&page=${
+      current_page + 1
+    }" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>`;
+  } else {
+    up += `<li class="page-item"><a class="page-link" href="?status=teaching&page=${current_page}" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>`;
+    down += ` <li class="page-item"><a class="page-link" href="?status=teaching&page=${current_page}" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>`;
+  }
 
-    let pagination = `${up}${pages}${down}`
+  let pagination = `${up}${pages}${down}`;
 
-    createPageParent.innerHTML = pagination;
-    pageParent.appendChild(createPageParent)
+  createPageParent.innerHTML = pagination;
+  pageParent.appendChild(createPageParent);
 
-
-    tableParent.innerHTML = items;
-
+  tableParent.innerHTML = items;
 }
-// display with init data 
+// display with init data
 function usersControl(current_page = 1, total_page = 1, userData = 1) {
-    let items = ``;
-    let pages = ``;
-    let dataLength = userData.length;
+  let items = ``;
+  let pages = ``;
+  let dataLength = userData.length;
 
-    // if there are data
-    if (typeof (userData) !== Number) {
-        for (let i = 0; i < userData.length; i++) {
-            const userName = userData[i]["username"];
-            const userIdentity = userData[i]["identity"];
-            items += `
+  // if there are data
+  if (typeof userData !== Number) {
+    for (let i = 0; i < userData.length; i++) {
+      const userName = userData[i]["username"];
+      const userIdentity = userData[i]["identity"];
+      items += `
                 <tr class="table-rows">
                     <th scope="row">${i + 1}</th>
                     <td>${userName}</td>
                     <td>${userIdentity} <input type="checkbox" name="checkbox" id="${userName}" name="${userName}" value="${userName}">
                     </td>
-                </tr>`
-        }
-        for (let i = 0; i < total_page; i++) {
-            pages += `
-            <li class="page-item"><a class="page-link" href="?status=usersControl&page=${i + 1}">${i + 1}</a></li>`;
-        }
-    } else {
-        items = ` <tr class="table-rows">
+                </tr>`;
+    }
+    for (let i = 0; i < total_page; i++) {
+      pages += `
+            <li class="page-item"><a class="page-link" href="?status=usersControl&page=${i + 1}">${
+        i + 1
+      }</a></li>`;
+    }
+  } else {
+    items = ` <tr class="table-rows">
                 <th scope="row">空</th>
                 <td>空</td>
                 <td>空</td>
-            </tr>`
-    }
-    removeChildElement(contentElement);
-    newContentLeft = `
+            </tr>`;
+  }
+  removeChildElement(contentElement);
+  newContentLeft = `
         <div class="system_buttons">
             <div class="system_button users_operation">
                 <div class="button_img"><img src="/assets/admin/identity.gif" alt="refresh_lecture"></div>
                 <div class="button_title">操作</div>
             </div>
         </div>`;
-    createLeftBox.innerHTML = newContentLeft;
-    contentElement.appendChild(createLeftBox);
-    //changing right_box
-    let up = ``;
-    let down = ``;
-    if (current_page - 1 !== 0 && !(current_page + 1 > total_page)) {
-        up += `<a class="page-link" href="?status=usersControl&page=${current_page - 1}" aria-label="Previous">`
-        down += ` <a class="page-link" href="?status=usersControl&page=${current_page + 1}" aria-label="Next">`
-    } else {
-        up += `<a class="page-link" href="?status=usersControl&page=${current_page}" aria-label="Previous">`
-        down += ` <a class="page-link" href="?status=usersControl&page=${current_page}" aria-label="Next">`
-    }
-    const newContentRight = `
+  createLeftBox.innerHTML = newContentLeft;
+  contentElement.appendChild(createLeftBox);
+  //changing right_box
+  let up = ``;
+  let down = ``;
+  if (current_page - 1 !== 0 && !(current_page + 1 > total_page)) {
+    up += `<a class="page-link" href="?status=usersControl&page=${
+      current_page - 1
+    }" aria-label="Previous">`;
+    down += ` <a class="page-link" href="?status=usersControl&page=${
+      current_page + 1
+    }" aria-label="Next">`;
+  } else {
+    up += `<a class="page-link" href="?status=usersControl&page=${current_page}" aria-label="Previous">`;
+    down += ` <a class="page-link" href="?status=usersControl&page=${current_page}" aria-label="Next">`;
+  }
+  const newContentRight = `
                 <h3 class="title">所有用戶<span class="value_bg">${dataLength}</span></h3><br>
                 <div class="lecture_form">
                     <div class="changing_identity_box">
@@ -678,74 +699,76 @@ function usersControl(current_page = 1, total_page = 1, userData = 1) {
                         </li>
                     </ul>
                 </nav>`;
-    createRightBox.innerHTML = newContentRight;
-    contentElement.appendChild(createRightBox);
+  createRightBox.innerHTML = newContentRight;
+  contentElement.appendChild(createRightBox);
 
-    //adding style
-    const rightBox = document.querySelector(".right_box");
+  //adding style
+  const rightBox = document.querySelector(".right_box");
 
-    rightBox.setAttribute("style", `${styles}`)
+  rightBox.setAttribute("style", `${styles}`);
 
-
-    document.querySelector(".deleting").addEventListener("click", () => {
-        deleting()
-    })
-    document.querySelector(".change_to_teacher").addEventListener("click", () => {
-        changeToTeacher()
-    })
+  document.querySelector(".deleting").addEventListener("click", () => {
+    deleting();
+  });
+  document.querySelector(".change_to_teacher").addEventListener("click", () => {
+    changeToTeacher();
+  });
 }
 // change identity
 async function changeToTeacher() {
-    let params = new URLSearchParams(window.location.search);
-    let status = params.get("status");
-    const allChecked = document.querySelectorAll("input[name=checkbox]:checked")
-    const checkArr = Array.from(allChecked).map(checkbox => checkbox.value)
-    const resp = await fetch("/admin/userData", {
-        method: "PUT",
-        headers: {
-            "Content-Type": "application/json; charset=utf-8"
-        },
-        body: JSON.stringify({ checkedArr: checkArr }),
-    });
-    const result = await resp.json();
-    if (result.success === true) {
-        Swal.fire({
-            icon: "success",
-            title: "success",
-            showConfirmButton: false,
-            timer: 1500,
-        }).then(() => { location.reload(); })
-        return;
-    }
+  let params = new URLSearchParams(window.location.search);
+  let status = params.get("status");
+  const allChecked = document.querySelectorAll("input[name=checkbox]:checked");
+  const checkArr = Array.from(allChecked).map((checkbox) => checkbox.value);
+  const resp = await fetch("/admin/userData", {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json; charset=utf-8",
+    },
+    body: JSON.stringify({ checkedArr: checkArr }),
+  });
+  const result = await resp.json();
+  if (result.success === true) {
     Swal.fire({
-        icon: "error",
-        title: result.message,
-        showConfirmButton: false,
-        timer: 1500,
-    }).then(() => { location.reload(); })
+      icon: "success",
+      title: "success",
+      showConfirmButton: false,
+      timer: 1500,
+    }).then(() => {
+      location.reload();
+    });
+    return;
+  }
+  Swal.fire({
+    icon: "error",
+    title: result.message,
+    showConfirmButton: false,
+    timer: 1500,
+  }).then(() => {
+    location.reload();
+  });
 }
-
 
 // setting
 document.querySelector("#setting").addEventListener("click", () => {
-    window.location.href = "admin.html?status=setting"
-    setting()
-})
+  window.location.href = "admin.html?status=setting";
+  setting();
+});
 // init display
 function setting() {
-    removeChildElement(contentElement);
-    newContentLeft = ` 
+  removeChildElement(contentElement);
+  newContentLeft = ` 
             <div class="system_buttons">
                 <div class="system_button changing_system">
                     <div class="button_img"><img src="/assets/admin/system.gif" alt="refresh_lecture"></div>
                     <div class="button_title">更改</div>
                 </div>
             </div>`;
-    createLeftBox.innerHTML = newContentLeft;
+  createLeftBox.innerHTML = newContentLeft;
 
-    contentElement.appendChild(createLeftBox);
-    //changing right_box
-    const newContentRight = `
+  contentElement.appendChild(createLeftBox);
+  //changing right_box
+  const newContentRight = `
                 <div class="admin_changing_account">
                     <form action="/action_page.php" class="setting_form">
                         <label for="email">郵箱:</label><br>
@@ -759,62 +782,67 @@ function setting() {
                         </div>
                     </form>
                 </div>`;
-    createRightBox.innerHTML = newContentRight;
-    contentElement.appendChild(createRightBox);
+  createRightBox.innerHTML = newContentRight;
+  contentElement.appendChild(createRightBox);
 
-    //adding style
-    const rightBox = document.querySelector(".right_box");
-    rightBox.setAttribute("style", `${styles}`)
+  //adding style
+  const rightBox = document.querySelector(".right_box");
+  rightBox.setAttribute("style", `${styles}`);
 
-    document.querySelector("#submit").addEventListener("click", (e) => {
-        e.preventDefault();
-        changeAdminInfo();
-    })
+  document.querySelector("#submit").addEventListener("click", (e) => {
+    e.preventDefault();
+    changeAdminInfo();
+  });
 }
 // changeAdminInfo
 async function changeAdminInfo() {
-    let adminForm = document.querySelector(".setting_form")
-    const adminFormData = new FormData();
+  let adminForm = document.querySelector(".setting_form");
+  const adminFormData = new FormData();
 
-    if (adminForm.password.value !== adminForm.confirm_password.value) {
-        Swal.fire({
-            icon: "error",
-            title: "Passwords are not the same",
-            showConfirmButton: false,
-            timer: 1500,
-        })
-        return
-    } else if (adminForm.email.value === "" || adminForm.password.value === "" || adminForm.confirm_password.value === "") {
-        Swal.fire({
-            icon: "error",
-            title: "Please fill in all the fields",
-            showConfirmButton: false,
-            timer: 1500,
-        })
-        return
-    }
-    adminFormData.append("email", adminForm.email.value)
-    adminFormData.append("password", adminForm.password.value);
-    adminFormData.append("confirm_password", adminForm.confirm_password.value);
-
-    const resp = await fetch("/admin/info", {
-        method: "POST",
-        body: adminFormData
+  if (adminForm.password.value !== adminForm.confirm_password.value) {
+    Swal.fire({
+      icon: "error",
+      title: "Passwords are not the same",
+      showConfirmButton: false,
+      timer: 1500,
     });
-    const result = await resp.json();
-    if (result.success === true) {
-        Swal.fire({
-            icon: "success",
-            title: "success",
-            showConfirmButton: false,
-            timer: 1500,
-        }).then(() => { location.reload(); })
-    }
+    return;
+  } else if (
+    adminForm.email.value === "" ||
+    adminForm.password.value === "" ||
+    adminForm.confirm_password.value === ""
+  ) {
+    Swal.fire({
+      icon: "error",
+      title: "Please fill in all the fields",
+      showConfirmButton: false,
+      timer: 1500,
+    });
+    return;
+  }
+  adminFormData.append("email", adminForm.email.value);
+  adminFormData.append("password", adminForm.password.value);
+  adminFormData.append("confirm_password", adminForm.confirm_password.value);
+
+  const resp = await fetch("/admin/info", {
+    method: "POST",
+    body: adminFormData,
+  });
+  const result = await resp.json();
+  if (result.success === true) {
+    Swal.fire({
+      icon: "success",
+      title: "success",
+      showConfirmButton: false,
+      timer: 1500,
+    }).then(() => {
+      location.reload();
+    });
+  }
 }
 
-
 function footer() {
-    document.querySelector("#footer").innerHTML = `
+  document.querySelector("#footer").innerHTML = `
     <div class="row container mx-auto pt-5">
                 <div class="footer-one col-lg-4 col-md-6 col-12 mb-3">
                     <img src="/assets/手語學堂logo.png" alt="logo" width="100" height="90">
@@ -854,56 +882,53 @@ function footer() {
                 </div>
             </div>
       `;
-
 }
 
-
 function logout() {
-    document.querySelector("#logout").addEventListener("click", () => {
-        const swalWithBootstrapButtons = Swal.mixin({
-            customClass: {
-                confirmButton: "btn btn-success",
-                cancelButton: "btn btn-danger",
-            },
-            buttonsStyling: false,
-        });
-        swalWithBootstrapButtons
-            .fire({
-                title: "是否登出?",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonText: "是",
-                cancelButtonText: "否",
-                reverseButtons: true,
-            })
-            .then(async (result) => {
-                if (result.isConfirmed) {
-                    const resp = await fetch("/logout");
-                    const result = await resp.json();
-
-                    if (result.success === false) {
-                        Swal.fire({
-                            icon: "error",
-                            title: "登出失敗",
-                            title: result.message,
-                            showConfirmButton: false,
-                            timer: 1500,
-                        }).then(function () {
-                            window.location.reload();
-                        });
-                        return;
-                    } else {
-                        Swal.fire({
-                            icon: "success",
-                            title: "登出成功",
-                            showConfirmButton: false,
-                            timer: 1500,
-                        }).then(function () {
-                            window.location.href = `http://localhost:8080/`;
-                        });
-                    }
-                }
-            });
+  document.querySelector("#logout").addEventListener("click", () => {
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        confirmButton: "btn btn-success",
+        cancelButton: "btn btn-danger",
+      },
+      buttonsStyling: false,
     });
+    swalWithBootstrapButtons
+      .fire({
+        title: "是否登出?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "是",
+        cancelButtonText: "否",
+        reverseButtons: true,
+      })
+      .then(async (result) => {
+        if (result.isConfirmed) {
+          const resp = await fetch("/logout");
+          const result = await resp.json();
 
+          if (result.success === false) {
+            Swal.fire({
+              icon: "error",
+              title: "登出失敗",
+              title: result.message,
+              showConfirmButton: false,
+              timer: 1500,
+            }).then(function () {
+              window.location.reload();
+            });
+            return;
+          } else {
+            Swal.fire({
+              icon: "success",
+              title: "登出成功",
+              showConfirmButton: false,
+              timer: 1500,
+            }).then(function () {
+              window.location.href = `http://localhost:8080/`;
+            });
+          }
+        }
+      });
+  });
 }

@@ -6,12 +6,10 @@
     --left-button-size: 2.5rem;
 }
 
-
 body {
     background-color: var(--background-color);
     color: var(--deeper-logo-color);
 }
-
 
 /* navbar */
 .system_navbar {
@@ -21,7 +19,7 @@ body {
     font-weight: bold;
 }
 
-.display_words > .title{
+.display_words > .title {
     font-size: 2rem;
     margin: 15px 0 15px;
     padding: 3px;
@@ -30,31 +28,28 @@ body {
     font-weight: bolder;
     position: relative;
 }
-.right_box > .title{
+.right_box > .title {
     position: relative;
     margin-bottom: 25px;
     margin-top: 20px;
 }
-span.value_bg{
+span.value_bg {
     position: absolute;
     left: 50%;
     top: 50%;
     -webkit-transform: translateX(-50%) translateY(-50%);
     -ms-transform: translateX(-50%) translateY(-50%);
     transform: translateX(-50%) translateY(-50%);
-    color: rgba(114, 143, 133,0.4);
+    color: rgba(114, 143, 133, 0.4);
     font-weight: 600;
     font-size: 8rem;
-    line-height: 60px;  
-
+    line-height: 60px;
 }
 
 .system_navbar_buttons a:hover {
     cursor: pointer;
     background-color: var(--background-color);
 }
-
-
 
 /* content basic */
 #content_box {
@@ -86,13 +81,14 @@ span.value_bg{
     background-color: white;
     margin-left: 40px;
     border-radius: 5px;
-    box-shadow: rgba(0, 0, 0, 0.09) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
+    box-shadow: rgba(0, 0, 0, 0.09) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px,
+        rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px,
+        rgba(0, 0, 0, 0.09) 0px 32px 16px;
 }
 
 #footer {
     background-color: var(--navbar-color);
 }
-
 
 /* left box */
 .system_buttons {
@@ -117,17 +113,16 @@ span.value_bg{
     height: fit-content;
 }
 
-
-.system_button>.button_img {
+.system_button > .button_img {
     width: 100px;
     height: 100px;
 }
 
-.button_img>img {
+.button_img > img {
     max-height: 100%;
 }
 
-.system_button>.button_title {
+.system_button > .button_title {
     padding-top: 10px;
     font-size: var(--left-button-size);
     font-weight: 450;
@@ -173,7 +168,7 @@ span.value_bg{
     margin-bottom: 10px;
 }
 
-.word>label {
+.word > label {
     width: 13vw;
     text-align: center;
     margin-top: auto;
@@ -203,26 +198,23 @@ input {
     padding: 10px;
 }
 
-
-#myFile{
+#myFile {
     cursor: pointer;
     border: inherit;
     background-color: white;
-
 }
 
 #myFile:hover {
     cursor: pointer;
     background-color: var(--navbar-color);
-
 }
 
 .searching_text {
     background-color: white;
 }
 
-.changing_identity_box>input,
-.changing_identity_box>button {
+.changing_identity_box > input,
+.changing_identity_box > button {
     margin-right: 3px;
 }
 
@@ -233,12 +225,12 @@ input {
     overflow: hidden;
 }
 
-.content_form>.form_input_buttons {
+.content_form > .form_input_buttons {
     width: 100%;
 }
 
 /* 教學 */
-.form_input_buttons>input {
+.form_input_buttons > input {
     margin: 10px;
 }
 
@@ -247,21 +239,16 @@ input {
     width: 100%;
 }
 
-
-
 button.searching {
     background-color: var(--navbar-color);
 }
 
-button.searching>img {
+button.searching > img {
     width: 20px;
     height: 20px;
     font-size: 10px;
     letter-spacing: 0cm;
 }
-
-
-
 
 /* right_box */
 .form_input_buttons #myFile,
@@ -280,7 +267,6 @@ button.searching>img {
     margin-right: 10px;
 }
 
-
 .lecture_form {
     width: 90%;
 }
@@ -290,7 +276,7 @@ td {
     text-align: center;
 }
 
-td>input {
+td > input {
     margin-left: 5px;
 }
 
@@ -304,14 +290,13 @@ td>input {
     justify-content: center;
 }
 
-.lecture_form>button {
+.lecture_form > button {
     margin-left: 4px;
 }
 
 .lecture_adding_form {
     justify-content: none;
 }
-
 
 .showing_table_box {
     width: 100%;
@@ -324,8 +309,7 @@ td>input {
     width: 70%;
 }
 
-
-td>img {
+td > img {
     width: 20px;
 }
 
@@ -350,7 +334,7 @@ td {
     margin-top: 20px;
 }
 
-.holding_lecture_form>#submit {
+.holding_lecture_form > #submit {
     margin-top: 10px;
 }
 
@@ -362,27 +346,26 @@ td {
 .setting_form {
     padding: 50px;
 }
-.setting_form > label{
+.setting_form > label {
     font-size: 20px;
 }
-.setting_form > input, .uploadVideo > input:not(.submitVideo){
+.setting_form > input,
+.uploadVideo > input:not(.submitVideo) {
     font-style: italic;
 }
 
-
-
-.setting_form>input,
-.modal-body>input,
-.form_button>input,
-.modal-content>input {
+.setting_form > input,
+.modal-body > input,
+.form_button > input,
+.modal-content > input {
     margin-top: 3px;
     border-radius: 10px;
     padding: 10px;
 }
 
-.setting_form>label,
-.modal-body>label,
-.modal-content>input {
+.setting_form > label,
+.modal-body > label,
+.modal-content > input {
     margin-top: 8px;
 }
 
@@ -408,7 +391,9 @@ h3 {
 .video_box {
     position: fixed;
     z-index: 1;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
+        rgba(0, 0, 0, 0.3) 0px 30px 60px -30px,
+        rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
     background-color: var(--navbar-color);
     width: 50vw;
     height: fit-content;
@@ -467,9 +452,6 @@ input#title {
     color: rgb(255, 255, 255);
 }
 
-
-
-
 .container {
     width: 100%;
     padding: 16px;
@@ -478,7 +460,7 @@ input#title {
     margin-right: auto;
 }
 
-.content_form>input [type='text'] {
+.content_form > input [type='text'] {
     width: 100%;
     padding: 15px;
     margin: 5px 0 22px 0;
@@ -503,11 +485,9 @@ input#title {
     opacity: 1;
 }
 
-.content_form>input {
+.content_form > input {
     margin-top: 1rem;
 }
-
-
 
 @-webkit-keyframes move {
     50% {
@@ -545,11 +525,6 @@ input#title {
     }
 }
 
-
-
-
-
-
 @media screen and (max-width: 1200px) {
     #content_box {
         display: flex;
@@ -574,7 +549,7 @@ input#title {
         box-shadow: rgba(0, 0, 0, 0.45) 0px 25px 20px -20px;
     }
 
-    .display_words>.title {
+    .display_words > .title {
         width: 100%;
         text-align: center;
     }
@@ -586,7 +561,9 @@ input#title {
         background-color: white;
         border-radius: 5px;
         margin-top: 45px;
-        box-shadow: rgba(0, 0, 0, 0.09) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
+        box-shadow: rgba(0, 0, 0, 0.09) 0px 2px 1px,
+            rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px,
+            rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
     }
 
     .words_box {
@@ -601,7 +578,6 @@ input#title {
         padding: 5px;
         margin-bottom: 10px;
     }
-
 }
 
 @media screen and (max-width: 890px) {
@@ -632,13 +608,14 @@ input#title {
         flex: 0;
         background-color: white;
         border-radius: 5px;
-        box-shadow: rgba(0, 0, 0, 0.09) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
+        box-shadow: rgba(0, 0, 0, 0.09) 0px 2px 1px,
+            rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px,
+            rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
     }
 
     .content_form {
         width: 100%;
     }
-
 
     .words_box {
         width: fit-content;
@@ -663,16 +640,15 @@ input#title {
         left: inherit;
     }
 
-    .video>h3 {
+    .video > h3 {
         margin-top: 2px;
     }
 
-    .changing_identity_box>input {
+    .changing_identity_box > input {
         width: 60%;
     }
 
     input#title {
         width: 100%;
     }
-
 }

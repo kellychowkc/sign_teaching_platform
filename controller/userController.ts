@@ -27,7 +27,9 @@ export class UserController {
             username: foundUserInfo["username"],
             identity: foundUserInfo["identity"],
           };
-          res.status(200).json({ success: true, message: "success", identity: foundUserInfo["identity"]});
+          res
+            .status(200)
+            .json({ success: true, message: "success", identity: foundUserInfo["identity"] });
         }
       } else {
         res.status(401).json({ success: false, message: "沒有這個用戶或密碼錯誤" });
@@ -58,7 +60,7 @@ export class UserController {
   logOut = async (req: Request, res: Response) => {
     try {
       delete req.session["user"];
-      console.log("this is req.session:",req.session["user"])
+      console.log("this is req.session:", req.session["user"]);
       res.status(200).json({ success: true, message: "success" });
     } catch (err) {
       logger.error(err.toString());

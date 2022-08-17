@@ -1,6 +1,6 @@
 import express from "express";
-import {userController} from "../server";
+import { userController } from "../server";
 
 export const logInRoutes = express.Router();
 
-logInRoutes.post("/",userController.logIn)
+logInRoutes.post("/", userController.logIn);

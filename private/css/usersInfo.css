@@ -1,10 +1,9 @@
-
-@import "./usersNavbar.css";
-@import "./userInfoPage/packages.css";
-@import "./userInfoPage/timeTable.css";
-@import "./userInfoPage/timeLine.css";
-@import "./userInfoPage/orderCard.css";
-@import "./userInfoPage/xdialog.3.4.0.css";
+@import './usersNavbar.css';
+@import './userInfoPage/packages.css';
+@import './userInfoPage/timeTable.css';
+@import './userInfoPage/timeLine.css';
+@import './userInfoPage/orderCard.css';
+@import './userInfoPage/xdialog.3.4.0.css';
 
 article {
     display: flex;
@@ -12,8 +11,9 @@ article {
     color: rgb(65, 81, 98);
 }
 
-aside {
-    width: 20vw;
+aside,
+.infoList {
+    width: 280px;
 }
 
 section {
@@ -25,6 +25,7 @@ section {
 }
 
 #userInfoDisplay {
+    margin: 1rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -42,23 +43,42 @@ section {
     color: rgb(65, 81, 98);
 }
 
+.student-username {
+    text-transform: capitalize;
+}
+
+.teacher-username {
+    text-transform: capitalize;
+}
 .nav-item {
     cursor: pointer;
     color: rgb(65, 81, 98);
 }
 
-
-.rightMenu, .leftMenu {
+.rightMenu,
+.leftMenu {
     display: none;
 }
 
+#teacherTimeTable {
+    margin-top: 2rem;
+    margin-left: 2rem;
+}
 
-
+.card-body {
+    margin: 3rem;
+}
 @media only screen and (max-width: 900px) {
     article {
         flex-direction: column;
     }
-    
+
+    aside,
+    .infoList {
+        width: 100vw;
+        font-size: 16px;
+    }
+
     section {
         width: 100vw;
     }
@@ -80,12 +100,7 @@ section {
         flex-direction: column;
     }
 
-    .show {
-        display: contents;
-        position: relative;
-    }
-
-    .push_body {
-        margin-left: 30rem;
+    .packagesList {
+        margin: 5px 0;
     }
 }

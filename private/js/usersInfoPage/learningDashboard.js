@@ -3,7 +3,7 @@ export async function displayDashboard() {
     document.querySelector("#userInfoDisplay").innerHTML = `
         <div class="container text-center">
             <div class="col-md-7 col-lg-8 m-auto">
-                <h4 class="mb-3">學習進度</h4>
+                <h2 class="mb-3">學習進度</h2>
             </div>
             <div class="container">
                 <div class="row" id="chart">
@@ -194,7 +194,7 @@ async function displayChartData() {
                             <li class="widget-49-meeting-item"><span>可使用堂數 : ${order["remainingLessonNum"]}</span></li>
                         </ul>
                         <div class="widget-49-meeting-action">
-                            <button type="button" class="w-100 btn btn-primary orderBtn" value="${order["orderId"]}">詳細資料</button>                      </div>
+                            <button type="button" class="btn btn-primary orderBtn" value="${order["orderId"]}">詳細資料</button>
                         </div>
                     </div>
                 </div>
@@ -207,7 +207,6 @@ async function displayChartData() {
   }
 }
 
-
 function displayOrderData() {
   document.querySelectorAll(".orderBtn").forEach((item) => {
     item.addEventListener("click", async () => {
@@ -216,9 +215,9 @@ function displayOrderData() {
         let data = {};
         data["id"] = orderId;
         const resp = await fetch("/userInfo/displayThatOrder", {
-          method: 'POST',
+          method: "POST",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
           body: JSON.stringify(data),
         });
@@ -226,7 +225,8 @@ function displayOrderData() {
         if (result.success === true) {
           const data = result.message;
           const orderData = data["order"];
-          let usedLessonNum = Number(orderData[0]["totalLessonNum"]) - Number(orderData[0]["remainingLessonNum"]);
+          let usedLessonNum =
+            Number(orderData[0]["totalLessonNum"]) - Number(orderData[0]["remainingLessonNum"]);
           const lessonData = data["lessonList"];
           let lessonHtmlStr = ``;
           let statusHtmlStr = ``;
@@ -250,7 +250,6 @@ function displayOrderData() {
                   status = "缺席";
                   absentNum++;
                   break;
-
               }
               lessonHtmlStr += `
                           <tr>
@@ -260,23 +259,25 @@ function displayOrderData() {
                               <td>${status}</td>
                           </tr>
                           `;
-              i++
+              i++;
             }
             statusHtmlStr = `
-                      <h6 class="mb-3">已預約 : ${bookingNum} 堂 | 出席 : ${attendNum} 堂 | 缺席 : ${absentNum} 堂</h6>
+                      <p class="mb-3">已預約 : ${bookingNum} 堂 | 出席 : ${attendNum} 堂 | 缺席 : ${absentNum} 堂</p>
                       `;
           } else {
             statusHtmlStr = `
-                      <h6 class="mb-3">已預約 : ${bookingNum} 堂 | 出席 : ${attendNum} 堂 | 缺席 : ${absentNum} 堂</h6>
+                      <p class="mb-3">已預約 : ${bookingNum} 堂 | 出席 : ${attendNum} 堂 | 缺席 : ${absentNum} 堂</p>
                       `;
           }
           xdialog.open({
             title: `${orderData[0]["packageName"]}`,
-            body: `\
+            body:
+              `\
                       <div class="container text-center">\
-                          <h4 class="mb-3">購買日期 : ${orderData[0]["createdDate"]}</h4>\
-                          <h5 class="mb-3">可使用堂數 : ${orderData[0]["totalLessonNum"]} 堂 | 已使用 : ${usedLessonNum} 堂</h5>`
-              + statusHtmlStr + `
+                          <h5 class="mb-3">購買日期 : ${orderData[0]["createdDate"]}</h5>\
+                          <h6 class="mb-3">可使用堂數 : ${orderData[0]["totalLessonNum"]} 堂 | 已使用 : ${usedLessonNum} 堂</h6>` +
+              statusHtmlStr +
+              `
                           <table class="table table-bordered text-center">\
                               <thead>\
                                   <tr class="bg-light-gray">\
@@ -286,15 +287,16 @@ function displayOrderData() {
                                       <th class="text-uppercase">課堂狀況</th>\
                                   </tr>\
                               </thead>\
-                              <tbody>`
-              + lessonHtmlStr + `
+                              <tbody>` +
+              lessonHtmlStr +
+              `
                               </tbody>\
                           </table>\
                       </div>`,
-            style: 'width: 60%;'
-          })
+            style: "width: 60%;",
+          });
         }
       }
-    })
-  })
+    });
+  });
 }

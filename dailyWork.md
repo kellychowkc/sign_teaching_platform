@@ -71,79 +71,88 @@
 4. logger replace console.error
 5. !! delete one row of users -> id is weird
 
-
 ## 10/8
+
 1. web demo
-- [x] feature
-- [x] combine
+
+-   [x] feature
+-   [x] combine
+
 2. isLoggedInAPI
-- [x] adding...
+
+-   [x] adding...
+
 3. testCase
-- [ ] any
+
+-   [ ] any
+
 4. login test
-- [ ] mock logger
-- [ ] logger -> (put in) ts
+
+-   [ ] mock logger
+-   [ ] logger -> (put in) ts
+
 5. logOut
 6. user page
-- [x] timeTable
-- [x] realTime
+
+-   [x] timeTable
+-   [x] realTime
+
 7. admin page
-- [x] ui
-- [x] ui logic
-- [x] router
-- [x] server
+
+-   [x] ui
+-   [x] ui logic
+-   [x] router
+-   [x] server
+
 8. style
-- [x] admin.html
-- [x] freeVideo.html
+
+-   [x] admin.html
+-   [x] freeVideo.html
 
 ## 11/8
+
 1. testCase
-- [ ] any
-- [ ] mock logger
-- [ ] logger -> (put in) ts
+
+-   [ ] any
+-   [ ] mock logger
+-   [ ] logger -> (put in) ts
+
 2. logOut
 3. CI/CD
 4. Dashboard
 5. CSS
-- [ ] style
-- [ ] mobile response
+
+-   [ ] style
+-   [ ] mobile response
+
 6. ppt
 7. pratise Demo
 
+# plan
 
-
-
-
-
-
-
-
-
-
-
-
-
-# plan 
 1. checkbox 更改 /
 2. js UI logic
-- [x] module import -> navbar
-- [x] linking all the pages
+
+-   [x] module import -> navbar
+-   [x] linking all the pages
+
 3. try get value
-- [x] checkbox
-- [x] search
-- [x] text
+
+-   [x] checkbox
+-   [x] search
+-   [x] text
+
 4. req
 5. database
-- [ ] Word -- create/, show/, delete, edit
-- [ ] User -- show(user & admin), delete, change identity
+
+-   [ ] Word -- create/, show/, delete, edit
+-   [ ] User -- show(user & admin), delete, change identity
 
     function:getXInfo(users[id, name, identity],teachers[lessons: id, teacher_id(name), timeStamp, status, link],admin[email, password]),([teaching table]sample_sign_language(top 10), [openLecture table]orders' user_id -> lessons' teacher_id)
 
 6. UI
-- [ ] fancy effect: design, animation
-- [x] sweetAlert
-- [ ] css: lecture form
-- [x] show logic: img / openClass, pageNum...
 
-
-
+-   [ ] fancy effect: design, animation
+-   [x] sweetAlert
+-   [ ] css: lecture form
+-   [x] show logic: img / openClass, pageNum...
