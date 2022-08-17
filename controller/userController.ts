@@ -1,6 +1,6 @@
 import { UserService } from "../service/userService";
 import type { Request, Response } from "express";
-import { logger } from "../server";
+import { logger } from "../utility/logger";
 import { checkPassword } from "../utility/hash";
 
 export class UserController {

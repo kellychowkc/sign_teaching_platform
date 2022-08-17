@@ -6,7 +6,7 @@ import { hashPassword } from "../utility/hash";
 export class UserService {
   constructor(private knex: Knex) {}
 
-  async logIn(username: string): Promise<User[]> {
+  async logIn(username: string): Promise<User> {
     const foundUser = await this.knex.select("*").from("users").where("username", username).first();
     return foundUser;
   }

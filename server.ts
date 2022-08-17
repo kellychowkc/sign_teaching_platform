@@ -4,8 +4,6 @@ import http from "http";
 import expressSession from "express-session";
 import Knex from "knex";
 
-import winston from "winston";
-
 const app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -18,16 +16,6 @@ app.use(
   })
 );
 
-// logger set up
-const logFormat = winston.format.printf(function (info) {
-  let date = new Date().toISOString();
-  return `${date}[${info.level}]: ${info.message}\n`;
-});
-export const logger = winston.createLogger({
-  level: "info",
-  format: winston.format.combine(winston.format.colorize(), logFormat),
-  transports: [new winston.transports.Console()],
-});
 
 //knex set up
 // const knexConfigs = require("./knexfile");
@@ -54,6 +42,7 @@ import { SignService } from "./service/signService";
 
 
 import { StatusController } from "./controller/statusController";
+import { isLoggedInAll} from "./middleware/isLoggedInGuard";
 
 //server & controller set up
 const userService = new UserService(knex);
@@ -89,7 +78,7 @@ app.use("/signUp", signUpRoutes);
 app.use("/logIn", logInRoutes);
 app.use("/logOut", logOutRoutes);
 
-app.use("/userInfo", userInfoRoutes);
+app.use("/userInfo",isLoggedInAll, userInfoRoutes);
 
 app.use("/sign", signRoutes);
 app.use("/admin",isLoggedInAdmin,adminRoutes);
